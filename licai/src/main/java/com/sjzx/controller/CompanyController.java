@@ -65,9 +65,9 @@ public class CompanyController {
         return companyService.combogrid(q);
     }
 
-    @PostMapping("/typeCombobox")
+    @PostMapping("/typeCombogrid")
     @ApiOperation(value = "下拉框")
-    public Map<String, String> typeCombobox() {
+    public List<Map<String, String>> typeCombobox() {
         return CompanyTypeEnum.getCombobox();
     }
 

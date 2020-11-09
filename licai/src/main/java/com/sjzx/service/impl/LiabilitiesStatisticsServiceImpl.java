@@ -73,7 +73,7 @@ public class LiabilitiesStatisticsServiceImpl extends ServiceImpl<LiabilitiesSta
         writer.write(list, true);
 
         response.setContentType("application/vnd.ms-excel;charset=utf-8");
-        String name = URLEncoder.encode("合并资产负债表", "utf-8");
+        String name = URLEncoder.encode("合并资产负债表指标", "utf-8");
         response.setHeader("Content-Disposition", "attachment;filename=" + name + ".xls");
 
         ServletOutputStream out = null;
@@ -122,9 +122,9 @@ public class LiabilitiesStatisticsServiceImpl extends ServiceImpl<LiabilitiesSta
         writer.addHeaderAlias("receivableMoneyInReportType", "应收账款占总资产比");
         writer.addHeaderAlias("fixedAssetsTotalInReportType", "固定资产总和占总资产比");
         writer.addHeaderAlias("investmentInReportType", "投资资产占总资产比");
-        writer.addHeaderAlias("remark", "备注");
-        writer.addHeaderAlias("createTime", "创建时间");
-        writer.addHeaderAlias("updateTime", "更新时间");
+//        writer.addHeaderAlias("remark", "备注");
+//        writer.addHeaderAlias("createTime", "创建时间");
+//        writer.addHeaderAlias("updateTime", "更新时间");
     }
 
     @Override

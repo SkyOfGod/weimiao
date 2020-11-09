@@ -14,4 +14,6 @@ public class CompanyInputVO extends BasePage {
 
     private Integer companyId;
 
+    private Integer type;
+
 }

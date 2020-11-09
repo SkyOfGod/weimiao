@@ -5,7 +5,6 @@
     行业类型:&nbsp;&nbsp;<input class="easyui-textbox" id="lists_searchCompanyType">
     年份:&nbsp;&nbsp;<input class="easyui-textbox" id="lists_searchYear">
     <input type="hidden" id="lists_searchCompanyReportTypeKey"/>
-    <input type="hidden" id="lists_searchCompanyTypeKey"/>
     <input type="hidden" id="lists_searchCompanyYearKey"/>
     <button class="easyui-linkbutton" iconCls="icon-search" onclick="liabilitiesStatisticListSearch()">搜索</button>
     <button id="export0" href="#" class="easyui-linkbutton" >导出excel</button>
@@ -42,22 +41,18 @@
             $("#lists_searchCompanyYearKey").val(record.key);
         }
     });
-    $("#lists_searchCompanyType").combobox({
-        valueField:'key',
-        textField:'value',
-        data: [{
-            key: '',
-            value: '全部'
-        },{
-            key: '1',
-            value: '汽车制造'
-        },{
-            key: '2',
-            value: '白色家电'
-        }],
-        onSelect: function (record) {
-            $("#lists_searchCompanyTypeKey").val(record.key);
-        }
+
+    $("#lists_searchCompanyType").combogrid({
+        panelWidth: 170,
+        idField: 'key',
+        textField: 'value',
+        url: '/company/typeCombogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'key', title: '值', width: 30, align: 'center'},
+            {field: 'value', title: '类型', width: 120, align: 'center'},
+        ]],
     });
 
     $("#lists_searchCompanyReportType").combobox({
@@ -148,7 +143,7 @@
             param.pageSize = param.rows;
             param.companyId = $("#lists_searchCompanyId").val();
             param.reportType = $("#lists_searchCompanyReportTypeKey").val();
-            param.type = $("#lists_searchCompanyTypeKey").val();
+            param.type = $("#lists_searchCompanyType").val();
             param.year = $("#lists_searchCompanyYearKey").val();
             return true;
         }

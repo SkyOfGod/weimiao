@@ -139,7 +139,7 @@ public class ProfitStatisticsServiceImpl extends ServiceImpl<ProfitStatisticsMap
         writer.write(list, true);
 
         response.setContentType("application/vnd.ms-excel;charset=utf-8");
-        String name = URLEncoder.encode("合并利润表指标表", "utf-8");
+        String name = URLEncoder.encode("合并利润表指标", "utf-8");
         response.setHeader("Content-Disposition", "attachment;filename=" + name + ".xls");
 
         ServletOutputStream out = null;

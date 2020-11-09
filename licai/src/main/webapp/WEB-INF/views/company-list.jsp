@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div style="width: 100%;height: 40px">
     公司:&nbsp;&nbsp;<input class="easyui-textbox" id="list_searchCompanyId">
+    行业类型:&nbsp;&nbsp;<input class="easyui-textbox" id="list_searchCompanyType">
     <button class="easyui-linkbutton" iconCls="icon-search" onclick="itemListSearch()">搜索</button>
 </div>
 <table id="company-list" style="width:100%;height:600px"></table>
@@ -22,11 +23,7 @@
             <tr>
                 <td>行业类型:</td>
                 <td>
-                    <select class="easyui-combobox" name="type" style="width: 100px;" data-options="editable:true">
-                        <option value="0">默认</option>
-                        <option value="1">汽车制造</option>
-                        <option value="2">白色家电</option>
-                    </select>
+                    <input class="easyui-textbox" name="type" style="width: 180px;" data-options="editable:true"/>
                 </td>
             </tr>
             <tr>
@@ -66,6 +63,32 @@
 </div>
 
 <script type="text/javascript" charset="utf-8">
+    $("#editCompanyForm [name='type']").combogrid({
+        panelWidth: 170,
+        idField: 'key',
+        textField: 'value',
+        url: '/company/typeCombogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'key', title: '值', width: 30, align: 'center'},
+            {field: 'value', title: '类型', width: 120, align: 'center'},
+        ]],
+    });
+
+    $("#list_searchCompanyType").combogrid({
+        panelWidth: 170,
+        idField: 'key',
+        textField: 'value',
+        url: '/company/typeCombogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'key', title: '值', width: 30, align: 'center'},
+            {field: 'value', title: '类型', width: 120, align: 'center'},
+        ]],
+    });
+
     $("#list_searchCompanyId").combogrid({
         panelWidth: 260,
         idField: 'id',
@@ -127,6 +150,7 @@
             param.pageNo = param.page;
             param.pageSize = param.rows;
             param.companyId = $('#list_searchCompanyId').val();
+            param.type = $('#list_searchCompanyType').val();
             return true;
         }
     });

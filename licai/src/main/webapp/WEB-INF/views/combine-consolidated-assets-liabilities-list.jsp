@@ -5,7 +5,6 @@
     行业类型:&nbsp;&nbsp;<input class="easyui-textbox" id="listl_searchCompanyType">
     年份:&nbsp;&nbsp;<input class="easyui-textbox" id="listl_searchYear">
     <input type="hidden" id="listl_searchCompanyReportTypeKey"/>
-    <input type="hidden" id="listl_searchCompanyTypeKey"/>
     <input type="hidden" id="listl_searchCompanyYearKey"/>
     <button style="margin-left: 10px" class="easyui-linkbutton" iconCls="icon-search" onclick="liabilitiesListSearch()">
         搜索
@@ -437,22 +436,17 @@
         }
     });
 
-    $("#listl_searchCompanyType").combobox({
-        valueField: 'key',
+    $("#listl_searchCompanyType").combogrid({
+        panelWidth: 170,
+        idField: 'key',
         textField: 'value',
-        data: [{
-            key: '',
-            value: '全部'
-        }, {
-            key: '1',
-            value: '汽车制造'
-        }, {
-            key: '2',
-            value: '白色家电'
-        }],
-        onSelect: function (record) {
-            $("#listl_searchCompanyTypeKey").val(record.key);
-        }
+        url: '/company/typeCombogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'key', title: '值', width: 30, align: 'center'},
+            {field: 'value', title: '类型', width: 120, align: 'center'},
+        ]],
     });
 
     $("#listl_searchCompanyReportType").combobox({
@@ -592,7 +586,7 @@
             param.pageSize = param.rows;
             param.companyId = $("#listl_searchCompanyId").val();
             param.reportType = $("#listl_searchCompanyReportTypeKey").val();
-            param.type = $("#listl_searchCompanyTypeKey").val();
+            param.type = $("#listl_searchCompanyType").val();
             param.year = $("#listl_searchCompanyYearKey").val();
             return true;
         }

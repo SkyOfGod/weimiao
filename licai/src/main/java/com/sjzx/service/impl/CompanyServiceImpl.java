@@ -40,6 +40,9 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
         if (vo.getCompanyId() != null) {
             wrapper.eq(Company::getId, vo.getCompanyId());
         }
+        if (vo.getType() != null) {
+            wrapper.eq(Company::getType, vo.getType());
+        }
         wrapper.orderByDesc(Company::getCreateTime);
         IPage<Company> iPage = new Page<>(vo.getPageNo(), vo.getPageSize());
         page(iPage, wrapper);

@@ -98,7 +98,7 @@ public class CashFlowStatisticsServiceImpl extends ServiceImpl<CashFlowStatistic
         writer.write(list, true);
 
         response.setContentType("application/vnd.ms-excel;charset=utf-8");
-        String name = URLEncoder.encode("合并现金流量表", "utf-8");
+        String name = URLEncoder.encode("合并现金流量表指标", "utf-8");
         response.setHeader("Content-Disposition", "attachment;filename=" + name + ".xls");
 
         ServletOutputStream out = null;
@@ -125,9 +125,9 @@ public class CashFlowStatisticsServiceImpl extends ServiceImpl<CashFlowStatistic
         writer.addHeaderAlias("cashInIncoming", "销售商品提供劳务收到的现金/营业收入");
         writer.addHeaderAlias("expandInProfitRate", "购建资产/经营活动产生的现金流量净额");
         writer.addHeaderAlias("sellInExpandRate", "处置资产/购建资产");
-        writer.addHeaderAlias("remark", "备注");
-        writer.addHeaderAlias("createTime", "创建时间");
-        writer.addHeaderAlias("updateTime", "更新时间");
+//        writer.addHeaderAlias("remark", "备注");
+//        writer.addHeaderAlias("createTime", "创建时间");
+//        writer.addHeaderAlias("updateTime", "更新时间");
 
     }
 
