@@ -1,5 +1,8 @@
 package com.sjzx.service.impl;
 
+import cn.hutool.core.io.IoUtil;
+import cn.hutool.poi.excel.ExcelUtil;
+import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -17,11 +20,17 @@ import com.sjzx.service.CombineProfitService;
 import com.sjzx.service.CompanyService;
 import com.sjzx.service.ProfitStatisticsService;
 import com.sjzx.utils.BeanUtils;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.URLEncoder;
 import java.util.Date;
+import java.util.List;
 
 import static com.sjzx.utils.NumberUtils.*;
 
@@ -114,6 +123,74 @@ public class ProfitStatisticsServiceImpl extends ServiceImpl<ProfitStatisticsMap
         } else {
             statistics.setId(old.getId()).setUpdateTime(new Date()).updateById();
         }
+    }
+
+    /**
+     * 导出数据
+     **/
+    @Override
+    @SneakyThrows
+    public void exportData(HttpServletResponse response, LiabilitiesStatisticsInputVO vo) {
+        List<ProfitStatisticsVO> list = baseMapper.getList(vo);
+        formatToPercent(list);
+        ExcelWriter writer = ExcelUtil.getWriter();
+        addHeaderAlias(writer);
+        writer.setOnlyAlias(true);
+        writer.write(list, true);
+
+        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        String name = URLEncoder.encode("合并利润表指标表", "utf-8");
+        response.setHeader("Content-Disposition", "attachment;filename=" + name + ".xls");
+
+        ServletOutputStream out = null;
+        try {
+            out = response.getOutputStream();
+            writer.flush(out, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            writer.close();
+        }
+        IoUtil.close(out);
+    }
+
+    private void addHeaderAlias(ExcelWriter writer) {
+        writer.merge(19, "合并利润表指标数据统计");
+        writer.addHeaderAlias("code", "股票代码");
+        writer.addHeaderAlias("name", "公司名称");
+        writer.addHeaderAlias("year", "年份");
+        writer.addHeaderAlias("reportType", "参考标准");
+        writer.addHeaderAlias("businessIncomeGrowthRate", "营业收入增速");
+        writer.addHeaderAlias("grossProfitMargin", "毛利率");
+        writer.addHeaderAlias("costRate", "费用率");
+        writer.addHeaderAlias("costInProfit", "费用率/毛利率");
+        writer.addHeaderAlias("mainProfit", "主营利润");
+        writer.addHeaderAlias("businessToProfit", "经营活动产生的现金流量净额");
+        writer.addHeaderAlias("profitQuality", "利润质量 经营活动产生的现金流量净额/主营利润");
+        writer.addHeaderAlias("profitQualityOne", "利润质量 经营活动产生的现金流量净额/净利润");
+        writer.addHeaderAlias("mainProfitInProfitTotal", "主营利润/利润总额");
+        writer.addHeaderAlias("mainProfitInIncomeTotal", "主营利润率 主营利润/营业收入");
+        writer.addHeaderAlias("belongMotherNetProfit", "归属于母公司所有者的净利润");
+        writer.addHeaderAlias("belongMotherNetProfitGrowthRate", "归属于母公司所有者的净利润增速");
+        writer.addHeaderAlias("totalEquity", "总股本");
+        writer.addHeaderAlias("sharesProfit", "每股收益");
+        writer.addHeaderAlias("createTime", "创建时间");
+        writer.addHeaderAlias("updateTime", "更新时间");
+    }
+
+    /** 数据百分比格式化**/
+    private void formatToPercent(List<ProfitStatisticsVO> records) {
+        records.forEach(e ->
+                e.setBusinessIncomeGrowthRate(toPercent(e.getBusinessIncomeGrowthRate()))
+                        .setGrossProfitMargin(toPercent(e.getGrossProfitMargin()))
+                        .setCostRate(toPercent(e.getCostRate()))
+                        .setCostInProfit(toPercent(e.getCostInProfit()))
+                        .setProfitQuality(toPercent(e.getProfitQuality()))
+                        .setProfitQualityOne(toPercent(e.getProfitQualityOne()))
+                        .setMainProfitInProfitTotal(toPercent(e.getMainProfitInProfitTotal()))
+                        .setMainProfitInIncomeTotal(toPercent(e.getMainProfitInIncomeTotal()))
+                        .setBelongMotherNetProfitGrowthRate(toPercent(e.getBelongMotherNetProfitGrowthRate()))
+        );
     }
 
     private ProfitStatistics getByIndex(Integer companyId, Integer year, Integer reportType) {

@@ -21,5 +21,24 @@
         </where>
         order by a.company_id,a.year desc,a.report_type
     </select>
+    <select id="getList" resultType="com.sjzx.model.vo.output.LiabilitiesStatisticsVO">
+        select a.*,b.code,b.name from liabilities_statistics a
+        join company b on b.id = a.company_id
+        <where>
+            <if test="vo.companyId != null">
+                and a.company_id = #{vo.companyId}
+            </if>
+            <if test="vo.reportType != null">
+                and a.report_type = #{vo.reportType}
+            </if>
+            <if test="vo.type != null">
+                and b.type = #{vo.type}
+            </if>
+            <if test="vo.year != null">
+                and a.year = #{vo.year}
+            </if>
+        </where>
+        order by a.company_id,a.year desc,a.report_type
+    </select>
 
 </mapper>

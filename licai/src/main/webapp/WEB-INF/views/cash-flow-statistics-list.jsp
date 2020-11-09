@@ -8,6 +8,7 @@
     <input type="hidden" id="listw_searchCompanyTypeKey"/>
     <input type="hidden" id="listw_searchCompanyYearKey"/>
     <button class="easyui-linkbutton" iconCls="icon-search" onclick="cashFlowListSearch()">搜索</button>
+    <button id="export2" href="#" class="easyui-linkbutton" >导出excel</button>
 </div>
 <table id="cash-flow-statistics-list" style="width:100%;height:600px"></table>
 
@@ -151,4 +152,7 @@
     cashFlowListSearch = function () {
         $('#cash-flow-statistics-list').datagrid('load');
     }
+    $("#export2").click(function () {
+        location ="/cashFlowStatistics/export";
+    });
 </script>

@@ -10,16 +10,19 @@ import com.sjzx.service.LiabilitiesStatisticsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * <p>
  * 资产负债表统计指标 前端控制器
  * </p>
  *
- * @author 
+ * @author
  * @since 2020-11-03
  */
 @RestController
@@ -41,6 +44,12 @@ public class LiabilitiesStatisticsController {
     public Response statistics(LiabilitiesStatisticsAddVO vo) {
         liabilitiesStatisticsService.statistics(vo.getCompanyId(), vo.getYear(), vo.getReportType());
         return Response.success();
+    }
+
+    @GetMapping("/export")
+    @ApiOperation(value = "导出数据")
+    public void exportData(LiabilitiesStatisticsInputVO vo, HttpServletResponse response) {
+        liabilitiesStatisticsService.exportData(response, vo);
     }
 
 }

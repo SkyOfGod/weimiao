@@ -1,5 +1,8 @@
 package com.sjzx.service.impl;
 
+import cn.hutool.core.io.IoUtil;
+import cn.hutool.poi.excel.ExcelUtil;
+import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -15,10 +18,17 @@ import com.sjzx.service.CompanyService;
 import com.sjzx.service.ConsolidatedAssetsLiabilitiesService;
 import com.sjzx.service.LiabilitiesStatisticsService;
 import com.sjzx.utils.BeanUtils;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.Date;
+import java.util.List;
 
 import static com.sjzx.utils.NumberUtils.*;
 
@@ -31,6 +41,7 @@ import static com.sjzx.utils.NumberUtils.*;
  * @since 2020-11-03
  */
 @Service
+@Slf4j
 public class LiabilitiesStatisticsServiceImpl extends ServiceImpl<LiabilitiesStatisticsMapper, LiabilitiesStatistics> implements LiabilitiesStatisticsService {
 
     @Autowired
@@ -43,7 +54,43 @@ public class LiabilitiesStatisticsServiceImpl extends ServiceImpl<LiabilitiesSta
     public EasyUIResult<LiabilitiesStatisticsVO> listPage(LiabilitiesStatisticsInputVO vo) {
         IPage<LiabilitiesStatisticsVO> iPage = new Page<>(vo.getPageNo(), vo.getPageSize());
         baseMapper.listPage(iPage, vo);
-        iPage.getRecords().forEach(e ->
+        List<LiabilitiesStatisticsVO> records = iPage.getRecords();
+        formatToPercent(records);
+        return new EasyUIResult<>(iPage.getTotal(), records);
+    }
+
+    /**
+     * 导出数据
+     **/
+    @Override
+    @SneakyThrows
+    public void exportData(HttpServletResponse response, LiabilitiesStatisticsInputVO vo) {
+        List<LiabilitiesStatisticsVO> list = baseMapper.getList(vo);
+        formatToPercent(list);
+        ExcelWriter writer = ExcelUtil.getWriter();
+        addHeaderAlias(writer);
+        writer.setOnlyAlias(true);
+        writer.write(list, true);
+
+        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        String name = URLEncoder.encode("合并资产负债表", "utf-8");
+        response.setHeader("Content-Disposition", "attachment;filename=" + name + ".xls");
+
+        ServletOutputStream out = null;
+        try {
+            out = response.getOutputStream();
+            writer.flush(out, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            writer.close();
+        }
+        IoUtil.close(out);
+    }
+
+    /** 数据百分比格式化**/
+    private void formatToPercent(List<LiabilitiesStatisticsVO> records) {
+        records.forEach(e ->
                 e.setTotalAssetsGrowthRate(toPercent(e.getTotalAssetsGrowthRate()))
                         .setTotalLiabilitiesInReportType(toPercent(e.getTotalLiabilitiesInReportType()))
                         .setTotalLiabilitiesGrowthRate(toPercent(e.getTotalLiabilitiesGrowthRate()))
@@ -52,7 +99,32 @@ public class LiabilitiesStatisticsServiceImpl extends ServiceImpl<LiabilitiesSta
                         .setFixedAssetsTotalInReportType(toPercent(e.getFixedAssetsTotalInReportType()))
                         .setInvestmentInReportType(toPercent(e.getInvestmentInReportType()))
         );
-        return new EasyUIResult<>(iPage.getTotal(), iPage.getRecords());
+    }
+
+    /**
+     * 定义导出表格列别名
+     **/
+    private void addHeaderAlias(ExcelWriter writer) {
+        writer.merge(18, "合并资产负债表数据统计");
+        writer.addHeaderAlias("code", "股票代码");
+        writer.addHeaderAlias("name", "公司名称");
+        writer.addHeaderAlias("year", "年份");
+        writer.addHeaderAlias("reportType", "规格");
+        writer.addHeaderAlias("totalAssets", "总资产");
+        writer.addHeaderAlias("sharesValue", "每股净资产");
+        writer.addHeaderAlias("totalAssetsGrowthRate", "总资产增速");
+        writer.addHeaderAlias("totalLiabilitiesInReportType", "资产负债率");
+        writer.addHeaderAlias("totalLiabilitiesGrowthRate", "负债合计增速");
+        writer.addHeaderAlias("shareHolderEquityGrowthRate", "股东权益合计增速");
+        writer.addHeaderAlias("interestBearingLiabilities", "有息负债总额");
+        writer.addHeaderAlias("industryStatusOne", "应付减应收");
+        writer.addHeaderAlias("monetaryCapital", "货币资金");
+        writer.addHeaderAlias("receivableMoneyInReportType", "应收账款占总资产比");
+        writer.addHeaderAlias("fixedAssetsTotalInReportType", "固定资产总和占总资产比");
+        writer.addHeaderAlias("investmentInReportType", "投资资产占总资产比");
+        writer.addHeaderAlias("remark", "备注");
+        writer.addHeaderAlias("createTime", "创建时间");
+        writer.addHeaderAlias("updateTime", "更新时间");
     }
 
     @Override

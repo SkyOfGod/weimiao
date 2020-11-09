@@ -10,16 +10,19 @@ import com.sjzx.service.CashFlowStatisticsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * <p>
  * 合并现金流量表指标 前端控制器
  * </p>
  *
- * @author 
+ * @author
  * @since 202004
  */
 @RestController
@@ -43,5 +46,9 @@ public class CashFlowStatisticsController {
         return Response.success();
     }
 
-
+    @GetMapping("/export")
+    @ApiOperation(value = "导出数据")
+    public void exportData(LiabilitiesStatisticsInputVO vo, HttpServletResponse response) {
+        cashFlowStatisticsService.exportData(response, vo);
+    }
 }

@@ -8,6 +8,7 @@
     <input type="hidden" id="lists_searchCompanyTypeKey"/>
     <input type="hidden" id="lists_searchCompanyYearKey"/>
     <button class="easyui-linkbutton" iconCls="icon-search" onclick="liabilitiesStatisticListSearch()">搜索</button>
+    <button id="export0" href="#" class="easyui-linkbutton" >导出excel</button>
 </div>
 <table id="liabilities-statistic-list" style="width:100%;height:600px"></table>
 
@@ -156,5 +157,7 @@
     liabilitiesStatisticListSearch = function () {
         $("#liabilities-statistic-list").datagrid('load');
     };
-
+    $("#export0").click(function () {
+        location ="/liabilitiesStatistics/export";
+    });
 </script>

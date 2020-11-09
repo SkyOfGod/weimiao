@@ -8,6 +8,7 @@
     <input type="hidden" id="listp_searchCompanyTypeKey"/>
     <input type="hidden" id="listp_searchCompanyYearKey"/>
     <button class="easyui-linkbutton" iconCls="icon-search" onclick="profitStatisticsListSearch()">搜索</button>
+    <button id="export1" href="#" class="easyui-linkbutton" >导出excel</button>
 </div>
 <table id="profit-statistics-list" style="width:100%;height:600px"></table>
 
@@ -158,4 +159,7 @@
         $("#profit-statistics-list").datagrid('load');
     }
 
+    $("#export1").click(function () {
+        location ="/profitStatistics/export";
+    });
 </script>
