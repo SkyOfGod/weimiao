@@ -174,8 +174,8 @@ public class ProfitStatisticsServiceImpl extends ServiceImpl<ProfitStatisticsMap
         writer.addHeaderAlias("belongMotherNetProfitGrowthRate", "归属于母公司所有者的净利润增速");
         writer.addHeaderAlias("totalEquity", "总股本");
         writer.addHeaderAlias("sharesProfit", "每股收益");
-        writer.addHeaderAlias("createTime", "创建时间");
-        writer.addHeaderAlias("updateTime", "更新时间");
+//        writer.addHeaderAlias("createTime", "创建时间");
+//        writer.addHeaderAlias("updateTime", "更新时间");
     }
 
     /** 数据百分比格式化**/

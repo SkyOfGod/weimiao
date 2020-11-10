@@ -136,6 +136,18 @@
     }
 
     $("#export1").click(function () {
-        location ="/profitStatistics/export";
+        var companyId = $("#listp_searchCompanyId").val();
+        if(!companyId) {
+            $.messager.alert('提示', '请选择公司!', 'warning');
+            return;
+        }
+        $.messager.confirm('确认', '确定导出合并利润表指标数据吗？', function (r) {
+            if (r) {
+                location = "/profitStatistics/export?companyId=" + companyId
+                    + "&reportType=" + $("#listp_searchCompanyReportTypeKey").val()
+                    + "&type=" + $("#listp_searchCompanyType").val()
+                    + "&year=" + $("#listp_searchYear").val();
+            }
+        });
     });
 </script>

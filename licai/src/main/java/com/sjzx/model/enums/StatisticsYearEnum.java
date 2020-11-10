@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @ClassName : CompanyTypeEnum
- * @Description : 公司归属于哪一类行业枚举
+ * @ClassName : StatisticsYearEnum
+ * @Description : 公司报表在那一年
  * @Author : Horus
  * @Date: 2020-11-02 14:22
  */
@@ -24,7 +24,6 @@ public enum StatisticsYearEnum {
     C(2017, "2017年"),
     B(2016, "2016年"),
     A(2015, "2015年"),
-    AA(2014, "2014年"),
     ;
 
     private int year;

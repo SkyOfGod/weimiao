@@ -129,6 +129,18 @@
         $('#cash-flow-statistics-list').datagrid('load');
     }
     $("#export2").click(function () {
-        location ="/cashFlowStatistics/export";
+        var companyId = $("#listw_searchCompanyId").val();
+        if(!companyId) {
+            $.messager.alert('提示', '请选择公司!', 'warning');
+            return;
+        }
+        $.messager.confirm('确认', '确定导出合并现金流量表指标数据吗？', function (r) {
+            if (r) {
+                location = "/cashFlowStatistics/export?companyId=" + companyId
+                    + "&reportType=" + $("#listw_searchCompanyReportTypeKey").val()
+                    + "&type=" + $("#listw_searchCompanyType").val()
+                    + "&year=" + $("#listw_searchYear").val();
+            }
+        });
     });
 </script>
