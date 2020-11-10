@@ -5,41 +5,23 @@
     行业类型:&nbsp;&nbsp;<input class="easyui-textbox" id="lists_searchCompanyType">
     年份:&nbsp;&nbsp;<input class="easyui-textbox" id="lists_searchYear">
     <input type="hidden" id="lists_searchCompanyReportTypeKey"/>
-    <input type="hidden" id="lists_searchCompanyYearKey"/>
     <button class="easyui-linkbutton" iconCls="icon-search" onclick="liabilitiesStatisticListSearch()">搜索</button>
     <button id="export0" href="#" class="easyui-linkbutton" >导出excel</button>
 </div>
 <table id="liabilities-statistic-list" style="width:100%;height:600px"></table>
 
 <script type="text/javascript">
-    $("#lists_searchYear").combobox({
-        valueField: 'key',
+
+    $("#lists_searchYear").combogrid({
+        panelWidth: 170,
+        idField: 'key',
         textField: 'value',
-        data: [{
-            key: '',
-            value: '全部'
-        }, {
-            key: '2020',
-            value: '2020年'
-        }, {
-            key: '2019',
-            value: '2019年'
-        }, {
-            key: '2018',
-            value: '2018年'
-        }, {
-            key: '2017',
-            value: '2017年'
-        }, {
-            key: '2016',
-            value: '2016年'
-        }, {
-            key: '2015',
-            value: '2015年'
-        }],
-        onSelect: function (record) {
-            $("#lists_searchCompanyYearKey").val(record.key);
-        }
+        url: '/company/yearCombogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'value', title: '年份', width: 150, align: 'center'},
+        ]],
     });
 
     $("#lists_searchCompanyType").combogrid({
@@ -144,7 +126,7 @@
             param.companyId = $("#lists_searchCompanyId").val();
             param.reportType = $("#lists_searchCompanyReportTypeKey").val();
             param.type = $("#lists_searchCompanyType").val();
-            param.year = $("#lists_searchCompanyYearKey").val();
+            param.year = $("#lists_searchYear").val();
             return true;
         }
     });

@@ -5,7 +5,6 @@
     行业类型:&nbsp;&nbsp;<input class="easyui-textbox" id="listl_searchCompanyType">
     年份:&nbsp;&nbsp;<input class="easyui-textbox" id="listl_searchYear">
     <input type="hidden" id="listl_searchCompanyReportTypeKey"/>
-    <input type="hidden" id="listl_searchCompanyYearKey"/>
     <button style="margin-left: 10px" class="easyui-linkbutton" iconCls="icon-search" onclick="liabilitiesListSearch()">
         搜索
     </button>
@@ -23,14 +22,7 @@
                 </td>
                 <td>年份:</td>
                 <td>
-                    <select class="easyui-combobox" name="year" style="width: 150px;" data-options="editable:true">
-                        <option value="2020">2020年</option>
-                        <option value="2019">2019年</option>
-                        <option value="2018">2018年</option>
-                        <option value="2017">2017年</option>
-                        <option value="2016">2016年</option>
-                        <option value="2015">2015年</option>
-                    </select>
+                    <input class="easyui-textbox" name="year" style="width: 150px;" data-options="required:true"/>
                 </td>
             </tr>
             <tr>
@@ -219,14 +211,7 @@
                 </td>
                 <td>年份:</td>
                 <td>
-                    <select class="easyui-combobox" name="year" style="width: 150px;" data-options="editable:false">
-                        <option value="2020">2020年</option>
-                        <option value="2019">2019年</option>
-                        <option value="2018">2018年</option>
-                        <option value="2017">2017年</option>
-                        <option value="2016">2016年</option>
-                        <option value="2015">2015年</option>
-                    </select>
+                    <input class="easyui-textbox" name="year" style="width: 150px;" data-options="editable:false"/>
                 </td>
             </tr>
             <tr>
@@ -406,34 +391,40 @@
 
 <script type="text/javascript" charset="utf-8">
 
-    $("#listl_searchYear").combobox({
-        valueField: 'key',
+    $("#liabilitiesAddForm [name='year']").combogrid({
+        panelWidth: 150,
+        idField: 'key',
         textField: 'value',
-        data: [{
-            key: '',
-            value: '全部'
-        }, {
-            key: '2020',
-            value: '2020年'
-        }, {
-            key: '2019',
-            value: '2019年'
-        }, {
-            key: '2018',
-            value: '2018年'
-        }, {
-            key: '2017',
-            value: '2017年'
-        }, {
-            key: '2016',
-            value: '2016年'
-        }, {
-            key: '2015',
-            value: '2015年'
-        }],
-        onSelect: function (record) {
-            $("#listl_searchCompanyYearKey").val(record.key);
-        }
+        url: '/company/yearCombogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'value', title: '年份', width: 130, align: 'center'},
+        ]],
+    });
+
+    $("#liabilitiesEditForm [name='year']").combogrid({
+        panelWidth: 150,
+        idField: 'key',
+        textField: 'value',
+        url: '/company/yearCombogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'value', title: '年份', width: 130, align: 'center'},
+        ]],
+    });
+
+    $("#listl_searchYear").combogrid({
+        panelWidth: 170,
+        idField: 'key',
+        textField: 'value',
+        url: '/company/yearCombogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'value', title: '年份', width: 150, align: 'center'},
+        ]],
     });
 
     $("#listl_searchCompanyType").combogrid({
@@ -587,7 +578,7 @@
             param.companyId = $("#listl_searchCompanyId").val();
             param.reportType = $("#listl_searchCompanyReportTypeKey").val();
             param.type = $("#listl_searchCompanyType").val();
-            param.year = $("#listl_searchCompanyYearKey").val();
+            param.year = $("#listl_searchYear").val();
             return true;
         }
     });

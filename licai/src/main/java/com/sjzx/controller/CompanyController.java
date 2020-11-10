@@ -4,6 +4,7 @@ import com.sjzx.entity.Company;
 import com.sjzx.model.EasyUIResult;
 import com.sjzx.model.Response;
 import com.sjzx.model.enums.CompanyTypeEnum;
+import com.sjzx.model.enums.StatisticsYearEnum;
 import com.sjzx.model.vo.input.CompanyInputVO;
 import com.sjzx.model.vo.input.CompanyUpdVO;
 import com.sjzx.model.vo.output.CompanyVO;
@@ -67,8 +68,14 @@ public class CompanyController {
 
     @PostMapping("/typeCombogrid")
     @ApiOperation(value = "下拉框")
-    public List<Map<String, String>> typeCombobox() {
-        return CompanyTypeEnum.getCombobox();
+    public List<Map<String, String>> typeCombogrid(String q) {
+        return CompanyTypeEnum.getCombobox(q);
+    }
+
+    @PostMapping("/yearCombogrid")
+    @ApiOperation(value = "下拉框")
+    public List<Map<String, String>> yearCombogrid(String q) {
+        return StatisticsYearEnum.getCombobox(q);
     }
 
 }

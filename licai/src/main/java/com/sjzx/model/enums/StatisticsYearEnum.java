@@ -16,31 +16,25 @@ import java.util.Map;
  */
 @Getter
 @AllArgsConstructor
-public enum CompanyTypeEnum {
+public enum StatisticsYearEnum {
 
-    DEFAULT(0, "默认"),
-    CAR_PRODUCT(1, "汽车制造"),
-    WHITE_ELECTRICAL(2, "白色家电"),
-    MEDICAL_CARE(3, "医疗"),
-    SEMICONDUCTOR(4, "半导体"),
+    F(2020, "2020年"),
+    E(2019, "2019年"),
+    D(2018, "2018年"),
+    C(2017, "2017年"),
+    B(2016, "2016年"),
+    A(2015, "2015年"),
+    AA(2014, "2014年"),
     ;
 
-    private int type;
+    private int year;
     private String desc;
-
-    public static Map<Integer, String> toMap() {
-        Map<Integer, String> map = new HashMap<>();
-        for (CompanyTypeEnum value : CompanyTypeEnum.values()) {
-            map.put(value.getType(), value.getDesc());
-        }
-        return map;
-    }
 
     public static List<Map<String, String>> getCombobox(String q) {
         List<Map<String, String>> list = new ArrayList<>();
-        for (CompanyTypeEnum value : CompanyTypeEnum.values()) {
+        for (StatisticsYearEnum value : StatisticsYearEnum.values()) {
             Map<String, String> map = new HashMap<>();
-            map.put("key", value.getType() + "");
+            map.put("key", value.getYear() + "");
             map.put("value", value.getDesc());
             list.add(map);
         }

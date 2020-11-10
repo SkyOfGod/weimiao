@@ -5,7 +5,6 @@
     行业类型:&nbsp;&nbsp;<input class="easyui-textbox" id="listf_searchCompanyType">
     年份:&nbsp;&nbsp;<input class="easyui-textbox" id="listf_searchYear">
     <input type="hidden" id="listf_searchCompanyReportTypeKey"/>
-    <input type="hidden" id="listf_searchCompanyYearKey"/>
     <button class="easyui-linkbutton" iconCls="icon-search" onclick="cashFlowListSearch()">搜索</button>
 </div>
 <table id="cash-flow-list" style="width:100%;height:600px"></table>
@@ -21,14 +20,7 @@
                 </td>
                 <td>年份:</td>
                 <td>
-                    <select class="easyui-combobox" name="year" style="width: 150px;" data-options="editable:true">
-                        <option value="2020">2020年</option>
-                        <option value="2019">2019年</option>
-                        <option value="2018">2018年</option>
-                        <option value="2017">2017年</option>
-                        <option value="2016">2016年</option>
-                        <option value="2015">2015年</option>
-                    </select>
+                    <input class="easyui-textbox" name="year" style="width: 150px;" data-options="required:true"/>
                 </td>
             </tr>
             <tr>
@@ -137,14 +129,7 @@
                 </td>
                 <td>年份:</td>
                 <td>
-                    <select class="easyui-combobox" name="year" style="width: 150px;" data-options="editable:false">
-                        <option value="2020">2020年</option>
-                        <option value="2019">2019年</option>
-                        <option value="2018">2018年</option>
-                        <option value="2017">2017年</option>
-                        <option value="2016">2016年</option>
-                        <option value="2015">2015年</option>
-                    </select>
+                    <input class="easyui-textbox" name="year" style="width: 150px;" data-options="editable:false"/>
                 </td>
             </tr>
             <tr>
@@ -245,34 +230,41 @@
 </div>
 
 <script type="text/javascript">
-    $("#listf_searchYear").combobox({
-        valueField: 'key',
+
+    $("#addCashFlowForm [name='year']").combogrid({
+        panelWidth: 150,
+        idField: 'key',
         textField: 'value',
-        data: [{
-            key: '',
-            value: '全部'
-        }, {
-            key: '2020',
-            value: '2020年'
-        }, {
-            key: '2019',
-            value: '2019年'
-        }, {
-            key: '2018',
-            value: '2018年'
-        }, {
-            key: '2017',
-            value: '2017年'
-        }, {
-            key: '2016',
-            value: '2016年'
-        }, {
-            key: '2015',
-            value: '2015年'
-        }],
-        onSelect: function (record) {
-            $("#listf_searchCompanyYearKey").val(record.key);
-        }
+        url: '/company/yearCombogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'value', title: '年份', width: 130, align: 'center'},
+        ]],
+    });
+
+    $("#editCashFlowForm [name='year']").combogrid({
+        panelWidth: 150,
+        idField: 'key',
+        textField: 'value',
+        url: '/company/yearCombogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'value', title: '年份', width: 130, align: 'center'},
+        ]],
+    });
+
+    $("#listf_searchYear").combogrid({
+        panelWidth: 170,
+        idField: 'key',
+        textField: 'value',
+        url: '/company/yearCombogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'value', title: '年份', width: 150, align: 'center'},
+        ]],
     });
 
     $("#listf_searchCompanyType").combogrid({
@@ -414,7 +406,7 @@
             param.companyId = $("#listf_searchCompanyId").val();
             param.reportType = $("#listf_searchCompanyReportTypeKey").val();
             param.type = $("#listf_searchCompanyType").val();
-            param.year = $("#listf_searchCompanyYearKey").val();
+            param.year = $("#listf_searchYear").val();
             return true;
         }
     });
