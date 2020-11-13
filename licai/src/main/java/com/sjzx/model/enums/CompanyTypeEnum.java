@@ -22,7 +22,10 @@ public enum CompanyTypeEnum {
     CAR_PRODUCT(1, "汽车制造"),
     WHITE_ELECTRICAL(2, "白色家电"),
     MEDICAL_CARE(3, "医疗"),
-    SEMICONDUCTOR(4, "半导体"),
+    SEMICONDUCTOR(4, "半导体及元件"),
+    BEVERAGE_MANUFACTURING(5, "饮料制造"),
+    BANK(6, "银行"),
+    AVIATION(7, "航空"),
     ;
 
     private int type;

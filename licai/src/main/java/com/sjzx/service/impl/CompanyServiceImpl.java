@@ -92,6 +92,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
         if (StringUtils.hasText(q)) {
             wrapper.like(Company::getCode, q).or().like(Company::getName, q);
         }
+        wrapper.orderByDesc(Company::getSort).orderByDesc(Company::getId);
         return page(iPage, wrapper).getRecords();
     }
 
