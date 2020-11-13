@@ -12,6 +12,7 @@ import com.sjzx.entity.ConsolidatedAssetsLiabilities;
 import com.sjzx.entity.LiabilitiesStatistics;
 import com.sjzx.mapper.LiabilitiesStatisticsMapper;
 import com.sjzx.model.EasyUIResult;
+import com.sjzx.model.enums.CompanyReportTypeEnum;
 import com.sjzx.model.vo.input.LiabilitiesStatisticsInputVO;
 import com.sjzx.model.vo.output.LiabilitiesStatisticsVO;
 import com.sjzx.service.CompanyService;
@@ -29,6 +30,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import static com.sjzx.utils.NumberUtils.*;
 
@@ -54,9 +56,8 @@ public class LiabilitiesStatisticsServiceImpl extends ServiceImpl<LiabilitiesSta
     public EasyUIResult<LiabilitiesStatisticsVO> listPage(LiabilitiesStatisticsInputVO vo) {
         IPage<LiabilitiesStatisticsVO> iPage = new Page<>(vo.getPageNo(), vo.getPageSize());
         baseMapper.listPage(iPage, vo);
-        List<LiabilitiesStatisticsVO> records = iPage.getRecords();
-        formatToPercent(records);
-        return new EasyUIResult<>(iPage.getTotal(), records);
+        formatToPercent(iPage.getRecords());
+        return new EasyUIResult<>(iPage.getTotal(), iPage.getRecords());
     }
 
     /**
@@ -90,6 +91,7 @@ public class LiabilitiesStatisticsServiceImpl extends ServiceImpl<LiabilitiesSta
 
     /** 数据百分比格式化**/
     private void formatToPercent(List<LiabilitiesStatisticsVO> records) {
+        Map<String, String> map = CompanyReportTypeEnum.toMap();
         records.forEach(e ->
                 e.setTotalAssetsGrowthRate(toPercent(e.getTotalAssetsGrowthRate()))
                         .setTotalLiabilitiesInReportType(toPercent(e.getTotalLiabilitiesInReportType()))
@@ -98,6 +100,7 @@ public class LiabilitiesStatisticsServiceImpl extends ServiceImpl<LiabilitiesSta
                         .setReceivableMoneyInReportType(toPercent(e.getReceivableMoneyInReportType()))
                         .setFixedAssetsTotalInReportType(toPercent(e.getFixedAssetsTotalInReportType()))
                         .setInvestmentInReportType(toPercent(e.getInvestmentInReportType()))
+                        .setReportType(map.get(e.getReportType()))
         );
     }
 
@@ -162,7 +165,7 @@ public class LiabilitiesStatisticsServiceImpl extends ServiceImpl<LiabilitiesSta
                 .setInvestmentInReportType(divide(investmentTotal, current.getTotalAssets()));
         Company company = companyService.getById(statistics.getCompanyId());
         if (company != null) {
-            statistics.setSharesValue(divideToBigDecimal(current.getBelongMotherEquity(), company.getTotalEquity()));
+            statistics.setSharesValue(divideToBigDecimal(current.getBelongMotherEquity(), current.getTotalEquity()));
         }
         LiabilitiesStatistics old = getByIndex(statistics.getCompanyId(), statistics.getYear(), statistics.getReportType());
         if (old == null) {
@@ -172,7 +175,8 @@ public class LiabilitiesStatisticsServiceImpl extends ServiceImpl<LiabilitiesSta
         }
     }
 
-    private LiabilitiesStatistics getByIndex(Integer companyId, Integer year, Integer reportType) {
+    @Override
+    public LiabilitiesStatistics getByIndex(Integer companyId, Integer year, Integer reportType) {
         if (companyId == null || year == null || reportType == null) {
             return null;
         }

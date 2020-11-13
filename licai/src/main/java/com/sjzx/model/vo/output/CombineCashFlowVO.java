@@ -97,7 +97,7 @@ public class CombineCashFlowVO {
     private Long cashAndCashEquivalentsEnd;
 
     /**
-     * 分红金额
+     * 分配股利、利润或偿付利息支付的现金
      */
     private Long bonusCash;
 

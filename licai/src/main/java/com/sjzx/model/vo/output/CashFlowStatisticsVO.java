@@ -34,7 +34,7 @@ public class CashFlowStatisticsVO {
     /**
      * 参考标准 1-年报 2-第三季度报 3-半年报 4-第一季度报
      */
-    private Integer reportType;
+    private String reportType;
 
     /**
      * 经营活动产生的现金流量净额

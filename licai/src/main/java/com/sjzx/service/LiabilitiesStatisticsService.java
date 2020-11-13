@@ -24,4 +24,6 @@ public interface LiabilitiesStatisticsService extends IService<LiabilitiesStatis
 
     void exportData(HttpServletResponse response, LiabilitiesStatisticsInputVO vo);
 
+    LiabilitiesStatistics getByIndex(Integer companyId, Integer year, Integer reportType);
+
 }

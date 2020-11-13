@@ -148,6 +148,11 @@ public class ConsolidatedAssetsLiabilitiesUpdVO {
     private Long payableSalary;
 
     /**
+     * 当期总股本
+     */
+    private Long totalEquity;
+
+    /**
      * 备注
      */
     private String remark;

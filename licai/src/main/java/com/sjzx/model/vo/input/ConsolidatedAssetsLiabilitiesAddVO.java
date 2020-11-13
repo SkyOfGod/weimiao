@@ -165,9 +165,18 @@ public class ConsolidatedAssetsLiabilitiesAddVO {
     private Long payableSalary;
 
     /**
+     * 当期总股本
+     */
+    private Long totalEquity;
+
+    /**
      * 备注
      */
     private String remark;
+
+    public void setTotalEquity(String totalEquity) {
+        this.totalEquity = toLong(totalEquity);
+    }
 
     public void setPayableSalary(String payableSalary) {
         this.payableSalary = toLong(payableSalary);
