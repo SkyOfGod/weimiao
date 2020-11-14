@@ -9,15 +9,17 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sjzx.entity.CombineCashFlow;
 import com.sjzx.entity.CombineProfit;
-import com.sjzx.entity.Company;
+import com.sjzx.entity.ConsolidatedAssetsLiabilities;
 import com.sjzx.entity.ProfitStatistics;
+import com.sjzx.exception.ServiceException;
 import com.sjzx.mapper.ProfitStatisticsMapper;
 import com.sjzx.model.EasyUIResult;
+import com.sjzx.model.enums.CompanyReportTypeEnum;
 import com.sjzx.model.vo.input.LiabilitiesStatisticsInputVO;
 import com.sjzx.model.vo.output.ProfitStatisticsVO;
 import com.sjzx.service.CombineCashFlowService;
 import com.sjzx.service.CombineProfitService;
-import com.sjzx.service.CompanyService;
+import com.sjzx.service.ConsolidatedAssetsLiabilitiesService;
 import com.sjzx.service.ProfitStatisticsService;
 import com.sjzx.utils.BeanUtils;
 import lombok.SneakyThrows;
@@ -31,6 +33,7 @@ import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import static com.sjzx.utils.NumberUtils.*;
 
@@ -52,35 +55,25 @@ public class ProfitStatisticsServiceImpl extends ServiceImpl<ProfitStatisticsMap
     private CombineCashFlowService combineCashFlowService;
 
     @Autowired
-    private CompanyService companyService;
+    private ConsolidatedAssetsLiabilitiesService consolidatedAssetsLiabilitiesService;
 
     @Override
     public EasyUIResult<ProfitStatisticsVO> listPage(LiabilitiesStatisticsInputVO vo) {
         IPage<ProfitStatisticsVO> iPage = new Page<>(vo.getPageNo(), vo.getPageSize());
         baseMapper.listPage(iPage, vo);
-        iPage.getRecords().forEach(e ->
-                e.setBusinessIncomeGrowthRate(toPercent(e.getBusinessIncomeGrowthRate()))
-                        .setGrossProfitMargin(toPercent(e.getGrossProfitMargin()))
-                        .setCostRate(toPercent(e.getCostRate()))
-                        .setCostInProfit(toPercent(e.getCostInProfit()))
-                        .setProfitQuality(toPercent(e.getProfitQuality()))
-                        .setProfitQualityOne(toPercent(e.getProfitQualityOne()))
-                        .setMainProfitInProfitTotal(toPercent(e.getMainProfitInProfitTotal()))
-                        .setMainProfitInIncomeTotal(toPercent(e.getMainProfitInIncomeTotal()))
-                        .setBelongMotherNetProfitGrowthRate(toPercent(e.getBelongMotherNetProfitGrowthRate()))
-        );
+        formatToPercent(iPage.getRecords());
         return new EasyUIResult<>(iPage.getTotal(), iPage.getRecords());
     }
 
     @Override
     public void statistics(Integer companyId, Integer year, Integer reportType) {
-        Company company = companyService.getById(companyId);
-        if (company == null) {
-            return;
+        ConsolidatedAssetsLiabilities consolidatedAssetsLiabilities = consolidatedAssetsLiabilitiesService.getByIndex(companyId, year, reportType);
+        if (consolidatedAssetsLiabilities == null) {
+            throw new ServiceException("请先添加" + year + "年合并资产负债表数据");
         }
         CombineProfit current = combineProfitService.getByIndex(companyId, year, reportType);
         if (current == null) {
-            return;
+            throw new ServiceException("请先添加" + year + "年合并利润表数据");
         }
         ProfitStatistics statistics = BeanUtils.copyProperties(current, ProfitStatistics::new);
 
@@ -99,8 +92,8 @@ public class ProfitStatisticsServiceImpl extends ServiceImpl<ProfitStatisticsMap
         long mainProfit = current.getBusinessIncome() - current.getBusinessCosts() - current.getTaxRevenueTotal() - threeCost;
         //每股收益
         BigDecimal sharesProfit = new BigDecimal(current.getBelongMotherNetProfit())
-                .divide(new BigDecimal(company.getTotalEquity()), 2, BigDecimal.ROUND_HALF_UP);
-        statistics.setRemark(null).setMainProfit(mainProfit).setTotalEquity(company.getTotalEquity())
+                .divide(new BigDecimal(consolidatedAssetsLiabilities.getTotalEquity()), 2, BigDecimal.ROUND_HALF_UP);
+        statistics.setRemark(null).setMainProfit(mainProfit).setTotalEquity(consolidatedAssetsLiabilities.getTotalEquity())
                 .setGrossProfitMargin(addRate(current.getBusinessIncome(), current.getBusinessCosts()))
                 .setCostRate(divide(threeCost, current.getBusinessIncome()))
                 .setCostInProfit(divide(statistics.getCostRate(), statistics.getGrossProfitMargin()))
@@ -180,6 +173,7 @@ public class ProfitStatisticsServiceImpl extends ServiceImpl<ProfitStatisticsMap
 
     /** 数据百分比格式化**/
     private void formatToPercent(List<ProfitStatisticsVO> records) {
+        Map<String, String> map = CompanyReportTypeEnum.toMap();
         records.forEach(e ->
                 e.setBusinessIncomeGrowthRate(toPercent(e.getBusinessIncomeGrowthRate()))
                         .setGrossProfitMargin(toPercent(e.getGrossProfitMargin()))
@@ -190,6 +184,7 @@ public class ProfitStatisticsServiceImpl extends ServiceImpl<ProfitStatisticsMap
                         .setMainProfitInProfitTotal(toPercent(e.getMainProfitInProfitTotal()))
                         .setMainProfitInIncomeTotal(toPercent(e.getMainProfitInIncomeTotal()))
                         .setBelongMotherNetProfitGrowthRate(toPercent(e.getBelongMotherNetProfitGrowthRate()))
+                        .setReportType(map.get(e.getReportType()))
         );
     }
 

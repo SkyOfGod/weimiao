@@ -163,14 +163,15 @@ public class ConsolidatedAssetsLiabilitiesVO {
     private Long belongMotherEquity;
 
     /**
-     * 总股本
-     */
-    private Long totalEquity;
-
-    /**
      * 应付职工薪酬
      */
     private Long payableSalary;
+
+    /**
+     * 当期总股本
+     */
+    private Long totalEquity;
+
 
     /**
      * 备注

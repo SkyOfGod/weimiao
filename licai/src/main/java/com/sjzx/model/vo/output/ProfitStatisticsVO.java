@@ -43,7 +43,7 @@ public class ProfitStatisticsVO {
     /**
      * 参考标准 1-年报 2-第三季度报 3-半年报 4-第一季度报
      */
-    private Integer reportType;
+    private String reportType;
 
     /**
      * 营业收入增速

@@ -54,7 +54,7 @@ public class Company extends Model<Company> {
     private Integer category;
 
     /**
-     * 总股本
+     * 现总股本
      */
     private Long totalEquity;
 

@@ -50,7 +50,11 @@
                 </td>
             </tr>
             <tr>
-                <td>总股本:</td>
+                <td>排序:</td>
+                <td><input class="easyui-numberbox" name="sort" value="0" style="width: 100px;" data-options="editable:true"/></td>
+            </tr>
+            <tr>
+                <td>现总股本:</td>
                 <td><input class="easyui-numberbox" name="totalEquity" style="width: 300px;" data-options="editable:true"/></td>
             </tr>
             <tr>
@@ -143,6 +147,7 @@
             {field: 'category', title: '类型', width: 60, align: 'center'},
             {field: 'totalEquity', title: '总股本', width: 100, align: 'center'},
             {field: 'remark', title: '备注', width: 200, align: 'center'},
+            {field: 'sort', title: '排序', width: 40, align: 'center'},
             {field: 'createTime', title: '创建时间', width: 150, align: 'center'},
             {field: 'updateTime', title: '修改时间', width: 150, align: 'center'},
         ]],

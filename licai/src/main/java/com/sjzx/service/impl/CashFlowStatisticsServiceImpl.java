@@ -12,6 +12,7 @@ import com.sjzx.entity.CombineCashFlow;
 import com.sjzx.entity.CombineProfit;
 import com.sjzx.mapper.CashFlowStatisticsMapper;
 import com.sjzx.model.EasyUIResult;
+import com.sjzx.model.enums.CompanyReportTypeEnum;
 import com.sjzx.model.vo.input.LiabilitiesStatisticsInputVO;
 import com.sjzx.model.vo.output.CashFlowStatisticsVO;
 import com.sjzx.service.CashFlowStatisticsService;
@@ -28,6 +29,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import static com.sjzx.utils.NumberUtils.divide;
 import static com.sjzx.utils.NumberUtils.toPercent;
@@ -53,11 +55,7 @@ public class CashFlowStatisticsServiceImpl extends ServiceImpl<CashFlowStatistic
     public EasyUIResult<CashFlowStatisticsVO> listPage(LiabilitiesStatisticsInputVO vo) {
         IPage<CashFlowStatisticsVO> iPage = new Page<>(vo.getPageNo(), vo.getPageSize());
         baseMapper.listPage(iPage, vo);
-        iPage.getRecords().forEach(e ->
-                e.setCashInIncoming(toPercent(e.getCashInIncoming()))
-                        .setExpandInProfitRate(toPercent(e.getExpandInProfitRate()))
-                        .setSellInExpandRate(toPercent(e.getSellInExpandRate()))
-        );
+        formatToPercent(iPage.getRecords());
         return new EasyUIResult<>(iPage.getTotal(), iPage.getRecords());
     }
 
@@ -120,7 +118,7 @@ public class CashFlowStatisticsServiceImpl extends ServiceImpl<CashFlowStatistic
         writer.addHeaderAlias("year", "年份");
         writer.addHeaderAlias("reportType", "参考标准");
         writer.addHeaderAlias("businessToProfit", "经营活动产生的现金流量净额");
-        writer.addHeaderAlias("bonusCash", "分红金额");
+        writer.addHeaderAlias("bonusCash", "分配股利、利润或偿付利息支付的现金");
         writer.addHeaderAlias("profitSubstractBonus", "现金净增额 经营活动产生的现金流量净额-分红");
         writer.addHeaderAlias("cashInIncoming", "销售商品提供劳务收到的现金/营业收入");
         writer.addHeaderAlias("expandInProfitRate", "购建资产/经营活动产生的现金流量净额");
@@ -131,12 +129,16 @@ public class CashFlowStatisticsServiceImpl extends ServiceImpl<CashFlowStatistic
 
     }
 
-    /** 数据百分比格式化**/
+    /**
+     * 数据百分比格式化
+     **/
     private void formatToPercent(List<CashFlowStatisticsVO> records) {
+        Map<String, String> map = CompanyReportTypeEnum.toMap();
         records.forEach(e ->
                 e.setCashInIncoming(toPercent(e.getCashInIncoming()))
                         .setExpandInProfitRate(toPercent(e.getExpandInProfitRate()))
                         .setSellInExpandRate(toPercent(e.getSellInExpandRate()))
+                        .setReportType(map.get(e.getReportType()))
         );
     }
 

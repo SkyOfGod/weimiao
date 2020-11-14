@@ -455,7 +455,9 @@
         $("#addCombineProfit").dialog({
             title: '新增合并利润表数据',
             width: 600,
-            height: 500,
+            height: 550,
+            top: 10,
+            left: 150,
             closed: false,
             cache: false,
             modal: true,
@@ -500,7 +502,9 @@
         $("#editCombineProfit").dialog({
             title: '编辑合并利润表',
             width: 600,
-            height: 500,
+            height: 550,
+            top: 10,
+            left: 150,
             closed: false,
             cache: false,
             modal: true,

@@ -53,6 +53,11 @@ public class CompanyUpdVO {
      */
     private String remark;
 
+    /**
+     * 排序
+     */
+    private Integer sort;
+
     public void setType(String type) {
         if(NumberUtils.isNumeric(type)) {
             this.type = Integer.parseInt(type);

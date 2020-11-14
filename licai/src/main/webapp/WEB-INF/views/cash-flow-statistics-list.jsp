@@ -91,20 +91,7 @@
             {field: 'code', title: '股票代码', width: 100, align: 'center'},
             {field: 'name', title: '公司名称', width: 100, align: 'center'},
             {field: 'year', title: '年份', width: 40, align: 'center'},
-            {
-                field: 'reportType', title: '规格', width: 60, align: 'center',
-                formatter: function (value, row, index) {
-                    if (value === 1) {
-                        return '年报';
-                    } else if (value === 2) {
-                        return '第三季度报';
-                    } else if (value === 3) {
-                        return '半年报';
-                    } else if (value === 4) {
-                        return '第一季度报';
-                    }
-                }
-            },
+            {field: 'reportType', title: '规格', width: 60, align: 'center'},
             {field: 'businessToProfit', title: '经营活动产生的现金流量净额', width: 110, align: 'center'},
             {field: 'bonusCash', title: '分红金额', width: 110, align: 'center'},
             {field: 'profitSubstractBonus', title: '现金净增额 经营活动产生的现金流量净额-分红', width: 110, align: 'center'},

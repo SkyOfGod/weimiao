@@ -90,20 +90,7 @@
             {field: 'code', title: '股票代码', width: 100, align: 'center'},
             {field: 'name', title: '公司名称', width: 100, align: 'center'},
             {field: 'year', title: '年份', width: 40, align: 'center'},
-            {
-                field: 'reportType', title: '规格', width: 60, align: 'center',
-                formatter: function (value, row, index) {
-                    if (value === 1) {
-                        return '年报';
-                    } else if (value === 2) {
-                        return '第三季度报';
-                    } else if (value === 3) {
-                        return '半年报';
-                    }  else if (value === 4) {
-                        return '第一季度报';
-                    }
-                }
-            },
+            {field: 'reportType', title: '规格', width: 60, align: 'center'},
             {field: 'businessIncomeGrowthRate', title: '营业收入增速', width: 100, align: 'center'},
             {field: 'grossProfitMargin', title: '毛利率', width: 80, align: 'center'},
             {field: 'costRate', title: '费用率', width: 80, align: 'center'},

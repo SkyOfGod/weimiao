@@ -55,6 +55,11 @@ public class CompanyVO {
     private String remark;
 
     /**
+     * 排序
+     */
+    private Integer sort;
+
+    /**
      * 创建时间
      */
     private Date createTime;

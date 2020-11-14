@@ -192,6 +192,13 @@
                     <input class="easyui-textbox" name="payableSalary" style="width: 150px;"
                            data-options="required:true"/>
                 </td>
+                <td>当期总股本:</td>
+                <td>
+                    <input class="easyui-textbox" name="totalEquity" style="width: 150px;"
+                           data-options="required:true"/>
+                </td>
+            </tr>
+            <tr>
                 <td>备注:</td>
                 <td><input class="easyui-textbox" name="remark" data-options="multiline:true,validType:'length[0,150]'"
                            style="height:60px;width: 200px;"/></td>
@@ -202,7 +209,7 @@
 
 <div id="liabilitiesEdit" class="easyui-dialog" data-options="closed:true">
     <form id="liabilitiesEditForm" method="post">
-        <table cellpadding="5">
+        <table cellpadding="8">
             <input type="hidden" name="id">
             <tr>
                 <td>公司:</td>
@@ -378,9 +385,16 @@
             <tr>
                 <td>应付职工薪酬:</td>
                 <td>
-                    <input class="easyui-numberbox" name="payableSalary" style="width: 110px;"
+                    <input class="easyui-numberbox" name="payableSalary" style="width: 150px;"
                            data-options="required:true"/>
                 </td>
+                <td>当期总股本:</td>
+                <td>
+                    <input class="easyui-numberbox" name="totalEquity" style="width: 150px;"
+                           data-options="required:true"/>
+                </td>
+            </tr>
+            <tr>
                 <td>备注:</td>
                 <td><input class="easyui-textbox" name="remark" data-options="multiline:true,validType:'length[0,150]'"
                            style="height:60px;width: 200px;"/></td>
@@ -604,6 +618,7 @@
             {field: 'longTermEquityInvestment', title: '长期股权投资（与主业无关）', width: 200, align: 'center'},
             {field: 'belongMotherEquity', title: '归属于母公司所有者权益合计', width: 200, align: 'center'},
             {field: 'payableSalary', title: '应付职工薪酬', width: 200, align: 'center'},
+            {field: 'totalEquity', title: '当期总股本', width: 200, align: 'center'},
             {field: 'remark', title: '备注', width: 300, align: 'center'},
             {field: 'createTime', title: '创建时间', width: 150, align: 'center'},
             {field: 'updateTime', title: '修改时间', width: 150, align: 'center'},
@@ -628,6 +643,8 @@
             title: '新增合并资产负债数据',
             width: 700,
             height: 650,
+            top: 10,
+            left: 150,
             closed: false,
             cache: false,
             modal: true,
@@ -737,6 +754,8 @@
             title: '编辑资产负债表数据',
             width: 700,
             height: 650,
+            top: 10,
+            left: 150,
             closed: false,
             cache: false,
             modal: true,
