@@ -389,6 +389,22 @@
     </form>
 </div>
 
+<div id="importExcel" class="easyui-dialog" title="导入文件" style="width:450px; padding:20px;" data-options="closed:true">
+    <form id="uploadExcel"  method="post" enctype="multipart/form-data">
+        <table>
+            <tr>
+                <td>公司:</td>
+                <td><input id="upload_searchCompanyId" name="id" class="easyui-textbox" style="width: 250px;"/></td>
+            </tr>
+            <tr>
+                <td>文件:</td>
+                <td><input id="file" name="file" class="easyui-filebox" style="width: 250px;"
+                           data-options="prompt:'请选择文件...'"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
 <script type="text/javascript" charset="utf-8">
 
     $("#liabilitiesAddForm [name='year']").combogrid({
@@ -478,6 +494,20 @@
         ]],
     });
 
+    $("#upload_searchCompanyId").combogrid({
+        panelWidth: 260,
+        idField: 'id',
+        textField: 'name',
+        url: '/company/combogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'id', title: '主键', width: 40, align: 'center'},
+            {field: 'code', title: '股票代码', width: 100, align: 'center'},
+            {field: 'name', title: '公司名称', width: 100, align: 'center'},
+        ]],
+    });
+
     $("#liabilitiesAddForm [name='companyId']").combogrid({
         panelWidth: 260,
         idField: 'id',
@@ -502,26 +532,32 @@
         pagination: true,
         pageSize: 20,
         pageList: [20, 50, 100],
-        toolbar: [{
-            text: '新增',
-            iconCls: 'icon-add',
-            handler: function () {
-                addLiabilitiesData();
-            }
-        }, '-', {
-            text: '编辑',
-            iconCls: 'icon-edit',
-            handler: function () {
-                editLiabilitiesData();
-            }
-        }, '-',
+        toolbar: [
             {
+                text: '新增',
+                iconCls: 'icon-add',
+                handler: function () {
+                    addLiabilitiesData();
+                }
+            }, '-', {
+                text: '编辑',
+                iconCls: 'icon-edit',
+                handler: function () {
+                    editLiabilitiesData();
+                }
+            }, '-',{
                 text: '删除',
                 iconCls: 'icon-cancel',
                 handler: function () {
                     deleteLiabilitiesData();
                 }
-            },
+            },'-',{
+                text: '导入',
+                iconCls: 'icon-save',
+                handler: function () {
+                    importLiabilitiesData();
+                }
+            }
         ],
         columns: [[
             {field: 'id', checkbox: true},
@@ -615,6 +651,70 @@
                 text: '关闭',
                 handler: function () {
                     $("#liabilitiesAdd").dialog("close");
+                }
+            }],
+            onBeforeClose: function () {
+                $("#liabilitiesAddForm").form("clear");
+            }
+        });
+    }
+
+    importLiabilitiesData = function(){
+        $("#importExcel").dialog({
+            title: 'Excel上传',
+            width: 400,
+            height: 200,
+            closed: false,
+            cache: false,
+            modal: true,
+            buttons: [{
+                text: '上传',
+                handler: function () {
+                    var compName= $('#upload_searchCompanyId').filebox('getValue');
+                    //alert("compName:"+compName);
+                    if (compName === "") {
+                        $.messager.alert('提示', '请选择公司!');
+                        return;
+                    }
+                    //进行基本校验
+                    var fileName = $('#file').filebox('getValue');
+                    if(fileName == ""){
+                        $.messager.alert('提示','请选择上传文件！','info');
+                        return;
+                    }
+                    //对文件格式进行校验
+                    var d1 = /\.[^\.]+$/.exec(fileName);
+                    if(d1 == ".xlsx"){
+                        var formdata = new FormData($("#uploadExcel")[0]);
+                        $.ajax({
+                            url: "/liabilities/uploadExcel",
+                            type: "POST",
+                            data:formdata,
+                            dataType: "json",
+                            processData: false,  // 告诉jQuery不要去处理发送的数据
+                            contentType: false,   // 告诉jQuery不要去设置Content-Type请求头
+                            success: function (data) {
+                                if (data.code == 200) {
+                                    $.messager.alert('提示', '导入成功!', 'info',
+                                        function () {
+                                            $("#importExcel").dialog('close');
+                                            $("#consolidated-assets-liabilities-list").datagrid("reload");
+                                        });
+                                } else {
+                                    $.messager.alert('提示', data.msg, 'warning');
+                                }
+                            }
+                        })
+                    }else{
+                        $.messager.alert('提示','请选择xlsx格式文件！','info');
+                        $('#fileUpload').filebox('setValue','');
+                    }
+
+                }
+            },{
+                text: '关闭',
+                handler: function () {
+                    $("#importExcel").dialog("close");
                 }
             }],
             onBeforeClose: function () {

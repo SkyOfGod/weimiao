@@ -10,10 +10,15 @@ import com.sjzx.model.vo.input.LiabilitiesInputVO;
 import com.sjzx.service.ConsolidatedAssetsLiabilitiesService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @ClassName : ConsolidatedAssetsLiabilitiesController
@@ -24,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Api(tags = "资产负债表相关管理接口")
 @RequestMapping("/liabilities")
+@Slf4j
 public class ConsolidatedAssetsLiabilitiesController {
 
     @Autowired
@@ -53,6 +59,16 @@ public class ConsolidatedAssetsLiabilitiesController {
     @ApiOperation(value = "删除")
     public Response deleteLiabilities(ConsolidatedAssetsLiabilities vo) {
         consolidatedAssetsLiabilitiesService.deleteLiabilities(vo);
+        return Response.success();
+    }
+
+    @PostMapping("/uploadExcel")
+    @ApiOperation(value = "文件上传")
+    public Response importLiabilitiesExcel(@RequestParam("file") MultipartFile file,HttpServletRequest request)  {
+        log.info("fileNme:"+file.getOriginalFilename());
+
+        String compId = request.getParameter("id");
+        log.info("compId:{}",compId);
         return Response.success();
     }
 }
