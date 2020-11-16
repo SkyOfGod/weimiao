@@ -229,6 +229,21 @@
     </form>
 </div>
 
+<div id="importExcel" class="easyui-dialog" title="导入文件" style="width:450px; padding:20px;" data-options="closed:true">
+    <form id="uploadExcel"  method="post" enctype="multipart/form-data">
+        <table>
+            <tr>
+                <td>公司:</td>
+                <td><input id="upload_searchCompanyId" name="id" class="easyui-textbox" style="width: 250px;"/></td>
+            </tr>
+            <tr>
+                <td>文件:</td>
+                <td><input id="file" name="file" class="easyui-filebox" style="width: 250px;"
+                           data-options="prompt:'请选择文件...'"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
 <script type="text/javascript">
 
     $("#addCashFlowForm [name='year']").combogrid({
@@ -242,6 +257,22 @@
             {field: 'value', title: '年份', width: 130, align: 'center'},
         ]],
     });
+
+    $("#upload_searchCompanyId").combogrid({
+        panelWidth: 260,
+        idField: 'id',
+        textField: 'name',
+        url: '/company/combogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'id', title: '主键', width: 40, align: 'center'},
+            {field: 'code', title: '股票代码', width: 100, align: 'center'},
+            {field: 'name', title: '公司名称', width: 100, align: 'center'},
+        ]],
+    });
+
+
 
     $("#editCashFlowForm [name='year']").combogrid({
         panelWidth: 150,
@@ -362,7 +393,13 @@
                 handler: function () {
                     deleteCashFlowData();
                 }
-            },
+            },'-',{
+                text: '导入',
+                iconCls: 'icon-save',
+                handler: function () {
+                    importCashFlowData();
+                }
+            }
         ],
         columns: [[
             {field: 'id', checkbox: true},
@@ -515,6 +552,70 @@
                             });
                     }
                 });
+            }
+        });
+    }
+
+    importCashFlowData = function(){
+        $("#importExcel").dialog({
+            title: 'Excel上传',
+            width: 400,
+            height: 200,
+            closed: false,
+            cache: false,
+            modal: true,
+            buttons: [{
+                text: '上传',
+                handler: function () {
+                    var compName= $('#upload_searchCompanyId').filebox('getValue');
+                    if (compName === "") {
+                        $.messager.alert('提示', '请选择公司!');
+                        return;
+                    }
+                    //进行基本校验
+                    var fileName = $('#file').filebox('getValue');
+                    if(fileName == ""){
+                        $.messager.alert('提示','请选择上传文件！','info');
+                        return;
+                    }
+                    //对文件格式进行校验
+                    var d1 = /\.[^\.]+$/.exec(fileName);
+                    if(d1 == ".xlsx" || d1 == ".xls"){
+                        var formdata = new FormData($("#uploadExcel")[0]);
+                        $.ajax({
+                            url: "/combineCashFlow/upload",
+                            type: "POST",
+                            data:formdata,
+                            contentType : "application/json;charset=UTF-8",
+                            dataType: "json",
+                            processData: false,  // 告诉jQuery不要去处理发送的数据
+                            contentType: false,   // 告诉jQuery不要去设置Content-Type请求头
+                            success: function (data) {
+                                if (data.code == 200) {
+                                    $.messager.alert('提示', '导入成功!', 'info',
+                                        function () {
+                                            $("#importExcel").dialog('close');
+                                            $("#consolidated-assets-liabilities-list").datagrid("reload");
+                                        });
+                                } else {
+                                    $.messager.alert('提示', data.msg, 'warning');
+                                }
+                            }
+                        })
+                    }else{
+                        $.messager.alert('提示','请选择xlsx或xls格式文件！','info');
+                        $('#fileUpload').filebox('setValue','');
+                    }
+
+                }
+            },{
+                text: '关闭',
+                handler: function () {
+                    $("#importExcel").dialog("close");
+                }
+            }],
+            onBeforeClose: function () {
+                $("#liabilitiesAddForm").form("clear");
             }
         });
     }

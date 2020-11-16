@@ -9,9 +9,6 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * 合并资产负债表
- */
 @Data
 public class CombineProfitExcelVO extends BaseRowModel implements Serializable{
 

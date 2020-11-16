@@ -8,11 +8,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-import static com.sjzx.utils.NumberUtils.toLong;
 
-/**
- * 合并资产负债表
- */
 
 @Data
 public class ConsolidatedAssetsLiabilitiesExcelVO extends BaseRowModel implements Serializable{

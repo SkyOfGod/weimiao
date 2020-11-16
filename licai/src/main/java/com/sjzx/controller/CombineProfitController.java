@@ -73,7 +73,7 @@ public class CombineProfitController {
         // 校验入参
         BiFunction<MultipartFile, HttpServletRequest, ExcelTypeEnum> checkParam = BaseController::checkParam;
         ExcelTypeEnum typeEnum = checkParam.apply(file, request);
-        return Response.successData(combineProfitService.uploadExcel(file,request,typeEnum));
+        return combineProfitService.uploadExcel(file,request,typeEnum);
     }
 
 

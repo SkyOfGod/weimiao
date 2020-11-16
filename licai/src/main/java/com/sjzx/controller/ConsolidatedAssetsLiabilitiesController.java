@@ -71,7 +71,7 @@ public class ConsolidatedAssetsLiabilitiesController extends BaseController {
         // 校验入参
         BiFunction<MultipartFile, HttpServletRequest, ExcelTypeEnum> checkParam = BaseController::checkParam;
         ExcelTypeEnum typeEnum = checkParam.apply(file, request);
-        return Response.successData(consolidatedAssetsLiabilitiesService.uploadExcel(file,request,typeEnum));
+        return consolidatedAssetsLiabilitiesService.uploadExcel(file,request,typeEnum);
     }
 
 }
