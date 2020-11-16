@@ -347,6 +347,8 @@
         ]],
     });
 
+
+
     $("#listc_searchCompanyReportType").combobox({
         valueField: 'key',
         textField: 'value',
