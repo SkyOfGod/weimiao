@@ -163,8 +163,8 @@
     addCompany = function () {
         $("#editCompany").dialog({
             title: '新增公司详情',
-            width: 450,
-            height: 400,
+            width: 500,
+            height: 500,
             closed: false,
             cache: false,
             modal: true,
@@ -208,8 +208,8 @@
         }
         $("#editCompany").dialog({
             title: '编辑公司详情',
-            width: 450,
-            height: 400,
+            width: 500,
+            height: 500,
             closed: false,
             cache: false,
             modal: true,
