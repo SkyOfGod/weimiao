@@ -688,7 +688,6 @@
                 text: '上传',
                 handler: function () {
                     var compName= $('#upload_searchCompanyId').filebox('getValue');
-                    //alert("compName:"+compName);
                     if (compName === "") {
                         $.messager.alert('提示', '请选择公司!');
                         return;
@@ -701,12 +700,13 @@
                     }
                     //对文件格式进行校验
                     var d1 = /\.[^\.]+$/.exec(fileName);
-                    if(d1 == ".xlsx"){
+                    if(d1 == ".xlsx" || d1 == ".xls"){
                         var formdata = new FormData($("#uploadExcel")[0]);
                         $.ajax({
-                            url: "/liabilities/uploadExcel",
+                            url: "/liabilities/upload",
                             type: "POST",
                             data:formdata,
+                            contentType : "application/json;charset=UTF-8",
                             dataType: "json",
                             processData: false,  // 告诉jQuery不要去处理发送的数据
                             contentType: false,   // 告诉jQuery不要去设置Content-Type请求头
@@ -723,7 +723,7 @@
                             }
                         })
                     }else{
-                        $.messager.alert('提示','请选择xlsx格式文件！','info');
+                        $.messager.alert('提示','请选择xlsx或xls格式文件！','info');
                         $('#fileUpload').filebox('setValue','');
                     }
 

@@ -1,5 +1,7 @@
 package com.sjzx.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.alibaba.excel.support.ExcelTypeEnum;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -8,14 +10,21 @@ import com.sjzx.entity.CombineProfit;
 import com.sjzx.exception.ServiceException;
 import com.sjzx.mapper.CombineProfitMapper;
 import com.sjzx.model.EasyUIResult;
+import com.sjzx.model.Response;
 import com.sjzx.model.vo.input.CombineProfitAddVO;
 import com.sjzx.model.vo.input.CombineProfitInputVO;
+import com.sjzx.model.vo.excel.CombineProfitExcelVO;
 import com.sjzx.model.vo.output.CombineProfitVO;
 import com.sjzx.service.CombineProfitService;
 import com.sjzx.utils.BeanUtils;
+import com.sjzx.utils.EasyExcelUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -26,6 +35,7 @@ import java.util.Date;
  * @since 2020-11-03
  */
 @Service
+@Slf4j
 public class CombineProfitServiceImpl extends ServiceImpl<CombineProfitMapper, CombineProfit> implements CombineProfitService {
 
     @Override
@@ -73,6 +83,28 @@ public class CombineProfitServiceImpl extends ServiceImpl<CombineProfitMapper, C
                 .eq(CombineProfit::getYear, year)
                 .eq(CombineProfit::getReportType, reportType);
         return getOne(wrapper);
+    }
+
+    @Override
+    public Response uploadExcel(MultipartFile file, HttpServletRequest request, ExcelTypeEnum typeEnum) {
+        try {
+            String compId = request.getParameter("id");
+            List<CombineProfitExcelVO> vos = EasyExcelUtils.readExcelWithModel(file.getInputStream(), CombineProfitExcelVO.class, typeEnum);
+            log.info("======>>>vos:{}",vos);
+            if(vos != null && vos.size() > 0){
+                vos.stream().forEach(x->{
+                    CombineProfit entity = new CombineProfit();
+                    BeanUtil.copyProperties(x,entity);
+                    entity.setCompanyId(Integer.parseInt(compId.trim()));
+                    entity.setCreateTime(new Date());
+                    entity.insert();
+                });
+            }
+        } catch (Exception e) {
+            log.info("解析Excel系统异常:{}",e);
+            throw new ServiceException("文件上传失败:" + e.getMessage());
+        }
+        return Response.success();
     }
 
 }

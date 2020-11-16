@@ -1,5 +1,6 @@
 package com.sjzx.controller;
 
+import com.alibaba.excel.support.ExcelTypeEnum;
 import com.sjzx.entity.ConsolidatedAssetsLiabilities;
 import com.sjzx.model.EasyUIResult;
 import com.sjzx.model.Response;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.function.BiFunction;
 
 /**
  * @ClassName : ConsolidatedAssetsLiabilitiesController
@@ -30,7 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 @Api(tags = "资产负债表相关管理接口")
 @RequestMapping("/liabilities")
 @Slf4j
-public class ConsolidatedAssetsLiabilitiesController {
+public class ConsolidatedAssetsLiabilitiesController extends BaseController {
 
     @Autowired
     private ConsolidatedAssetsLiabilitiesService consolidatedAssetsLiabilitiesService;
@@ -62,13 +64,14 @@ public class ConsolidatedAssetsLiabilitiesController {
         return Response.success();
     }
 
-    @PostMapping("/uploadExcel")
+    @PostMapping("/upload")
     @ApiOperation(value = "文件上传")
-    public Response importLiabilitiesExcel(@RequestParam("file") MultipartFile file,HttpServletRequest request)  {
-        log.info("fileNme:"+file.getOriginalFilename());
-
-        String compId = request.getParameter("id");
-        log.info("compId:{}",compId);
-        return Response.success();
+    public Response uploadExcel(@RequestParam("file") MultipartFile file,HttpServletRequest request){
+        log.info("=======>>>uploadExcel....");
+        // 校验入参
+        BiFunction<MultipartFile, HttpServletRequest, ExcelTypeEnum> checkParam = BaseController::checkParam;
+        ExcelTypeEnum typeEnum = checkParam.apply(file, request);
+        return Response.successData(consolidatedAssetsLiabilitiesService.uploadExcel(file,request,typeEnum));
     }
+
 }
