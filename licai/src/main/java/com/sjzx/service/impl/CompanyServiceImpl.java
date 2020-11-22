@@ -40,7 +40,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
         if (vo.getCompanyId() != null) {
             wrapper.eq(Company::getId, vo.getCompanyId());
         }
-        if (vo.getType() != null) {
+        if (vo.getType() != null && vo.getType() != 0) {
             wrapper.eq(Company::getType, vo.getType());
         }
         wrapper.orderByDesc(Company::getCreateTime);

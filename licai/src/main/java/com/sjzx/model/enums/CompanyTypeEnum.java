@@ -19,13 +19,17 @@ import java.util.Map;
 public enum CompanyTypeEnum {
 
     DEFAULT(0, "默认"),
-    CAR_PRODUCT(1, "汽车制造"),
+    CAR_PRODUCT(1, "汽车整车"),
     WHITE_ELECTRICAL(2, "白色家电"),
     MEDICAL_CARE(3, "医疗"),
     SEMICONDUCTOR(4, "半导体及元件"),
     BEVERAGE_MANUFACTURING(5, "饮料制造"),
     BANK(6, "银行"),
     AVIATION(7, "航空"),
+    LOGISTICS(8, "仓储物流"),
+    TEXTILE(9, "纺织制造"),
+    BUILDING_MATERIAL(10, "建筑材料"),
+    NEGOTIABLE_SECURITIES(11, "证券公司"),
     ;
 
     private int type;
