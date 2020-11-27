@@ -91,10 +91,13 @@ public class ProfitStatisticsServiceImpl extends ServiceImpl<ProfitStatisticsMap
         //主营利润 营业收入 - 营业成本 - 税金及附加 - (销售费用 + 管理费用 + 财务费用）
         long mainProfit = current.getBusinessIncome() - current.getBusinessCosts() - current.getTaxRevenueTotal() - threeCost;
         //每股收益
-        BigDecimal sharesProfit = new BigDecimal(current.getBelongMotherNetProfit())
-                .divide(new BigDecimal(consolidatedAssetsLiabilities.getTotalEquity()), 2, BigDecimal.ROUND_HALF_UP);
+        BigDecimal sharesProfit = BigDecimal.ZERO;
+        if(consolidatedAssetsLiabilities.getTotalEquity() != 0) {
+            sharesProfit = new BigDecimal(current.getBelongMotherNetProfit())
+                    .divide(new BigDecimal(consolidatedAssetsLiabilities.getTotalEquity()), 2, BigDecimal.ROUND_HALF_UP);
+        }
         statistics.setRemark(null).setMainProfit(mainProfit).setTotalEquity(consolidatedAssetsLiabilities.getTotalEquity())
-                .setGrossProfitMargin(addRate(current.getBusinessIncome(), current.getBusinessCosts()))
+                .setGrossProfitMargin(addRate(current.getBusinessIncome() - current.getBusinessCosts(), current.getBusinessIncome()))
                 .setCostRate(divide(threeCost, current.getBusinessIncome()))
                 .setCostInProfit(divide(statistics.getCostRate(), statistics.getGrossProfitMargin()))
                 .setMainProfitInProfitTotal(divide(mainProfit, current.getTotalProfit()))
@@ -106,7 +109,7 @@ public class ProfitStatisticsServiceImpl extends ServiceImpl<ProfitStatisticsMap
         if (cashFlow != null) {
             statistics.setBusinessToProfit(cashFlow.getBusinessToProfit())
                     .setProfitQuality(divide(cashFlow.getBusinessToProfit(), mainProfit))
-                    .setProfitQualityOne(divide(cashFlow.getBusinessToProfit(), current.getNetProfit()));
+                    .setProfitQualityOne(divide(cashFlow.getBusinessToProfit(), current.getBelongMotherNetProfit()));
         } else {
             statistics.setBusinessToProfit(0L).setProfitQuality(0).setProfitQualityOne(0);
         }

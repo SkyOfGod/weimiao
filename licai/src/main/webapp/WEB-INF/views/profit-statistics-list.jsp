@@ -6,7 +6,7 @@
     年份:&nbsp;&nbsp;<input class="easyui-textbox" id="listd_searchYear">
     <input type="hidden" id="listd_searchCompanyReportTypeKey"/>
     <button class="easyui-linkbutton" iconCls="icon-search" onclick="profitStatisticsListSearch()">搜索</button>
-    <button id="export1" href="#" class="easyui-linkbutton" >导出excel</button>
+    <button id="listd_export" href="#" class="easyui-linkbutton" >导出excel</button>
 </div>
 <table id="profit-statistics-list" style="width:100%;height:600px"></table>
 
@@ -122,7 +122,7 @@
         $("#profit-statistics-list").datagrid('load');
     }
 
-    $("#export1").click(function () {
+    $("#listd_export").click(function () {
         var companyId = $("#listd_searchCompanyId").val();
         if(!companyId) {
             $.messager.alert('提示', '请选择公司!', 'warning');

@@ -104,7 +104,7 @@ public class CombineCashFlow extends Model<CombineCashFlow> {
     private Long cashAndCashEquivalentsEnd;
 
     /**
-     * 分配股利、利润或偿付利息支付的现金
+     * 分红
      */
     private Long bonusCash;
 

@@ -7,18 +7,17 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sjzx.entity.CombineCashFlow;
-import com.sjzx.entity.CombineProfit;
 import com.sjzx.exception.ServiceException;
 import com.sjzx.mapper.CombineCashFlowMapper;
 import com.sjzx.model.EasyUIResult;
 import com.sjzx.model.Response;
 import com.sjzx.model.vo.excel.CombineCashFlowExcelVO;
-import com.sjzx.model.vo.excel.CombineProfitExcelVO;
 import com.sjzx.model.vo.input.CombineCashFlowAddVO;
 import com.sjzx.model.vo.input.CombineCashFlowInputVO;
 import com.sjzx.model.vo.output.CombineCashFlowVO;
 import com.sjzx.service.CashFlowStatisticsService;
 import com.sjzx.service.CombineCashFlowService;
+import com.sjzx.service.ImportantTargetService;
 import com.sjzx.service.ProfitStatisticsService;
 import com.sjzx.utils.BeanUtils;
 import com.sjzx.utils.EasyExcelUtils;
@@ -50,6 +49,9 @@ public class CombineCashFlowServiceImpl extends ServiceImpl<CombineCashFlowMappe
     @Autowired
     private ProfitStatisticsService profitStatisticsService;
 
+    @Autowired
+    private ImportantTargetService importantTargetService;
+
     @Override
     public EasyUIResult<CombineCashFlowVO> listPage(CombineCashFlowInputVO vo) {
         IPage<CombineCashFlowVO> iPage = new Page<>(vo.getPageNo(), vo.getPageSize());
@@ -66,8 +68,13 @@ public class CombineCashFlowServiceImpl extends ServiceImpl<CombineCashFlowMappe
         CombineCashFlow entity = BeanUtils.copyProperties(vo, CombineCashFlow::new);
         entity.setCreateTime(new Date()).insert();
 
-        profitStatisticsService.statistics(vo.getCompanyId(), vo.getYear(), vo.getReportType());
-        cashFlowStatisticsService.statistics(vo.getCompanyId(), vo.getYear(), vo.getReportType());
+        statistics(vo.getCompanyId(), vo.getYear(), vo.getReportType());
+    }
+
+    private void statistics(Integer companyId, Integer year, Integer reportType) {
+        profitStatisticsService.statistics(companyId, year, reportType);
+        cashFlowStatisticsService.statistics(companyId, year, reportType);
+        importantTargetService.statistics(companyId, year, reportType);
     }
 
     @Override
@@ -84,8 +91,7 @@ public class CombineCashFlowServiceImpl extends ServiceImpl<CombineCashFlowMappe
         CombineCashFlow entity = BeanUtils.copyProperties(vo, CombineCashFlow::new);
         entity.setUpdateTime(new Date()).updateById();
 
-        profitStatisticsService.statistics(old.getCompanyId(), vo.getYear(), vo.getReportType());
-        cashFlowStatisticsService.statistics(old.getCompanyId(), vo.getYear(), vo.getReportType());
+        statistics(old.getCompanyId(), vo.getYear(), vo.getReportType());
     }
 
     @Override

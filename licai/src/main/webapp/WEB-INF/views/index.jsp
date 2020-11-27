@@ -31,6 +31,7 @@
 	         		<li data-options="attributes:{'url':'/page/liabilities-statistics-list'}">合并资产负债表指标</li>
 	         		<li data-options="attributes:{'url':'/page/profit-statistics-list'}">合并利润表指标</li>
 					<li data-options="attributes:{'url':'/page/cash-flow-statistics-list'}">合并现金流量表指标</li>
+					<li data-options="attributes:{'url':'/page/important-target-list'}">重要指标</li>
 	         	</ul>
          	</li>
          	<li>

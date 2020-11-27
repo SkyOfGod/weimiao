@@ -31,7 +31,7 @@ public class CodeGenerator {
         if (ALL_TABLE) {
             gen.setStrategy(getStrategyConfig(null));
         } else {
-            String[] tables = {"cash_flow_statistics"};
+            String[] tables = {"important_target"};
             gen.setStrategy(getStrategyConfig(tables));
         }
         //包配置

@@ -6,7 +6,7 @@
     年份:&nbsp;&nbsp;<input class="easyui-textbox" id="listf_searchYear">
     <input type="hidden" id="listf_searchCompanyReportTypeKey"/>
     <button class="easyui-linkbutton" iconCls="icon-search" onclick="cashFlowListSearch()">搜索</button>
-    <button id="export2" href="#" class="easyui-linkbutton" >导出excel</button>
+    <button id="listf_export" href="#" class="easyui-linkbutton" >导出excel</button>
 </div>
 <table id="cash-flow-statistics-list" style="width:100%;height:600px"></table>
 
@@ -115,7 +115,7 @@
     cashFlowListSearch = function () {
         $('#cash-flow-statistics-list').datagrid('load');
     }
-    $("#export2").click(function () {
+    $("#listf_export").click(function () {
         var companyId = $("#listf_searchCompanyId").val();
         if(!companyId) {
             $.messager.alert('提示', '请选择公司!', 'warning');

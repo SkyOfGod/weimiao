@@ -6,7 +6,7 @@
     年份:&nbsp;&nbsp;<input class="easyui-textbox" id="listb_searchYear">
     <input type="hidden" id="listb_searchCompanyReportTypeKey"/>
     <button class="easyui-linkbutton" iconCls="icon-search" onclick="liabilitiesStatisticListSearch()">搜索</button>
-    <button id="export0" href="#" class="easyui-linkbutton">导出excel</button>
+    <button id="listb_export" href="#" class="easyui-linkbutton">导出excel</button>
 </div>
 <table id="liabilities-statistic-list" style="width:100%;height:600px"></table>
 
@@ -121,7 +121,7 @@
     liabilitiesStatisticListSearch = function () {
         $("#liabilities-statistic-list").datagrid('load');
     };
-    $("#export0").click(function () {
+    $("#listb_export").click(function () {
         var companyId = $("#listb_searchCompanyId").val();
         if (!companyId) {
             $.messager.alert('提示', '请选择公司!', 'warning');

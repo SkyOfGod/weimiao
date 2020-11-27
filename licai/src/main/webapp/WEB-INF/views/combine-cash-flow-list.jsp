@@ -104,7 +104,7 @@
                     <input class="easyui-textbox" name="cashAndCashEquivalentsEnd" style="width: 150px;"
                            data-options="required:true"/>
                 </td>
-                <td>分配股利、利润或偿付利息支付的现金:</td>
+                <td>分红:</td>
                 <td>
                     <input class="easyui-textbox" name="bonusCash" style="width: 150px;" data-options="required:true"/>
                 </td>
@@ -214,7 +214,7 @@
                     <input class="easyui-numberbox" name="cashAndCashEquivalentsEnd" style="width: 150px;"
                            data-options="required:true"/>
                 </td>
-                <td>分配股利、利润或偿付利息支付的现金:</td>
+                <td>分红:</td>
                 <td>
                     <input class="easyui-numberbox" name="bonusCash" style="width: 150px;"
                            data-options="required:true"/>
@@ -432,7 +432,7 @@
             {field: 'cashAndCashEquivalentsAdd', title: '现金及现金等价物净增加额', width: 150, align: 'center'},
             {field: 'cashAndCashEquivalentsBegin', title: '期初现金及现金等价物余额', width: 150, align: 'center'},
             {field: 'cashAndCashEquivalentsEnd', title: '期末现金及现金等价物余额', width: 150, align: 'center'},
-            {field: 'bonusCash', title: '分配股利、利润或偿付利息支付的现金', width: 110, align: 'center'},
+            {field: 'bonusCash', title: '分红', width: 110, align: 'center'},
             {field: 'remark', title: '备注', width: 300, align: 'center'},
             {field: 'createTime', title: '创建时间', width: 150, align: 'center'},
             {field: 'updateTime', title: '更新时间', width: 150, align: 'center'},

@@ -152,7 +152,7 @@
             {field: 'totalEquity', title: '总股本', width: 100, align: 'center'},
             {field: 'remark', title: '备注', width: 200, align: 'center'},
             {field: 'sort', title: '排序', width: 40, align: 'center'},
-            {field: 'targetLevel', title: '指标级别', width: 40, align: 'center'},
+            {field: 'targetLevel', title: '指标级别', width: 80, align: 'center'},
             {field: 'createTime', title: '创建时间', width: 150, align: 'center'},
             {field: 'updateTime', title: '修改时间', width: 150, align: 'center'},
         ]],

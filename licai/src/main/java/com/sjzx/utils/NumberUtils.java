@@ -52,7 +52,7 @@ public class NumberUtils {
     }
 
     public static String toPercent(String num) {
-        if(isNumeric(num)) {
+        if(num != null && isNumeric(num)) {
             return new BigDecimal(num).divide(new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP) + "%";
         }
         return num;
