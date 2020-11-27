@@ -1,12 +1,10 @@
 package com.sjzx.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.sjzx.entity.CombineCashFlow;
-import com.sjzx.entity.CombineProfit;
-import com.sjzx.entity.ConsolidatedAssetsLiabilities;
-import com.sjzx.entity.ImportantTarget;
+import com.sjzx.entity.*;
 import com.sjzx.exception.ServiceException;
 import com.sjzx.mapper.ImportantTargetMapper;
 import com.sjzx.model.EasyUIResult;
@@ -90,7 +88,7 @@ public class ImportantTargetServiceImpl extends ServiceImpl<ImportantTargetMappe
         }
 
         ImportantTarget entity = new ImportantTarget()
-                .setCompanyId(companyId).setYear(year).setReportType(reportType).setCreateTime(new Date());
+                .setCompanyId(companyId).setYear(year).setReportType(reportType);
         entity.setT1(divide(combineProfit.getBelongMotherNetProfit(), liabilities.getShareHolderEquity()))
                 .setT2(divide(cashFlow.getBusinessToProfit(), combineProfit.getBelongMotherNetProfit()))
                 .setT3(divide(liabilities.getTotalLiabilities(), liabilities.getTotalAssets()))
@@ -107,8 +105,30 @@ public class ImportantTargetServiceImpl extends ServiceImpl<ImportantTargetMappe
         entity.setT7(divide(fixedAssetsTotal, liabilities.getTotalAssets()))
                 .setT8(divide(cashFlow.getBonusCash(), combineProfit.getBelongMotherNetProfit()));
         //人均年工资
-        entity.setT9(0);
-        entity.insert();
+        ConsolidatedAssetsLiabilities prefixLiabilities = consolidatedAssetsLiabilitiesService.getByIndex(companyId, year - 1, reportType);
+        if(prefixLiabilities != null && cashFlow.getStaffTotal() != 0) {
+            long salary = liabilities.getPayableSalary() - prefixLiabilities.getPayableSalary() + cashFlow.getSalary();
+            entity.setT9(salary/cashFlow.getStaffTotal());
+        } else {
+            entity.setT9(0L);
+        }
+        ImportantTarget old = getByIndex(companyId, year, reportType);
+        if(old == null) {
+            entity.setCreateTime(new Date()).insert();
+        } else {
+            entity.setId(old.getId()).setUpdateTime(new Date()).updateById();
+        }
+    }
+
+    public ImportantTarget getByIndex(Integer companyId, Integer year, Integer reportType) {
+        if (companyId == null || year == null || reportType == null) {
+            return null;
+        }
+        LambdaQueryWrapper<ImportantTarget> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(ImportantTarget::getCompanyId, companyId)
+                .eq(ImportantTarget::getYear, year)
+                .eq(ImportantTarget::getReportType, reportType);
+        return getOne(wrapper);
     }
 
 }

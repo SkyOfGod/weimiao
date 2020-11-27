@@ -109,6 +109,11 @@ public class CombineCashFlow extends Model<CombineCashFlow> {
     private Long bonusCash;
 
     /**
+     * 员工总数
+     */
+    private Long staffTotal;
+
+    /**
      * 备注
      */
     private String remark;

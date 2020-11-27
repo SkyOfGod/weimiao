@@ -88,9 +88,18 @@ public class CombineCashFlowAddVO {
     private Long bonusCash;
 
     /**
+     * 员工总数
+     */
+    private Long staffTotal;
+
+    /**
      * 备注
      */
     private String remark;
+
+    public void setStaffTotal(String staffTotal) {
+        this.staffTotal = toLong(staffTotal);
+    }
 
     public void setBonusCash(String bonusCash) {
         this.bonusCash = toLong(bonusCash);

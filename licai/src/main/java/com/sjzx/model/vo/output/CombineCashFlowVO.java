@@ -102,6 +102,11 @@ public class CombineCashFlowVO {
     private Long bonusCash;
 
     /**
+     * 员工总数
+     */
+    private Long staffTotal;
+
+    /**
      * 备注
      */
     private String remark;

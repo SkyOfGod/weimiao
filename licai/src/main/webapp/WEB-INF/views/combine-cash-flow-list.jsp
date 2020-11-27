@@ -113,6 +113,12 @@
                 <td>备注:</td>
                 <td><input class="easyui-textbox" name="remark" data-options="multiline:true,validType:'length[0,150]'"
                            style="height:60px;width: 200px;"/></td>
+            </tr>staffTotal
+            <tr>
+                <td>员工总数:</td>
+                <td>
+                    <input class="easyui-textbox" name="staffTotal" style="width: 150px;" data-options="required:true"/>
+                </td>
             </tr>
         </table>
     </form>
@@ -224,6 +230,12 @@
                 <td>备注:</td>
                 <td><input class="easyui-textbox" name="remark" data-options="multiline:true,validType:'length[0,150]'"
                            style="height:60px;width: 200px;"/></td>
+            </tr>
+            <tr>
+                <td>员工总数:</td>
+                <td>
+                    <input class="easyui-numberbox" name="staffTotal" style="width: 150px;" data-options="required:true"/>
+                </td>
             </tr>
         </table>
     </form>
@@ -433,6 +445,7 @@
             {field: 'cashAndCashEquivalentsBegin', title: '期初现金及现金等价物余额', width: 150, align: 'center'},
             {field: 'cashAndCashEquivalentsEnd', title: '期末现金及现金等价物余额', width: 150, align: 'center'},
             {field: 'bonusCash', title: '分红', width: 110, align: 'center'},
+            {field: 'staffTotal', title: '员工总数', width: 110, align: 'center'},
             {field: 'remark', title: '备注', width: 300, align: 'center'},
             {field: 'createTime', title: '创建时间', width: 150, align: 'center'},
             {field: 'updateTime', title: '更新时间', width: 150, align: 'center'},
