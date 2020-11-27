@@ -2,7 +2,7 @@
 <div style="width: 100%;height: 40px">
     公司:&nbsp;&nbsp;<input class="easyui-textbox" id="list_searchCompanyId">
     行业类型:&nbsp;&nbsp;<input class="easyui-textbox" id="list_searchCompanyType">
-    <button class="easyui-linkbutton" iconCls="icon-search" onclick="itemListSearch()">搜索</button>
+    <button class="easyui-linkbutton" iconCls="icon-search" onclick="companyListSearch()">搜索</button>
 </div>
 <table id="company-list" style="width:100%;height:600px"></table>
 
@@ -205,9 +205,6 @@
     }
 
     editCompany = function () {
-        if(!$("#editCompanyForm").form('validate')) {
-            return false;
-        }
         var ids = getCompanyListSelectionsIds();
         if (ids.length == 0) {
             $.messager.alert('提示', '必须选择一条数据才能编辑!');
@@ -227,6 +224,9 @@
             buttons: [{
                 text: '保存',
                 handler: function () {
+                    if(!$("#editCompanyForm").form('validate')) {
+                        return false;
+                    }
                     var params = $("#editCompanyForm").serialize();
                     $.post("/company/update", params, function (data) {
                         if (data.code == 200) {
@@ -275,7 +275,7 @@
         });
     }
 
-    itemListSearch = function () {
+    companyListSearch = function () {
         $('#company-list').datagrid('load');
     }
 

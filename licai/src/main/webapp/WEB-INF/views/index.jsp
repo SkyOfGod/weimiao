@@ -33,20 +33,20 @@
 					<li data-options="attributes:{'url':'/page/cash-flow-statistics-list'}">合并现金流量表指标</li>
 	         	</ul>
          	</li>
-         	<%--<li>
-         		<span>商户管理</span>
+         	<li>
+         		<span>配置管理</span>
          		<ul>
-	         		<li data-options="attributes:{'url':'/page/shop'}">查询门店</li>
-	         		<li data-options="attributes:{'url':'/page/user'}">查询用户</li>
+	         		<li data-options="attributes:{'url':'/page/target-category-list'}">指标配置</li>
+	         		<%--<li data-options="attributes:{'url':'/page/user'}">查询用户</li>--%>
 	         	</ul>
          	</li>
-         	<li>
-         		<span>规则管理</span>
-         		<ul>
-	         		<li data-options="attributes:{'url':'/page/rule'}">查询规则</li>
-	         		<li data-options="attributes:{'url':'/page/rule-item'}">查询规则-商品</li>
-	         	</ul>
-         	</li>--%>
+			<%--<li>
+                <span>规则管理</span>
+                <ul>
+                    <li data-options="attributes:{'url':'/page/rule'}">查询规则</li>
+                    <li data-options="attributes:{'url':'/page/rule-item'}">查询规则-商品</li>
+                </ul>
+            </li>--%>
          </ul>
     </div>
     <div data-options="region:'center',title:''">
