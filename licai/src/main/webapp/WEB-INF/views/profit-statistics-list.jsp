@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div style="width: 100%;height: 40px">
-    公司:&nbsp;&nbsp;<input class="easyui-textbox" id="listp_searchCompanyId">
-    规格:&nbsp;&nbsp;<input class="easyui-textbox" id="listp_searchCompanyReportType">
-    行业类型:&nbsp;&nbsp;<input class="easyui-textbox" id="listp_searchCompanyType">
-    年份:&nbsp;&nbsp;<input class="easyui-textbox" id="listp_searchYear">
-    <input type="hidden" id="listp_searchCompanyReportTypeKey"/>
+    公司:&nbsp;&nbsp;<input class="easyui-textbox" id="listd_searchCompanyId">
+    规格:&nbsp;&nbsp;<input class="easyui-textbox" id="listd_searchCompanyReportType">
+    行业类型:&nbsp;&nbsp;<input class="easyui-textbox" id="listd_searchCompanyType">
+    年份:&nbsp;&nbsp;<input class="easyui-textbox" id="listd_searchYear">
+    <input type="hidden" id="listd_searchCompanyReportTypeKey"/>
     <button class="easyui-linkbutton" iconCls="icon-search" onclick="profitStatisticsListSearch()">搜索</button>
     <button id="export1" href="#" class="easyui-linkbutton" >导出excel</button>
 </div>
@@ -12,7 +12,7 @@
 
 <script type="text/javascript">
 
-    $("#listp_searchYear").combogrid({
+    $("#listd_searchYear").combogrid({
         panelWidth: 170,
         idField: 'key',
         textField: 'value',
@@ -24,7 +24,7 @@
         ]],
     });
 
-    $("#listp_searchCompanyType").combogrid({
+    $("#listd_searchCompanyType").combogrid({
         panelWidth: 170,
         idField: 'key',
         textField: 'value',
@@ -37,7 +37,7 @@
         ]],
     });
 
-    $("#listp_searchCompanyReportType").combobox({
+    $("#listd_searchCompanyReportType").combobox({
         valueField:'key',
         textField:'value',
         data: [{
@@ -57,11 +57,11 @@
             value: '第一季度报'
         }],
         onSelect: function (record) {
-            $("#listp_searchCompanyReportTypeKey").val(record.key);
+            $("#listd_searchCompanyReportTypeKey").val(record.key);
         }
     });
 
-    $("#listp_searchCompanyId").combogrid({
+    $("#listd_searchCompanyId").combogrid({
         panelWidth: 260,
         idField: 'id',
         textField: 'name',
@@ -111,10 +111,10 @@
         onBeforeLoad: function (param) {
             param.pageNo = param.page;
             param.pageSize = param.rows;
-            param.companyId = $("#listp_searchCompanyId").val();
-            param.reportType = $("#listp_searchCompanyReportTypeKey").val();
-            param.type = $("#listp_searchCompanyType").val();
-            param.year = $("#listp_searchYear").val();
+            param.companyId = $("#listd_searchCompanyId").val();
+            param.reportType = $("#listd_searchCompanyReportTypeKey").val();
+            param.type = $("#listd_searchCompanyType").val();
+            param.year = $("#listd_searchYear").val();
             return true;
         }
     });
@@ -123,7 +123,7 @@
     }
 
     $("#export1").click(function () {
-        var companyId = $("#listp_searchCompanyId").val();
+        var companyId = $("#listd_searchCompanyId").val();
         if(!companyId) {
             $.messager.alert('提示', '请选择公司!', 'warning');
             return;
@@ -131,9 +131,9 @@
         $.messager.confirm('确认', '确定导出合并利润表指标数据吗？', function (r) {
             if (r) {
                 location = "/profitStatistics/export?companyId=" + companyId
-                    + "&reportType=" + $("#listp_searchCompanyReportTypeKey").val()
-                    + "&type=" + $("#listp_searchCompanyType").val()
-                    + "&year=" + $("#listp_searchYear").val();
+                    + "&reportType=" + $("#listd_searchCompanyReportTypeKey").val()
+                    + "&type=" + $("#listd_searchCompanyType").val()
+                    + "&year=" + $("#listd_searchYear").val();
             }
         });
     });

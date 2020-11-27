@@ -69,6 +69,11 @@ public class Company extends Model<Company> {
     private Integer sort;
 
     /**
+     * 指标级别
+     */
+    private Integer targetLevel;
+
+    /**
      * 创建时间
      */
     private Date createTime;

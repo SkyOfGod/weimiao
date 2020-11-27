@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div style="width: 100%;height: 40px">
-    公司:&nbsp;&nbsp;<input class="easyui-textbox" id="listw_searchCompanyId">
-    规格:&nbsp;&nbsp;<input class="easyui-textbox" id="listw_searchCompanyReportType">
-    行业类型:&nbsp;&nbsp;<input class="easyui-textbox" id="listw_searchCompanyType">
-    年份:&nbsp;&nbsp;<input class="easyui-textbox" id="listw_searchYear">
-    <input type="hidden" id="listw_searchCompanyReportTypeKey"/>
+    公司:&nbsp;&nbsp;<input class="easyui-textbox" id="listf_searchCompanyId">
+    规格:&nbsp;&nbsp;<input class="easyui-textbox" id="listf_searchCompanyReportType">
+    行业类型:&nbsp;&nbsp;<input class="easyui-textbox" id="listf_searchCompanyType">
+    年份:&nbsp;&nbsp;<input class="easyui-textbox" id="listf_searchYear">
+    <input type="hidden" id="listf_searchCompanyReportTypeKey"/>
     <button class="easyui-linkbutton" iconCls="icon-search" onclick="cashFlowListSearch()">搜索</button>
     <button id="export2" href="#" class="easyui-linkbutton" >导出excel</button>
 </div>
@@ -12,7 +12,7 @@
 
 <script type="text/javascript">
 
-    $("#listw_searchYear").combogrid({
+    $("#listf_searchYear").combogrid({
         panelWidth: 170,
         idField: 'key',
         textField: 'value',
@@ -24,7 +24,7 @@
         ]],
     });
 
-    $("#listw_searchCompanyType").combogrid({
+    $("#listf_searchCompanyType").combogrid({
         panelWidth: 170,
         idField: 'key',
         textField: 'value',
@@ -37,7 +37,7 @@
         ]],
     });
 
-    $("#listw_searchCompanyReportType").combobox({
+    $("#listf_searchCompanyReportType").combobox({
         valueField: 'key',
         textField: 'value',
         data: [{
@@ -57,11 +57,11 @@
             value: '第一季度报'
         }],
         onSelect: function (record) {
-            $("#listw_searchCompanyReportTypeKey").val(record.key);
+            $("#listf_searchCompanyReportTypeKey").val(record.key);
         }
     });
 
-    $("#listw_searchCompanyId").combogrid({
+    $("#listf_searchCompanyId").combogrid({
         panelWidth: 260,
         idField: 'id',
         textField: 'name',
@@ -105,10 +105,10 @@
         onBeforeLoad: function (param) {
             param.pageNo = param.page;
             param.pageSize = param.rows;
-            param.companyId = $("#listw_searchCompanyId").val();
-            param.reportType = $("#listw_searchCompanyReportTypeKey").val();
-            param.type = $("#listw_searchCompanyType").val();
-            param.year = $("#listw_searchYear").val();
+            param.companyId = $("#listf_searchCompanyId").val();
+            param.reportType = $("#listf_searchCompanyReportTypeKey").val();
+            param.type = $("#listf_searchCompanyType").val();
+            param.year = $("#listf_searchYear").val();
             return true;
         }
     });
@@ -116,7 +116,7 @@
         $('#cash-flow-statistics-list').datagrid('load');
     }
     $("#export2").click(function () {
-        var companyId = $("#listw_searchCompanyId").val();
+        var companyId = $("#listf_searchCompanyId").val();
         if(!companyId) {
             $.messager.alert('提示', '请选择公司!', 'warning');
             return;
@@ -124,9 +124,9 @@
         $.messager.confirm('确认', '确定导出合并现金流量表指标数据吗？', function (r) {
             if (r) {
                 location = "/cashFlowStatistics/export?companyId=" + companyId
-                    + "&reportType=" + $("#listw_searchCompanyReportTypeKey").val()
-                    + "&type=" + $("#listw_searchCompanyType").val()
-                    + "&year=" + $("#listw_searchYear").val();
+                    + "&reportType=" + $("#listf_searchCompanyReportTypeKey").val()
+                    + "&type=" + $("#listf_searchCompanyType").val()
+                    + "&year=" + $("#listf_searchYear").val();
             }
         });
     });

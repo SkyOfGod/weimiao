@@ -18,6 +18,7 @@ import java.util.Map;
 @AllArgsConstructor
 public enum CompanyTypeEnum {
 
+    COMPARE(-1, "对比"),
     DEFAULT(0, "默认"),
     CAR_PRODUCT(1, "汽车整车"),
     WHITE_ELECTRICAL(2, "白色家电"),
@@ -30,6 +31,8 @@ public enum CompanyTypeEnum {
     TEXTILE(9, "纺织制造"),
     BUILDING_MATERIAL(10, "建筑材料"),
     NEGOTIABLE_SECURITIES(11, "证券公司"),
+    UHV(12, "特高压"),
+    CONSUMER_GOODS(13, "消费品"),
     ;
 
     private int type;

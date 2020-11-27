@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div style="width: 100%;height: 40px">
-    公司:&nbsp;&nbsp;<input class="easyui-textbox" id="listf_searchCompanyId">
-    规格:&nbsp;&nbsp;<input class="easyui-textbox" id="listf_searchCompanyReportType">
-    行业类型:&nbsp;&nbsp;<input class="easyui-textbox" id="listf_searchCompanyType">
-    年份:&nbsp;&nbsp;<input class="easyui-textbox" id="listf_searchYear">
-    <input type="hidden" id="listf_searchCompanyReportTypeKey"/>
+    公司:&nbsp;&nbsp;<input class="easyui-textbox" id="liste_searchCompanyId">
+    规格:&nbsp;&nbsp;<input class="easyui-textbox" id="liste_searchCompanyReportType">
+    行业类型:&nbsp;&nbsp;<input class="easyui-textbox" id="liste_searchCompanyType">
+    年份:&nbsp;&nbsp;<input class="easyui-textbox" id="liste_searchYear">
+    <input type="hidden" id="liste_searchCompanyReportTypeKey"/>
     <button class="easyui-linkbutton" iconCls="icon-search" onclick="cashFlowListSearch()">搜索</button>
 </div>
 <table id="cash-flow-list" style="width:100%;height:600px"></table>
@@ -286,7 +286,7 @@
         ]],
     });
 
-    $("#listf_searchYear").combogrid({
+    $("#liste_searchYear").combogrid({
         panelWidth: 170,
         idField: 'key',
         textField: 'value',
@@ -298,7 +298,7 @@
         ]],
     });
 
-    $("#listf_searchCompanyType").combogrid({
+    $("#liste_searchCompanyType").combogrid({
         panelWidth: 170,
         idField: 'key',
         textField: 'value',
@@ -311,7 +311,7 @@
         ]],
     });
 
-    $("#listf_searchCompanyReportType").combobox({
+    $("#liste_searchCompanyReportType").combobox({
         valueField: 'key',
         textField: 'value',
         data: [{
@@ -331,11 +331,11 @@
             value: '第一季度报'
         }],
         onSelect: function (record) {
-            $("#listf_searchCompanyReportTypeKey").val(record.key);
+            $("#liste_searchCompanyReportTypeKey").val(record.key);
         }
     });
 
-    $("#listf_searchCompanyId").combogrid({
+    $("#liste_searchCompanyId").combogrid({
         panelWidth: 260,
         idField: 'id',
         textField: 'name',
@@ -440,10 +440,10 @@
         onBeforeLoad: function (param) {
             param.pageNo = param.page;
             param.pageSize = param.rows;
-            param.companyId = $("#listf_searchCompanyId").val();
-            param.reportType = $("#listf_searchCompanyReportTypeKey").val();
-            param.type = $("#listf_searchCompanyType").val();
-            param.year = $("#listf_searchYear").val();
+            param.companyId = $("#liste_searchCompanyId").val();
+            param.reportType = $("#liste_searchCompanyReportTypeKey").val();
+            param.type = $("#liste_searchCompanyType").val();
+            param.year = $("#liste_searchYear").val();
             return true;
         }
     });

@@ -58,6 +58,11 @@ public class CompanyUpdVO {
      */
     private Integer sort;
 
+    /**
+     * 指标级别
+     */
+    private Integer targetLevel;
+
     public void setType(String type) {
         if(NumberUtils.isNumeric(type)) {
             this.type = Integer.parseInt(type);

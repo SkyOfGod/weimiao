@@ -13,23 +13,23 @@
             <tr>
                 <td>股票代码:</td>
                 <td>
-                    <input class="easyui-textbox" name="code" style="width: 300px;" data-options="editable:true"/>
+                    <input class="easyui-textbox" name="code" style="width: 300px;" data-options="editable:true,required:true"/>
                 </td>
             </tr>
             <tr>
                 <td>公司名称:</td>
-                <td><input class="easyui-textbox" name="name" style="width: 300px;" data-options="editable:true"/></td>
+                <td><input class="easyui-textbox" name="name" style="width: 300px;" data-options="editable:true,required:true"/></td>
             </tr>
             <tr>
                 <td>行业类型:</td>
                 <td>
-                    <input class="easyui-textbox" name="type" style="width: 180px;" data-options="editable:true"/>
+                    <input class="easyui-textbox" name="type" style="width: 180px;" data-options="editable:true,required:true"/>
                 </td>
             </tr>
             <tr>
                 <td>归属市场:</td>
                 <td>
-                    <select class="easyui-combobox" name="location" style="width: 100px;" data-options="editable:true">
+                    <select class="easyui-combobox" name="location" style="width: 100px;" data-options="editable:true,required:true">
                         <option value="1">沪</option>
                         <option value="2">深</option>
                         <option value="3">港</option>
@@ -40,7 +40,7 @@
             <tr>
                 <td>类型:</td>
                 <td>
-                    <select class="easyui-combobox" name="category" style="width: 100px;" data-options="editable:true">
+                    <select class="easyui-combobox" name="category" style="width: 100px;" data-options="editable:true,required:true">
                         <option value="1">股票</option>
                         <option value="2">基金</option>
                         <option value="3">Reits</option>
@@ -51,11 +51,15 @@
             </tr>
             <tr>
                 <td>排序:</td>
-                <td><input class="easyui-numberbox" name="sort" value="0" style="width: 100px;" data-options="editable:true"/></td>
+                <td><input class="easyui-numberbox" name="sort" value="0" style="width: 100px;" data-options="editable:true,required:true"/></td>
+            </tr>
+            <tr>
+                <td>指标级别:</td>
+                <td><input class="easyui-numberbox" name="targetLevel" value="0" style="width: 100px;" data-options="editable:true,required:true"/></td>
             </tr>
             <tr>
                 <td>现总股本:</td>
-                <td><input class="easyui-numberbox" name="totalEquity" style="width: 300px;" data-options="editable:true"/></td>
+                <td><input class="easyui-numberbox" name="totalEquity" style="width: 300px;" data-options="editable:true,required:true"/></td>
             </tr>
             <tr>
                 <td>备注:</td>
@@ -148,6 +152,7 @@
             {field: 'totalEquity', title: '总股本', width: 100, align: 'center'},
             {field: 'remark', title: '备注', width: 200, align: 'center'},
             {field: 'sort', title: '排序', width: 40, align: 'center'},
+            {field: 'targetLevel', title: '指标级别', width: 40, align: 'center'},
             {field: 'createTime', title: '创建时间', width: 150, align: 'center'},
             {field: 'updateTime', title: '修改时间', width: 150, align: 'center'},
         ]],
@@ -171,6 +176,9 @@
             buttons: [{
                 text: '保存',
                 handler: function () {
+                    if(!$("#editCompanyForm").form('validate')) {
+                        return false;
+                    }
                     var params = $("#editCompanyForm").serialize();
                     $.post("/company/add", params, function (data) {
                         if (data.code == 200) {
@@ -197,6 +205,9 @@
     }
 
     editCompany = function () {
+        if(!$("#editCompanyForm").form('validate')) {
+            return false;
+        }
         var ids = getCompanyListSelectionsIds();
         if (ids.length == 0) {
             $.messager.alert('提示', '必须选择一条数据才能编辑!');

@@ -101,7 +101,7 @@ public class ProfitStatisticsServiceImpl extends ServiceImpl<ProfitStatisticsMap
                 .setMainProfitInIncomeTotal(divide(mainProfit, current.getBusinessIncome()))
                 .setBelongMotherNetProfit(current.getBelongMotherNetProfit())
                 .setSharesProfit(sharesProfit);
-        ;
+
         CombineCashFlow cashFlow = combineCashFlowService.getByIndex(companyId, year, reportType);
         if (cashFlow != null) {
             statistics.setBusinessToProfit(cashFlow.getBusinessToProfit())
