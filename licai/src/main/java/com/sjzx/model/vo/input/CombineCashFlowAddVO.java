@@ -2,6 +2,9 @@ package com.sjzx.model.vo.input;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+
+import java.math.BigDecimal;
+
 import static com.sjzx.utils.NumberUtils.toLong;
 @Data
 @Accessors(chain = true)
@@ -91,6 +94,17 @@ public class CombineCashFlowAddVO {
      * 员工总数
      */
     private Long staffTotal;
+
+    /**
+     * PE最小值
+     */
+    private BigDecimal peMin;
+
+    /**
+     * PE最大值
+     */
+    private BigDecimal peMax;
+
 
     /**
      * 备注

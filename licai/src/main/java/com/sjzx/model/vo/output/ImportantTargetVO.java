@@ -3,6 +3,7 @@ package com.sjzx.model.vo.output;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
@@ -36,50 +37,56 @@ public class ImportantTargetVO {
      */
     private String reportType;
 
-    /**
-     * 指标表t1
-     */
-    private String t1;
 
     /**
-     * 指标表t2
+     * 指标表tp1
      */
-    private String t2;
+    private String tp1;
 
     /**
-     * 指标表t3
+     * 指标表tp2
      */
-    private String t3;
+    private String tp2;
 
     /**
-     * 指标表t4
+     * 指标表tp3
      */
-    private String t4;
+    private String tp3;
 
     /**
-     * 指标表t5
+     * 指标表tp4
      */
-    private String t5;
+    private String tp4;
 
     /**
-     * 指标表t6
+     * 指标表tp5
      */
-    private String t6;
+    private String tp5;
 
     /**
-     * 指标表t7
+     * 指标表tp6
      */
-    private String t7;
+    private String tp6;
 
     /**
-     * 指标表t8
+     * 指标表tp7
      */
-    private String t8;
+    private String tp7;
 
     /**
-     * 指标表t9
+     * 指标表tp8
      */
-    private String t9;
+    private String tp8;
+
+    /**
+     * 指标表ta1
+     */
+    private Long ta1;
+
+    /**
+     * 指标表ta2
+     */
+    private BigDecimal ta2;
 
     /**
      * 备注

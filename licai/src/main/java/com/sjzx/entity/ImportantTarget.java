@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -44,49 +45,54 @@ public class ImportantTarget extends Model<ImportantTarget> {
     private Integer reportType;
 
     /**
-     * 指标表t1
+     * 指标表tp1
      */
-    private Integer t1;
+    private Integer tp1;
 
     /**
-     * 指标表t2
+     * 指标表tp2
      */
-    private Integer t2;
+    private Integer tp2;
 
     /**
-     * 指标表t3
+     * 指标表tp3
      */
-    private Integer t3;
+    private Integer tp3;
 
     /**
-     * 指标表t4
+     * 指标表tp4
      */
-    private Integer t4;
+    private Integer tp4;
 
     /**
-     * 指标表t5
+     * 指标表tp5
      */
-    private Integer t5;
+    private Integer tp5;
 
     /**
-     * 指标表t6
+     * 指标表tp6
      */
-    private Integer t6;
+    private Integer tp6;
 
     /**
-     * 指标表t7
+     * 指标表tp7
      */
-    private Integer t7;
+    private Integer tp7;
 
     /**
-     * 指标表t8
+     * 指标表tp8
      */
-    private Integer t8;
+    private Integer tp8;
 
     /**
-     * 指标表t9
+     * 指标表ta1
      */
-    private Long t9;
+    private Long ta1;
+
+    /**
+     * 指标表ta2
+     */
+    private BigDecimal ta2;
 
     /**
      * 备注

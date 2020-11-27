@@ -112,12 +112,20 @@
             <tr>
                 <td>备注:</td>
                 <td><input class="easyui-textbox" name="remark" data-options="multiline:true,validType:'length[0,150]'"
-                           style="height:60px;width: 200px;"/></td>
-            </tr>staffTotal
-            <tr>
+                           style="height:60px;width: 150px;"/></td>
                 <td>员工总数:</td>
                 <td>
                     <input class="easyui-textbox" name="staffTotal" style="width: 150px;" data-options="required:true"/>
+                </td>
+            </tr>
+            <tr>
+                <td>PE最小值:</td>
+                <td>
+                    <input class="easyui-textbox" name="peMin" style="width: 150px;" data-options="required:true"/>
+                </td>
+                <td>PE最大值:</td>
+                <td>
+                    <input class="easyui-textbox" name="peMax" style="width: 150px;" data-options="required:true"/>
                 </td>
             </tr>
         </table>
@@ -229,12 +237,20 @@
             <tr>
                 <td>备注:</td>
                 <td><input class="easyui-textbox" name="remark" data-options="multiline:true,validType:'length[0,150]'"
-                           style="height:60px;width: 200px;"/></td>
-            </tr>
-            <tr>
+                           style="height:60px;width: 150px;"/></td>
                 <td>员工总数:</td>
                 <td>
                     <input class="easyui-numberbox" name="staffTotal" style="width: 150px;" data-options="required:true"/>
+                </td>
+            </tr>
+            <tr>
+                <td>PE最小值:</td>
+                <td>
+                    <input class="easyui-numberbox" name="peMin" style="width: 150px;" data-options="required:true"/>
+                </td>
+                <td>PE最大值:</td>
+                <td>
+                    <input class="easyui-numberbox" name="peMax" style="width: 150px;" data-options="required:true"/>
                 </td>
             </tr>
         </table>
@@ -446,6 +462,8 @@
             {field: 'cashAndCashEquivalentsEnd', title: '期末现金及现金等价物余额', width: 150, align: 'center'},
             {field: 'bonusCash', title: '分红', width: 110, align: 'center'},
             {field: 'staffTotal', title: '员工总数', width: 110, align: 'center'},
+            {field: 'peMin', title: 'PE最小值', width: 80, align: 'center'},
+            {field: 'peMax', title: 'PE最大值', width: 80, align: 'center'},
             {field: 'remark', title: '备注', width: 300, align: 'center'},
             {field: 'createTime', title: '创建时间', width: 150, align: 'center'},
             {field: 'updateTime', title: '更新时间', width: 150, align: 'center'},

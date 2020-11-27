@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Map;
 
@@ -59,7 +60,7 @@ public class ImportantTargetServiceImpl extends ServiceImpl<ImportantTargetMappe
     private void handleImportantTargetVO(ImportantTargetVO e) {
         Class<? extends ImportantTargetVO> clz = e.getClass();
         for (Field field : clz.getDeclaredFields()) {
-            if (field.getName().startsWith("t") && !"t9".equals(field.getName())) {
+            if (field.getName().startsWith("tp")) {
                 try {
                     field.setAccessible(true);
                     if (field.get(e) != null) {
@@ -89,29 +90,30 @@ public class ImportantTargetServiceImpl extends ServiceImpl<ImportantTargetMappe
 
         ImportantTarget entity = new ImportantTarget()
                 .setCompanyId(companyId).setYear(year).setReportType(reportType);
-        entity.setT1(divide(combineProfit.getBelongMotherNetProfit(), liabilities.getShareHolderEquity()))
-                .setT2(divide(cashFlow.getBusinessToProfit(), combineProfit.getBelongMotherNetProfit()))
-                .setT3(divide(liabilities.getTotalLiabilities(), liabilities.getTotalAssets()))
-                .setT4(divide(combineProfit.getBusinessIncome() - combineProfit.getBusinessCosts(), combineProfit.getBusinessIncome()))
-                .setT5(divide(combineProfit.getBusinessProfit(), combineProfit.getBusinessIncome()));
+        entity.setTp1(divide(combineProfit.getBelongMotherNetProfit(), liabilities.getShareHolderEquity()))
+                .setTp2(divide(cashFlow.getBusinessToProfit(), combineProfit.getBelongMotherNetProfit()))
+                .setTp3(divide(liabilities.getTotalLiabilities(), liabilities.getTotalAssets()))
+                .setTp4(divide(combineProfit.getBusinessIncome() - combineProfit.getBusinessCosts(), combineProfit.getBusinessIncome()))
+                .setTp5(divide(combineProfit.getBusinessProfit(), combineProfit.getBusinessIncome()));
         CombineProfit prefixCombineProfit = combineProfitService.getByIndex(companyId, year - 1, reportType);
         if (prefixCombineProfit != null) {
-            entity.setT6(addRate(combineProfit.getBusinessIncome(), prefixCombineProfit.getBusinessIncome()));
+            entity.setTp6(addRate(combineProfit.getBusinessIncome(), prefixCombineProfit.getBusinessIncome()));
         } else {
-            entity.setT6(0);
+            entity.setTp6(0);
         }
         //固定资产+在建工程+工程物资
         long fixedAssetsTotal = liabilities.getFixedAssets() + liabilities.getReconstructionProject() + liabilities.getEngineeringMaterials();
-        entity.setT7(divide(fixedAssetsTotal, liabilities.getTotalAssets()))
-                .setT8(divide(cashFlow.getBonusCash(), combineProfit.getBelongMotherNetProfit()));
+        entity.setTp7(divide(fixedAssetsTotal, liabilities.getTotalAssets()))
+                .setTp8(divide(cashFlow.getBonusCash(), combineProfit.getBelongMotherNetProfit()));
         //人均年工资
         ConsolidatedAssetsLiabilities prefixLiabilities = consolidatedAssetsLiabilitiesService.getByIndex(companyId, year - 1, reportType);
         if(prefixLiabilities != null && cashFlow.getStaffTotal() != 0) {
             long salary = liabilities.getPayableSalary() - prefixLiabilities.getPayableSalary() + cashFlow.getSalary();
-            entity.setT9(salary/cashFlow.getStaffTotal());
+            entity.setTa1(salary/cashFlow.getStaffTotal());
         } else {
-            entity.setT9(0L);
+            entity.setTa1(0L);
         }
+        entity.setTa2(cashFlow.getPeMax().subtract(cashFlow.getPeMin()).divide(new BigDecimal("2"), 2, BigDecimal.ROUND_HALF_UP).add(cashFlow.getPeMin()));
         ImportantTarget old = getByIndex(companyId, year, reportType);
         if(old == null) {
             entity.setCreateTime(new Date()).insert();

@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -112,6 +113,16 @@ public class CombineCashFlow extends Model<CombineCashFlow> {
      * 员工总数
      */
     private Long staffTotal;
+
+    /**
+     * PE最小值
+     */
+    private BigDecimal peMin;
+
+    /**
+     * PE最大值
+     */
+    private BigDecimal peMax;
 
     /**
      * 备注
