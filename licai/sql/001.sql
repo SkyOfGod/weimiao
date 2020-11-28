@@ -155,7 +155,7 @@ CREATE TABLE `combine_cash_flow` (
   `cash_and_cash_equivalents_add` bigint(20) NOT NULL COMMENT '现金及现金等价物净增加额',
   `cash_and_cash_equivalents_begin` bigint(20) NOT NULL COMMENT '期初现金及现金等价物余额',
   `cash_and_cash_equivalents_end` bigint(20) NOT NULL COMMENT '期末现金及现金等价物余额',
-  `bonus_cash` bigint(20) NOT NULL DEFAULT '0' COMMENT '分红',
+  `bonus_cash` bigint(20) NOT NULL DEFAULT '0' COMMENT '每股分红',
   `staff_total` bigint(20) NOT NULL DEFAULT '0' COMMENT '员工总数',
   `pe_min` decimal(8,2) NOT NULL DEFAULT '0.00' COMMENT 'PE最小值',
   `pe_max` decimal(8,2) NOT NULL DEFAULT '0.00' COMMENT 'PE最大值',

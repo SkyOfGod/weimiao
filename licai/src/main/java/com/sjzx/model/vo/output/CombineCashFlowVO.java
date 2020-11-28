@@ -98,9 +98,9 @@ public class CombineCashFlowVO {
     private Long cashAndCashEquivalentsEnd;
 
     /**
-     * 分红
+     * 每股分红
      */
-    private Long bonusCash;
+    private BigDecimal bonusCash;
 
     /**
      * 员工总数

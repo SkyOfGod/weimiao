@@ -103,8 +103,10 @@ public class ImportantTargetServiceImpl extends ServiceImpl<ImportantTargetMappe
         }
         //固定资产+在建工程+工程物资
         long fixedAssetsTotal = liabilities.getFixedAssets() + liabilities.getReconstructionProject() + liabilities.getEngineeringMaterials();
-        entity.setTp7(divide(fixedAssetsTotal, liabilities.getTotalAssets()))
-                .setTp8(divide(cashFlow.getBonusCash(), combineProfit.getBelongMotherNetProfit()));
+        entity.setTp7(divide(fixedAssetsTotal, liabilities.getTotalAssets()));
+        //分红
+        long bonusCash = cashFlow.getBonusCash().multiply(BigDecimal.valueOf(liabilities.getTotalEquity())).longValue();
+        entity.setTp8(divide(bonusCash, combineProfit.getBelongMotherNetProfit()));
         //人均年工资
         ConsolidatedAssetsLiabilities prefixLiabilities = consolidatedAssetsLiabilitiesService.getByIndex(companyId, year - 1, reportType);
         if(prefixLiabilities != null && cashFlow.getStaffTotal() != 0) {

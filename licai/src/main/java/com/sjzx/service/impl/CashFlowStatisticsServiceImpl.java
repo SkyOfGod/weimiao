@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sjzx.entity.CashFlowStatistics;
 import com.sjzx.entity.CombineCashFlow;
 import com.sjzx.entity.CombineProfit;
+import com.sjzx.entity.ConsolidatedAssetsLiabilities;
 import com.sjzx.mapper.CashFlowStatisticsMapper;
 import com.sjzx.model.EasyUIResult;
 import com.sjzx.model.enums.CompanyReportTypeEnum;
@@ -18,6 +19,7 @@ import com.sjzx.model.vo.output.CashFlowStatisticsVO;
 import com.sjzx.service.CashFlowStatisticsService;
 import com.sjzx.service.CombineCashFlowService;
 import com.sjzx.service.CombineProfitService;
+import com.sjzx.service.ConsolidatedAssetsLiabilitiesService;
 import com.sjzx.utils.BeanUtils;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
@@ -51,6 +54,9 @@ public class CashFlowStatisticsServiceImpl extends ServiceImpl<CashFlowStatistic
     @Autowired
     private CombineProfitService combineProfitService;
 
+    @Autowired
+    private ConsolidatedAssetsLiabilitiesService consolidatedAssetsLiabilitiesService;
+
     @Override
     public EasyUIResult<CashFlowStatisticsVO> listPage(LiabilitiesStatisticsInputVO vo) {
         IPage<CashFlowStatisticsVO> iPage = new Page<>(vo.getPageNo(), vo.getPageSize());
@@ -67,8 +73,13 @@ public class CashFlowStatisticsServiceImpl extends ServiceImpl<CashFlowStatistic
         }
 
         CashFlowStatistics statistics = BeanUtils.copyProperties(current, CashFlowStatistics::new);
-        statistics.setRemark(null).setProfitSubstractBonus(current.getBusinessToProfit() - current.getBonusCash())
-                .setExpandInProfitRate(divide(current.getInvestmentInsideOut(), current.getBusinessToProfit()))
+        ConsolidatedAssetsLiabilities liabilities = consolidatedAssetsLiabilitiesService.getByIndex(companyId, year, reportType);
+        if(liabilities != null) {
+            //分红
+            long bonusCash = current.getBonusCash().multiply(BigDecimal.valueOf(liabilities.getTotalEquity())).longValue();
+            statistics.setProfitSubstractBonus(current.getBusinessToProfit() - bonusCash);
+        }
+        statistics.setRemark(null).setExpandInProfitRate(divide(current.getInvestmentInsideOut(), current.getBusinessToProfit()))
                 .setSellInExpandRate(divide(current.getInvestmentInsideIn(), current.getBusinessToProfit()));
 
         CombineProfit combineProfit = combineProfitService.getByIndex(companyId, year, reportType);

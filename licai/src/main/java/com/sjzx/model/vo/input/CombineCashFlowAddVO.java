@@ -86,7 +86,7 @@ public class CombineCashFlowAddVO {
     private Long cashAndCashEquivalentsEnd;
 
     /**
-     * 分红
+     * 每股分红
      */
     private Long bonusCash;
 

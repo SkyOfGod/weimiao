@@ -104,7 +104,7 @@
                     <input class="easyui-textbox" name="cashAndCashEquivalentsEnd" style="width: 150px;"
                            data-options="required:true"/>
                 </td>
-                <td>分红:</td>
+                <td>每股分红:</td>
                 <td>
                     <input class="easyui-textbox" name="bonusCash" style="width: 150px;" data-options="required:true"/>
                 </td>
@@ -228,9 +228,9 @@
                     <input class="easyui-numberbox" name="cashAndCashEquivalentsEnd" style="width: 150px;"
                            data-options="required:true"/>
                 </td>
-                <td>分红:</td>
+                <td>每股分红:</td>
                 <td>
-                    <input class="easyui-numberbox" name="bonusCash" style="width: 150px;"
+                    <input class="easyui-textbox" name="bonusCash" style="width: 150px;"
                            data-options="required:true"/>
                 </td>
             </tr>
@@ -246,11 +246,11 @@
             <tr>
                 <td>PE最小值:</td>
                 <td>
-                    <input class="easyui-numberbox" name="peMin" style="width: 150px;" data-options="required:true"/>
+                    <input class="easyui-textbox" name="peMin" style="width: 150px;" data-options="required:true"/>
                 </td>
                 <td>PE最大值:</td>
                 <td>
-                    <input class="easyui-numberbox" name="peMax" style="width: 150px;" data-options="required:true"/>
+                    <input class="easyui-textbox" name="peMax" style="width: 150px;" data-options="required:true"/>
                 </td>
             </tr>
         </table>
@@ -460,7 +460,7 @@
             {field: 'cashAndCashEquivalentsAdd', title: '现金及现金等价物净增加额', width: 150, align: 'center'},
             {field: 'cashAndCashEquivalentsBegin', title: '期初现金及现金等价物余额', width: 150, align: 'center'},
             {field: 'cashAndCashEquivalentsEnd', title: '期末现金及现金等价物余额', width: 150, align: 'center'},
-            {field: 'bonusCash', title: '分红', width: 110, align: 'center'},
+            {field: 'bonusCash', title: '每股分红', width: 60, align: 'center'},
             {field: 'staffTotal', title: '员工总数', width: 110, align: 'center'},
             {field: 'peMin', title: 'PE最小值', width: 80, align: 'center'},
             {field: 'peMax', title: 'PE最大值', width: 80, align: 'center'},
