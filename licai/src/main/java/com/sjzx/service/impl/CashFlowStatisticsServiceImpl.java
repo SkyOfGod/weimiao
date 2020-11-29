@@ -77,7 +77,7 @@ public class CashFlowStatisticsServiceImpl extends ServiceImpl<CashFlowStatistic
         if(liabilities != null) {
             //分红
             long bonusCash = current.getBonusCash().multiply(BigDecimal.valueOf(liabilities.getTotalEquity())).longValue();
-            statistics.setProfitSubstractBonus(current.getBusinessToProfit() - bonusCash);
+            statistics.setBonusCash(bonusCash).setProfitSubstractBonus(current.getBusinessToProfit() - bonusCash);
         }
         statistics.setRemark(null).setExpandInProfitRate(divide(current.getInvestmentInsideOut(), current.getBusinessToProfit()))
                 .setSellInExpandRate(divide(current.getInvestmentInsideIn(), current.getBusinessToProfit()));

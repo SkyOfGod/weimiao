@@ -461,7 +461,7 @@
             {field: 'businessCosts', title: '营业成本', width: 110, align: 'center'},
             {field: 'taxRevenueTotal', title: '税金及附加', width: 100, align: 'center'},
             {field: 'sellingExpenses', title: '销售费用', width: 100, align: 'center'},
-            {field: 'manageExpenses', title: '管理费用', width: 100, align: 'center'},
+            {field: 'manageExpenses', title: '管理费用', width: 110, align: 'center'},
             {field: 'financialExpenses', title: '财务费用', width: 100, align: 'center'},
             {field: 'assetsImpairmentLoss', title: '资产减值损失', width: 100, align: 'center'},
             {field: 'incomeFromChangesInFairValue', title: '公允价值变动收益', width: 100, align: 'center'},
