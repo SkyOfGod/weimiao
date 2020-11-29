@@ -599,7 +599,7 @@
             {field: 'yearArriveNoCurrentLiabilities', title: '一年内到期的非流动负债', width: 120, align: 'center'},
             {field: 'longTermLiabilities', title: '长期借款', width: 120, align: 'center'},
             {field: 'payableBonds', title: '应付债券', width: 120, align: 'center'},
-            {field: 'longPayableMoney', title: '长期应付款', width: 100, align: 'center'},
+            {field: 'longPayableMoney', title: '长期应付款', width: 120, align: 'center'},
             {field: 'payableInterest', title: '应付利息', width: 100, align: 'center'},
             {field: 'monetaryCapital', title: '货币资金', width: 120, align: 'center'},
             {field: 'payableBill', title: '应付票据', width: 100, align: 'center'},
