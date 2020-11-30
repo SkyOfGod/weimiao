@@ -88,7 +88,7 @@ public class CombineCashFlowAddVO {
     /**
      * 每股分红
      */
-    private Long bonusCash;
+    private BigDecimal bonusCash;
 
     /**
      * 员工总数
@@ -113,10 +113,6 @@ public class CombineCashFlowAddVO {
 
     public void setStaffTotal(String staffTotal) {
         this.staffTotal = toLong(staffTotal);
-    }
-
-    public void setBonusCash(String bonusCash) {
-        this.bonusCash = toLong(bonusCash);
     }
 
     public void setBusinessToProfit(String businessToProfit) {
