@@ -65,6 +65,21 @@ public class CompanyVO {
     private Integer targetLevel;
 
     /**
+     * 使命
+     */
+    private String mission;
+
+    /**
+     * 愿景
+     */
+    private String vision;
+
+    /**
+     * 核心价值观
+     */
+    private String coreValues;
+
+    /**
      * 创建时间
      */
     private Date createTime;

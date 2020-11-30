@@ -66,6 +66,18 @@
                 <td><input class="easyui-textbox" name="remark" data-options="multiline:true,validType:'length[0,150]'"
                            style="height:60px;width: 300px;"/></td>
             </tr>
+            <tr>
+                <td>使命:</td>
+                <td><input class="easyui-numberbox" name="mission" style="width: 300px;" data-options="editable:true"/></td>
+            </tr>
+            <tr>
+                <td>愿景:</td>
+                <td><input class="easyui-numberbox" name="vision" style="width: 300px;" data-options="editable:true"/></td>
+            </tr>
+            <tr>
+                <td>核心价值观:</td>
+                <td><input class="easyui-numberbox" name="coreValues" style="width: 300px;" data-options="editable:true"/></td>
+            </tr>
         </table>
     </form>
 </div>
@@ -152,9 +164,12 @@
             {field: 'totalEquity', title: '总股本', width: 100, align: 'right'},
             {field: 'remark', title: '备注', width: 200, align: 'left'},
             {field: 'sort', title: '排序', width: 40, align: 'center'},
+            {field: 'mission', title: '使命', width: 200, align: 'left'},
+            {field: 'vision', title: '愿景', width: 200, align: 'left'},
+            {field: 'coreValues', title: '核心价值观', width: 200, align: 'left'},
             {field: 'targetLevel', title: '指标级别', width: 80, align: 'center'},
             {field: 'createTime', title: '创建时间', width: 150, align: 'center'},
-            {field: 'updateTime', title: '修改时间', width: 150, align: 'center'},
+            {field: 'updateTime', title: '修改时间', width: 150, align: 'center'}
         ]],
         onBeforeLoad: function (param) {
             param.pageNo = param.page;

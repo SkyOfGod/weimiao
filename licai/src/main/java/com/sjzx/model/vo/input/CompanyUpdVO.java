@@ -63,6 +63,21 @@ public class CompanyUpdVO {
      */
     private Integer targetLevel;
 
+    /**
+     * 使命
+     */
+    private String mission;
+
+    /**
+     * 愿景
+     */
+    private String vision;
+
+    /**
+     * 核心价值观
+     */
+    private String coreValues;
+
     public void setType(String type) {
         if(NumberUtils.isNumeric(type)) {
             this.type = Integer.parseInt(type);
