@@ -109,15 +109,15 @@ public class ImportantTargetServiceImpl extends ServiceImpl<ImportantTargetMappe
         entity.setTp8(divide(bonusCash, combineProfit.getBelongMotherNetProfit()));
         //人均年工资
         ConsolidatedAssetsLiabilities prefixLiabilities = consolidatedAssetsLiabilitiesService.getByIndex(companyId, year - 1, reportType);
-        if(prefixLiabilities != null && cashFlow.getStaffTotal() != 0) {
+        if (prefixLiabilities != null && cashFlow.getStaffTotal() != 0) {
             long salary = liabilities.getPayableSalary() - prefixLiabilities.getPayableSalary() + cashFlow.getSalary();
-            entity.setTa1(salary/cashFlow.getStaffTotal());
+            entity.setTa1(salary / cashFlow.getStaffTotal());
         } else {
             entity.setTa1(0L);
         }
         entity.setTa2(cashFlow.getPeMax().subtract(cashFlow.getPeMin()).divide(new BigDecimal("2"), 2, BigDecimal.ROUND_HALF_UP).add(cashFlow.getPeMin()));
         ImportantTarget old = getByIndex(companyId, year, reportType);
-        if(old == null) {
+        if (old == null) {
             entity.setCreateTime(new Date()).insert();
         } else {
             entity.setId(old.getId()).setUpdateTime(new Date()).updateById();

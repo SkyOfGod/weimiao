@@ -10,12 +10,13 @@ import com.sjzx.mapper.CompanyMapper;
 import com.sjzx.model.EasyUIResult;
 import com.sjzx.model.enums.CompanyCategoryEnum;
 import com.sjzx.model.enums.CompanyLocationEnum;
-import com.sjzx.model.enums.CompanyTypeEnum;
 import com.sjzx.model.vo.input.CompanyInputVO;
 import com.sjzx.model.vo.input.CompanyUpdVO;
 import com.sjzx.model.vo.output.CompanyVO;
 import com.sjzx.service.CompanyService;
+import com.sjzx.service.CompanyTypeService;
 import com.sjzx.utils.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -34,6 +35,9 @@ import java.util.Map;
 @Service
 public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> implements CompanyService {
 
+    @Autowired
+    private CompanyTypeService companyTypeService;
+
     @Override
     public EasyUIResult<CompanyVO> companyPage(CompanyInputVO vo) {
         LambdaQueryWrapper<Company> wrapper = new LambdaQueryWrapper<>();
@@ -47,7 +51,7 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
         IPage<Company> iPage = new Page<>(vo.getPageNo(), vo.getPageSize());
         page(iPage, wrapper);
 
-        Map<Integer, String> typeMap = CompanyTypeEnum.toMap();
+        Map<Integer, String> typeMap = companyTypeService.toMap();
         Map<Integer, String> locationMap = CompanyLocationEnum.toMap();
         Map<Integer, String> categoryMap = CompanyCategoryEnum.toMap();
         return new EasyUIResult<>(iPage.getTotal(), BeanUtils.copyProperties(iPage.getRecords(), CompanyVO::new,
