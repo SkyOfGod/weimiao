@@ -2,4 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sjzx.mapper.CompanyMapper">
 
+    <select id="companyPage" resultType="com.sjzx.model.vo.output.CompanyVO">
+        select a.id, a.code, a.name, b.name type, a.location, a.category, a.total_equity, a.remark,
+        a.sort, a.target_level, a.mission, a.vision, a.core_values, a.create_time, a.update_time
+        from company a
+        join company_type b on b.id = a.type
+        <where>
+            <if test="vo.companyId != null">
+                and a.id = #{vo.companyId}
+            </if>
+            <if test="vo.type != null">
+                and a.type = #{vo.type}
+            </if>
+        </where>
+        order by b.sort desc, a.sort desc, a.create_time desc
+    </select>
+
 </mapper>

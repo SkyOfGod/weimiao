@@ -38,4 +38,12 @@ public enum CompanyLocationEnum {
         return map;
     }
 
+    public static Map<String, String> toStrMap() {
+        Map<String, String> map = new HashMap<>();
+        for (CompanyLocationEnum value : CompanyLocationEnum.values()) {
+            map.put(value.getLocation() + "", value.getName());
+        }
+        return map;
+    }
+
 }

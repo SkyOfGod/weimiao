@@ -34,4 +34,12 @@ public enum CompanyCategoryEnum {
         return map;
     }
 
+    public static Map<String, String> toStrMap() {
+        Map<String, String> map = new HashMap<>();
+        for (CompanyCategoryEnum value : CompanyCategoryEnum.values()) {
+            map.put(value.getCategory() + "", value.getDesc());
+        }
+        return map;
+    }
+
 }

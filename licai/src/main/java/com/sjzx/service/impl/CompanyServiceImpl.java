@@ -14,9 +14,7 @@ import com.sjzx.model.vo.input.CompanyInputVO;
 import com.sjzx.model.vo.input.CompanyUpdVO;
 import com.sjzx.model.vo.output.CompanyVO;
 import com.sjzx.service.CompanyService;
-import com.sjzx.service.CompanyTypeService;
 import com.sjzx.utils.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -36,28 +34,18 @@ import java.util.Map;
 @Service
 public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> implements CompanyService {
 
-    @Autowired
-    private CompanyTypeService companyTypeService;
-
     @Override
     public EasyUIResult<CompanyVO> companyPage(CompanyInputVO vo) {
-        LambdaQueryWrapper<Company> wrapper = new LambdaQueryWrapper<>();
-        if (vo.getCompanyId() != null) {
-            wrapper.eq(Company::getId, vo.getCompanyId());
-        }
-        if (vo.getType() != null && vo.getType() != 0) {
-            wrapper.eq(Company::getType, vo.getType());
-        }
-        wrapper.orderByDesc(Company::getCreateTime);
-        IPage<Company> iPage = new Page<>(vo.getPageNo(), vo.getPageSize());
-        page(iPage, wrapper);
+        IPage<CompanyVO> iPage = new Page<>(vo.getPageNo(), vo.getPageSize());
+        baseMapper.companyPage(iPage, vo);
 
-        Map<Integer, String> typeMap = companyTypeService.toMap();
-        Map<Integer, String> locationMap = CompanyLocationEnum.toMap();
-        Map<Integer, String> categoryMap = CompanyCategoryEnum.toMap();
-        return new EasyUIResult<>(iPage.getTotal(), BeanUtils.copyProperties(iPage.getRecords(), CompanyVO::new,
-                (s, t) -> t.setType(typeMap.get(s.getType())).setLocation(locationMap.get(s.getLocation()))
-                        .setCategory(categoryMap.get(s.getCategory()))));
+        Map<String, String> locationMap = CompanyLocationEnum.toStrMap();
+        Map<String, String> categoryMap = CompanyCategoryEnum.toStrMap();
+
+        iPage.getRecords().forEach(e ->
+            e.setLocation(locationMap.get(e.getLocation())).setCategory(categoryMap.get(e.getCategory()))
+        );
+        return new EasyUIResult<>(iPage.getTotal(), iPage.getRecords());
     }
 
     @Override
