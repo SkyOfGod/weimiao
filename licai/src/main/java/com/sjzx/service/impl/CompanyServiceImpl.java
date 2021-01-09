@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +65,20 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
         Company company = getByCode(vo.getCode());
         if (company != null) {
             throw new ServiceException("股票代码已存在");
+        }
+        for (CompanyLocationEnum value : CompanyLocationEnum.values()) {
+            if(value.getPrefix().contains(",")) {
+                String[] split = value.getPrefix().split(",");
+                if(Arrays.asList(split).contains(vo.getCode().substring(0, 3))) {
+                    vo.setLocation(value.getLocation());
+                    break;
+                }
+            } else {
+                if(vo.getCode().startsWith(value.getPrefix())) {
+                    vo.setLocation(value.getLocation());
+                    break;
+                }
+            }
         }
         vo.setCreateTime(new Date()).insert();
     }

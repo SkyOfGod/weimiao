@@ -42,7 +42,8 @@ public class CompanyTypeServiceImpl extends ServiceImpl<CompanyTypeMapper, Compa
         if(StringUtils.hasText(q)) {
             wrapper.eq(CompanyType::getId, q).or().like(CompanyType::getName, q);
         }
-        wrapper.orderByDesc(CompanyType::getSort).orderByAsc(CompanyType::getId);
+        wrapper.eq(CompanyType::getState, 1)
+                .orderByDesc(CompanyType::getSort).orderByAsc(CompanyType::getId);
         IPage<CompanyType> iPage = new Page<>(1, 20);
 
         List<Map<String, String>> list = new ArrayList<>();

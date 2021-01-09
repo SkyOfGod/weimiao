@@ -4,3 +4,4 @@ licai/target/
 .idea/
 myLogs/
 licai/META-INF/context.xml
+*.iml

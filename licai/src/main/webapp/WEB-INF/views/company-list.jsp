@@ -21,12 +21,17 @@
                 <td><input class="easyui-textbox" name="name" style="width: 300px;" data-options="editable:true,required:true"/></td>
             </tr>
             <tr>
-                <td>行业类型:</td>
-                <td>
-                    <input class="easyui-textbox" name="type" style="width: 180px;" data-options="editable:true,required:true"/>
-                </td>
+                <td>备注:</td>
+                <td><input class="easyui-textbox" name="remark" data-options="multiline:true,validType:'length[0,150]'"
+                           style="height:60px;width: 300px;"/></td>
             </tr>
             <tr>
+                <td>行业类型:</td>
+                <td>
+                    <input class="easyui-textbox" name="type" style="width: 180px;" value="0" data-options="editable:true,required:true"/>
+                </td>
+            </tr>
+            <%--<tr>
                 <td>归属市场:</td>
                 <td>
                     <select class="easyui-combobox" name="location" style="width: 100px;" data-options="editable:true,required:true">
@@ -36,7 +41,7 @@
                         <option value="4">美</option>
                     </select>
                 </td>
-            </tr>
+            </tr>--%>
             <tr>
                 <td>类型:</td>
                 <td>
@@ -59,12 +64,7 @@
             </tr>
             <tr>
                 <td>现总股本:</td>
-                <td><input class="easyui-numberbox" name="totalEquity" style="width: 300px;" data-options="editable:true,required:true"/></td>
-            </tr>
-            <tr>
-                <td>备注:</td>
-                <td><input class="easyui-textbox" name="remark" data-options="multiline:true,validType:'length[0,150]'"
-                           style="height:60px;width: 300px;"/></td>
+                <td><input class="easyui-numberbox" name="totalEquity" value="0" style="width: 300px;" data-options="editable:true,required:true"/></td>
             </tr>
             <tr>
                 <td>使命:</td>
@@ -159,10 +159,10 @@
             {field: 'code', title: '股票代码', width: 100, align: 'center'},
             {field: 'name', title: '公司名称', width: 150, align: 'center'},
             {field: 'type', title: '行业类型', width: 100, align: 'center'},
+            {field: 'remark', title: '备注', width: 300, align: 'left'},
             {field: 'location', title: '归属市场', width: 60, align: 'center'},
             {field: 'category', title: '类型', width: 60, align: 'center'},
             {field: 'totalEquity', title: '总股本', width: 140, align: 'right'},
-            {field: 'remark', title: '备注', width: 200, align: 'left'},
             {field: 'sort', title: '排序', width: 40, align: 'center'},
             {field: 'mission', title: '使命', width: 200, align: 'left'},
             {field: 'vision', title: '愿景', width: 200, align: 'left'},
@@ -213,8 +213,10 @@
                     $("#editCompany").dialog("close");
                 }
             }],
-            onBeforeClose: function () {
-                $("#editCompanyForm").form("clear");
+            onBeforeOpen: function () {
+                $("#editCompanyForm [name='code']").val("");
+                $("#editCompanyForm [name='name']").val("");
+                $("#editCompanyForm [name='remark']").val("");
             }
         });
     }
