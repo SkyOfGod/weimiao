@@ -159,7 +159,14 @@
             {field: 'code', title: '股票代码', width: 100, align: 'center'},
             {field: 'name', title: '公司名称', width: 150, align: 'center'},
             {field: 'type', title: '行业类型', width: 100, align: 'center'},
-            {field: 'remark', title: '备注', width: 300, align: 'left'},
+            {field: 'remark', title: '备注', width: 300, align: 'left',
+                formatter: function(value, row, index){
+                    return "<span title='" + value + "'>" + value + "</span>";
+                }/*,
+                styler: function(value,row,index){
+                    return {style:'color:red'};
+                }*/
+            },
             {field: 'location', title: '归属市场', width: 60, align: 'center'},
             {field: 'category', title: '类型', width: 60, align: 'center'},
             {field: 'totalEquity', title: '总股本', width: 140, align: 'right'},
