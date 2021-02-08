@@ -43,14 +43,14 @@ public class HotCompany extends Model<HotCompany> {
     private String hotTypeIds;
 
     /**
-     * 连扳次数
+     * 最近连扳次数
      */
     private Integer continuityTime;
 
     /**
      * 首板日期
      */
-    private Date firstTime;
+    private String firstTime;
 
     /**
      * 备注

@@ -24,7 +24,7 @@
                 </td>
             </tr>
             <tr>
-                <td>描述:</td>
+                <td>状态:</td>
                 <td>
                     <select class="easyui-combobox" name="state" style="width: 150px;" data-options="required:true">
                         <option value="1">启用</option>
@@ -94,7 +94,7 @@
         onBeforeLoad: function (param) {
             param.pageNo = param.page;
             param.pageSize = param.rows;
-            param.targetLevel = $('#listi_searchName').val();
+            param.name = $('#listi_searchName').val();
             return true;
         }
     });

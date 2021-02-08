@@ -6,10 +6,10 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class HotTypeInputVO extends BasePage {
+public class HotCompanyInputVO extends BasePage {
 
     /**
-     * 热点名称
+     * 名称
      */
     private String name;
 

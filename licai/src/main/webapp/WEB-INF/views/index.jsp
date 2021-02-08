@@ -45,7 +45,7 @@
                 <span>热点管理</span>
                 <ul>
                     <li data-options="attributes:{'url':'/page/hot-type-list'}">查询热点类型</li>
-                    <%--<li data-options="attributes:{'url':'/page/rule-item'}">查询规则-商品</li>--%>
+                    <li data-options="attributes:{'url':'/page/hot-company-list'}">热点公司</li>
                 </ul>
             </li>
          </ul>

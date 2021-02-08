@@ -2,12 +2,12 @@ package com.sjzx.controller;
 
 
 import com.sjzx.entity.HotType;
-import com.sjzx.entity.TargetCategory;
 import com.sjzx.model.EasyUIResult;
 import com.sjzx.model.Response;
 import com.sjzx.model.vo.input.HotTypeInputVO;
 import com.sjzx.service.HotTypeService;
 import io.swagger.annotations.ApiOperation;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,26 +36,30 @@ public class HotTypeController {
 
   @PostMapping("/add")
   @ApiOperation(value = "添加")
-  public Response addTargetCategory(HotType vo) {
-    hotTypeService.addTargetCategory(vo);
+  public Response addHotType(HotType vo) {
+    hotTypeService.addHotType(vo);
     return Response.success();
   }
 
   @PostMapping("/update")
   @ApiOperation(value = "修改")
-  public Response updateTargetCategory(HotType vo) {
-    hotTypeService.updateTargetCategory(vo);
+  public Response updateHotType(HotType vo) {
+    hotTypeService.updateHotType(vo);
     return Response.success();
   }
 
   @PostMapping("/delete")
   @ApiOperation(value = "删除")
-  public Response deleteTargetCategory(HotType vo) {
-    hotTypeService.deleteTargetCategory(vo);
+  public Response deleteHotType(HotType vo) {
+    hotTypeService.deleteHotType(vo);
     return Response.success();
   }
 
-
+  @PostMapping("/combogrid")
+  @ApiOperation(value = "下拉框")
+  public List<HotType> combogrid(String q) {
+    return hotTypeService.combogrid(q);
+  }
 
 
 }
