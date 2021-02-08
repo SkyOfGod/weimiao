@@ -31,7 +31,7 @@ public class CodeGenerator {
         if (ALL_TABLE) {
             gen.setStrategy(getStrategyConfig(null));
         } else {
-            String[] tables = {"company_type"};
+            String[] tables = {"hot_company"};
             gen.setStrategy(getStrategyConfig(tables));
         }
         //包配置
