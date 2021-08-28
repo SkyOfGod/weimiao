@@ -29,10 +29,9 @@ public class CodeGenerator {
         gen.setGlobalConfig(getGlobalConfig());
         //策略配置 tables为null时生成库里面所有的表
         if (ALL_TABLE) {
-            gen.setStrategy(getStrategyConfig(null));
+            gen.setStrategy(getStrategyConfig());
         } else {
-            String[] tables = {"hot_company"};
-            gen.setStrategy(getStrategyConfig(tables));
+            gen.setStrategy(getStrategyConfig("fund", "fund_company"));
         }
         //包配置
         gen.setPackageInfo(getPackageConfig());
@@ -51,7 +50,7 @@ public class CodeGenerator {
                 .setXml("mapper");
     }
 
-    private static StrategyConfig getStrategyConfig(String[] tables) {
+    private static StrategyConfig getStrategyConfig(String... tables) {
         StrategyConfig strategyConfig = new StrategyConfig()
                 //.setCapitalMode(true) // 全局大写命名
                 //.setTablePrefix(new String[]{""}) // 此处可以修改为您的表前缀
@@ -95,7 +94,7 @@ public class CodeGenerator {
         return new DataSourceConfig()
                 .setDbType(DbType.MYSQL)
                 .setDriverName("com.mysql.cj.jdbc.Driver")
-                .setUrl("jdbc:mysql://localhost:3306/" + DB_NAEM + "?serverTimezone=GMT%2B8")
+                .setUrl("jdbc:mysql://159.138.46.107:3307/" + DB_NAEM + "?serverTimezone=GMT%2B8")
                 .setUsername("root")
                 .setPassword("123456")
                 //将datetime装换为localdatetime的类型换成date类型

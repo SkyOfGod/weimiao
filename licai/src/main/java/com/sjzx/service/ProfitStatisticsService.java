@@ -23,4 +23,6 @@ public interface ProfitStatisticsService extends IService<ProfitStatistics> {
     void statistics(Integer companyId, Integer year, Integer reportType);
 
     void exportData(HttpServletResponse response, LiabilitiesStatisticsInputVO vo);
+
+    ProfitStatistics getRecentYearData(Integer companyId);
 }

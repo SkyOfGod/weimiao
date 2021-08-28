@@ -18,9 +18,9 @@
          		<span>公司数据管理</span>
          		<ul>
 					<li data-options="attributes:{'url':'/page/company-list'}">公司-详情</li>
-					<li data-options="attributes:{'url':'/page/combine-consolidated-assets-liabilities-list'}">公司-合并资产负债表</li>
-					<li data-options="attributes:{'url':'/page/combine-profit-list'}">公司-合并利润表</li>
-					<li data-options="attributes:{'url':'/page/combine-cash-flow-list'}">公司-合并现金流量表</li>
+					<li data-options="attributes:{'url':'/page/a-combine-consolidated-assets-liabilities-list'}">公司-合并资产负债表</li>
+					<li data-options="attributes:{'url':'/page/c-combine-profit-list'}">公司-合并利润表</li>
+					<li data-options="attributes:{'url':'/page/e-combine-cash-flow-list'}">公司-合并现金流量表</li>
 					<%--<li data-options="attributes:{'url':'/page/item-img-list'}">查询商品图片</li>
 					<li data-options="attributes:{'url':'/page/item-img-category-list'}">查询商品图片类目</li>--%>
 	         	</ul>
@@ -28,26 +28,32 @@
          	<li>
          		<span>统计指标管理</span>
          		<ul>
-	         		<li data-options="attributes:{'url':'/page/liabilities-statistics-list'}">合并资产负债表指标</li>
-	         		<li data-options="attributes:{'url':'/page/profit-statistics-list'}">合并利润表指标</li>
-					<li data-options="attributes:{'url':'/page/cash-flow-statistics-list'}">合并现金流量表指标</li>
-					<li data-options="attributes:{'url':'/page/important-target-list'}">重要指标</li>
+	         		<li data-options="attributes:{'url':'/page/b-liabilities-statistics-list'}">合并资产负债表指标</li>
+	         		<li data-options="attributes:{'url':'/page/d-profit-statistics-list'}">合并利润表指标</li>
+					<li data-options="attributes:{'url':'/page/f-cash-flow-statistics-list'}">合并现金流量表指标</li>
+					<li data-options="attributes:{'url':'/page/h-important-target-list'}">重要指标</li>
 	         	</ul>
          	</li>
          	<li>
          		<span>配置管理</span>
          		<ul>
-	         		<li data-options="attributes:{'url':'/page/target-category-list'}">指标配置</li>
-	         		<%--<li data-options="attributes:{'url':'/page/user'}">查询用户</li>--%>
+	         		<li data-options="attributes:{'url':'/page/g-target-category-list'}">指标配置</li>
 	         	</ul>
          	</li>
 			<li>
                 <span>热点管理</span>
                 <ul>
-                    <li data-options="attributes:{'url':'/page/hot-type-list'}">查询热点类型</li>
-                    <li data-options="attributes:{'url':'/page/hot-company-list'}">热点公司</li>
+                    <li data-options="attributes:{'url':'/page/i-hot-type-list'}">查询热点类型</li>
+                    <li data-options="attributes:{'url':'/page/j-hot-company-list'}">热点公司</li>
                 </ul>
             </li>
+			<li>
+				<span>基金管理</span>
+				<ul>
+					<li data-options="attributes:{'url':'/page/k-fund-list'}">基金</li>
+					<li data-options="attributes:{'url':'/page/l-fund-company-list'}">基金持股</li>
+				</ul>
+			</li>
          </ul>
     </div>
     <div data-options="region:'center',title:''">

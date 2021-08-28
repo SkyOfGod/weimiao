@@ -202,5 +202,18 @@ public class ProfitStatisticsServiceImpl extends ServiceImpl<ProfitStatisticsMap
         return getOne(wrapper);
     }
 
+    @Override
+    public ProfitStatistics getRecentYearData(Integer companyId) {
+        LambdaQueryWrapper<ProfitStatistics> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(ProfitStatistics::getCompanyId, companyId)
+                .eq(ProfitStatistics::getReportType, CompanyReportTypeEnum.A.getType())
+                .orderByDesc(ProfitStatistics::getYear);
+        List<ProfitStatistics> list = list(wrapper);
+        if(list.isEmpty()) {
+            return null;
+        }
+        return list.get(0);
+    }
+
 
 }

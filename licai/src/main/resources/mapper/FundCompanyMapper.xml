@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjzx.mapper.FundCompanyMapper">
+
+    <select id="listPage" resultType="com.sjzx.model.vo.output.FundCompanyVO">
+        SELECT a.*,b.name companyName,b.code companyCode,c.name fundName,c.code fundCode,c.sort fundSort
+        FROM fund_company a
+        LEFT JOIN company b on b.id = a.company_id
+        LEFT JOIN fund c on c.id = a.fund_id
+        <where>
+            <if test="vo.companyId != null and vo.companyId.trim() != ''">
+                and a.company_id = #{vo.companyId}
+            </if>
+            <if test="vo.companyCountId != null and vo.companyCountId.trim() != ''">
+                and a.company_id = #{vo.companyCountId}
+            </if>
+            <if test="vo.fundId != null and vo.fundId.trim() != ''">
+                and a.fund_id = #{vo.fundId}
+            </if>
+        </where>
+        order by fundSort desc,a.fund_id,a.valid_is desc,a.sort desc
+    </select>
+
+    <select id="combogrid" resultType="com.sjzx.model.vo.output.FundCompanyCountVO">
+        SELECT a.id,a.code,a.name,b.count FROM company a
+        JOIN (SELECT company_id, count(1) count FROM fund_company GROUP BY company_id) b
+        on b.company_id = a.id
+        <where>
+            <if test="q != null and q.trim() != ''">
+                and code like concat('%', #{q}, '%') or name like concat('%', #{q}, '%')
+            </if>
+        </where>
+        ORDER BY count desc
+        limit 20
+    </select>
+
+</mapper>
