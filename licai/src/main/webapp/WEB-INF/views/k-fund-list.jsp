@@ -26,8 +26,8 @@
             <tr>
                 <td>基金创建时价格:</td>
                 <td>
-                    <input class="easyui-textbox" name="fundCreatePrice" style="width: 300px;"
-                           data-options="editable:true,required:true"/>
+                    <input class="easyui-textbox" name="fundCreatePrice" value="1" style="width: 300px;"
+                           data-options="editable:true,required:false"/>
                 </td>
             </tr>
             <tr>
@@ -116,7 +116,7 @@
         columns: [[
             {field: 'id', checkbox: true},
             {field: 'code', title: '基金代码', width: 100, align: 'center'},
-            {field: 'name', title: '基金名称', width: 150, align: 'center'},
+            {field: 'name', title: '基金名称', width: 200, align: 'center'},
             {field: 'fundCreatePrice', title: '基金创建时价格', width: 110, align: 'center'},
             {field: 'fundCreateTime', title: '基金创建时间', width: 100, align: 'center'},
             {field: 'fundOperator', title: '管理基金经理', width: 100, align: 'center'},

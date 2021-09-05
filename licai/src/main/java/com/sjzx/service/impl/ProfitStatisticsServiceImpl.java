@@ -94,7 +94,7 @@ public class ProfitStatisticsServiceImpl extends ServiceImpl<ProfitStatisticsMap
         BigDecimal sharesProfit = BigDecimal.ZERO;
         if(consolidatedAssetsLiabilities.getTotalEquity() != 0) {
             sharesProfit = new BigDecimal(current.getBelongMotherNetProfit())
-                    .divide(new BigDecimal(consolidatedAssetsLiabilities.getTotalEquity()), 2, BigDecimal.ROUND_HALF_UP);
+                    .divide(new BigDecimal(consolidatedAssetsLiabilities.getTotalEquity()), 4, BigDecimal.ROUND_HALF_UP);
         }
         statistics.setRemark(null).setMainProfit(mainProfit).setTotalEquity(consolidatedAssetsLiabilities.getTotalEquity())
                 .setGrossProfitMargin(divide(current.getBusinessIncome() - current.getBusinessCosts(), current.getBusinessIncome()))

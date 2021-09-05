@@ -151,7 +151,7 @@
                 </td>
             </tr>
             <tr>
-                <td>以公允价值计量且变动计入当期损益的金融资产:</td>
+                <td>以公允价值计量且变动计入当期损益的金融资产(交易性金融资产):</td>
                 <td>
                     <input class="easyui-textbox" name="fairValueProject" style="width: 150px;"
                            data-options="required:true"/>
@@ -347,7 +347,7 @@
                 </td>
             </tr>
             <tr>
-                <td>以公允价值计量且变动计入当期损益的金融资产:</td>
+                <td>以公允价值计量且变动计入当期损益的金融资产(交易性金融资产):</td>
                 <td>
                     <input class="easyui-numberbox" name="fairValueProject" style="width: 150px;"
                            data-options="required:true"/>
@@ -611,7 +611,7 @@
             {field: 'fixedAssets', title: '固定资产', width: 120, align: 'right'},
             {field: 'reconstructionProject', title: '在建工程', width: 100, align: 'right'},
             {field: 'engineeringMaterials', title: '工程物资', width: 100, align: 'right'},
-            {field: 'fairValueProject', title: '以公允价值计量且变动计入当期损益的金融资产', width: 120, align: 'right'},
+            {field: 'fairValueProject', title: '以公允价值计量且变动计入当期损益的金融资产(交易性金融资产)', width: 120, align: 'right'},
             {field: 'prepareSaleFinanceProject', title: '可供出售金融资产', width: 120, align: 'right'},
             {field: 'heldToMaturityInvestment', title: '持有至到期投资', width: 120, align: 'right'},
             {field: 'investinInRealEstate', title: '投资房地产', width: 100, align: 'right'},
@@ -642,7 +642,7 @@
         $("#liabilitiesAdd").dialog({
             title: '新增合并资产负债数据',
             width: 700,
-            height: 650,
+            height: 800,
             top: 10,
             left: 150,
             closed: false,

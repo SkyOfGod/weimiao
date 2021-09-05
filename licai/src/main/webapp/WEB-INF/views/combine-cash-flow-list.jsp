@@ -121,11 +121,11 @@
             <tr>
                 <td>PE最小值:</td>
                 <td>
-                    <input class="easyui-textbox" name="peMin" style="width: 150px;" data-options="required:true"/>
+                    <input class="easyui-textbox" name="peMin" value="0" style="width: 150px;" data-options="required:true"/>
                 </td>
                 <td>PE最大值:</td>
                 <td>
-                    <input class="easyui-textbox" name="peMax" style="width: 150px;" data-options="required:true"/>
+                    <input class="easyui-textbox" name="peMax" value="0" style="width: 150px;" data-options="required:true"/>
                 </td>
             </tr>
         </table>

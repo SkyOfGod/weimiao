@@ -81,7 +81,7 @@
 <script type="text/javascript">
 
     $("#listl_searchFundId").combogrid({
-        panelWidth: 310,
+        panelWidth: 350,
         idField: 'id',
         textField: 'name',
         url: '/fund/combogrid',
@@ -90,7 +90,7 @@
         columns: [[
             {field: 'id', title: '主键', width: 40, align: 'center'},
             {field: 'code', title: '基金代码', width: 100, align: 'center'},
-            {field: 'name', title: '基金名称', width: 160, align: 'center'},
+            {field: 'name', title: '基金名称', width: 200, align: 'center'},
         ]],
     });
 
@@ -109,7 +109,7 @@
     });
 
     $("#listl_searchCompanyCountId").combogrid({
-        panelWidth: 300,
+        panelWidth: 320,
         idField: 'id',
         textField: 'name',
         url: '/fundCompany/combogrid',
@@ -119,12 +119,12 @@
             {field: 'id', title: '主键', width: 40, align: 'center'},
             {field: 'code', title: '股票代码', width: 100, align: 'center'},
             {field: 'name', title: '公司名称', width: 100, align: 'center'},
-            {field: 'count', title: '总计', width: 30, align: 'center'},
+            {field: 'count', title: '总计', width: 40, align: 'center'},
         ]],
     });
 
     $("#editFundCompanyForm [name='fundId']").combogrid({
-        panelWidth: 310,
+        panelWidth: 350,
         idField: 'id',
         textField: 'name',
         url: '/fund/combogrid',
@@ -133,7 +133,7 @@
         columns: [[
             {field: 'id', title: '主键', width: 40, align: 'center'},
             {field: 'code', title: '基金代码', width: 100, align: 'center'},
-            {field: 'name', title: '基金名称', width: 160, align: 'center'},
+            {field: 'name', title: '基金名称', width: 200, align: 'center'},
         ]],
     });
 
@@ -186,12 +186,12 @@
         columns: [[
             {field: 'id', checkbox: true},
             {field: 'fundCode', title: '基金代码', width: 100, align: 'center'},
-            {field: 'fundName', title: '基金名称', width: 150, align: 'center'},
+            {field: 'fundName', title: '基金名称', width: 200, align: 'center'},
             {field: 'companyCode', title: '公司代码', width: 100, align: 'center'},
             {field: 'companyName', title: '公司名称', width: 100, align: 'center'},
             {field: 'joinTime', title: '建仓时间', width: 90, align: 'center'},
             {field: 'leaveTime', title: '撤离时间', width: 90, align: 'center'},
-            {field: 'percent', title: '占基金比例', width: 200, align: 'center'},
+            {field: 'percent', title: '占基金比例', width: 300, align: 'left'},
             {field: 'price', title: '股价', width: 40, align: 'center'},
             {field: 'year', title: '财报年限', width: 40, align: 'center'},
             {field: 'ttm', title: 'TTM动态市盈率', width: 100, align: 'center'},
