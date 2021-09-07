@@ -31,7 +31,7 @@
             </if>
         </where>
         ORDER BY count desc
-        limit 20
+        limit 30
     </select>
 
 </mapper>

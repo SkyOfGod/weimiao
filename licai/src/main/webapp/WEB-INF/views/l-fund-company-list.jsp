@@ -47,6 +47,13 @@
                 </td>
             </tr>
             <tr>
+                <td> 持股数（中间用逗号隔开，万股）:</td>
+                <td>
+                    <input class="easyui-textbox" name="total" style="width: 300px;"
+                           data-options="editable:true,required:true"/>
+                </td>
+            </tr>
+            <tr>
                 <td>股价:</td>
                 <td>
                     <input class="easyui-numberbox" name="price" style="width: 300px;"
@@ -109,7 +116,8 @@
     });
 
     $("#listl_searchCompanyCountId").combogrid({
-        panelWidth: 320,
+        panelWidth: 500,
+        panelHeight: 600,
         idField: 'id',
         textField: 'name',
         url: '/fundCompany/combogrid',
@@ -118,8 +126,8 @@
         columns: [[
             {field: 'id', title: '主键', width: 40, align: 'center'},
             {field: 'code', title: '股票代码', width: 100, align: 'center'},
-            {field: 'name', title: '公司名称', width: 100, align: 'center'},
-            {field: 'count', title: '总计', width: 40, align: 'center'},
+            {field: 'name', title: '公司名称', width: 200, align: 'center'},
+            {field: 'count', title: '持股基金家数', width: 90, align: 'center'},
         ]],
     });
 
@@ -192,6 +200,7 @@
             {field: 'joinTime', title: '建仓时间', width: 90, align: 'center'},
             {field: 'leaveTime', title: '撤离时间', width: 90, align: 'center'},
             {field: 'percent', title: '占基金比例', width: 300, align: 'left'},
+            {field: 'total', title: '持股数（万股）', width: 200, align: 'left'},
             {field: 'price', title: '股价', width: 40, align: 'center'},
             {field: 'year', title: '财报年限', width: 40, align: 'center'},
             {field: 'ttm', title: 'TTM动态市盈率', width: 100, align: 'center'},

@@ -48,6 +48,11 @@ public class FundCompanyVO {
     private String percent;
 
     /**
+     * 持股数（中间用逗号隔开，单位：万股）
+     */
+    private String total;
+
+    /**
      * 股价
      */
     private BigDecimal price;
