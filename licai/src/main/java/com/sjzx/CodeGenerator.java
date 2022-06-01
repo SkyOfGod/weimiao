@@ -31,7 +31,7 @@ public class CodeGenerator {
         if (ALL_TABLE) {
             gen.setStrategy(getStrategyConfig());
         } else {
-            gen.setStrategy(getStrategyConfig("fund", "fund_company"));
+            gen.setStrategy(getStrategyConfig("hot_company_data"));
         }
         //包配置
         gen.setPackageInfo(getPackageConfig());
@@ -94,7 +94,7 @@ public class CodeGenerator {
         return new DataSourceConfig()
                 .setDbType(DbType.MYSQL)
                 .setDriverName("com.mysql.cj.jdbc.Driver")
-                .setUrl("jdbc:mysql://159.138.46.107:3307/" + DB_NAEM + "?serverTimezone=GMT%2B8")
+                .setUrl("jdbc:mysql://localhost:3306/" + DB_NAEM + "?serverTimezone=GMT%2B8")
                 .setUsername("root")
                 .setPassword("123456")
                 //将datetime装换为localdatetime的类型换成date类型

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjzx.mapper.HotCompanyDataMapper">
+
+    <select id="listPage" resultType="com.sjzx.model.vo.output.HotCompanyDataVO">
+        select a.id,a.hot_type_id,a.max_change,a.circulation_market_value,a.full_time,a.continuity_time,
+               a.sort,a.data_date,a.remark,a.create_time,a.update_time,a.no_deal,
+(select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 1 and data_date &lt; a.data_date) firstTime,
+(select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 2 and data_date &lt; a.data_date) secondTime,
+(select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 3 and data_date &lt; a.data_date) thirdTime,
+(select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 4 and data_date &lt; a.data_date) forthTime,
+(select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 5 and data_date &lt; a.data_date) fifthTime,
+(select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 6 and data_date &lt; a.data_date) sixthTime,
+(select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 7 and data_date &lt; a.data_date) seventhTime,
+                b.name,b.code,b.hot_type_ids,c.name hotType
+        from hot_company_data a
+        join hot_company b on b.id = a.hot_company_id
+        join hot_type c on c.id = a.hot_type_id
+        <where>
+            <if test="vo.dataDate != null and vo.dataDate.trim() !=''">
+                and a.data_date = #{vo.dataDate}
+            </if>
+            <if test="vo.hotTypeId != null">
+                and a.hot_type_id = #{vo.hotTypeId}
+            </if>
+            <if test="vo.hotCompanyId != null">
+                and a.hot_company_id = #{vo.hotCompanyId}
+            </if>
+            <if test="vo.continuityTime != null and vo.continuityTime == -1">
+                and a.continuity_time > 1
+            </if>
+            <if test="vo.continuityTime != null and vo.continuityTime == -2">
+                and a.continuity_time > 2
+            </if>
+            <if test="vo.continuityTime != null and vo.continuityTime == -20">
+                and SUBSTR(a.full_time, 12, 8) = '09:30:00'
+            </if>
+            <if test="vo.continuityTime != null and vo.continuityTime > 0">
+                and a.continuity_time = {vo.continuityTime}
+            </if>
+        </where>
+        order by data_date desc,sort desc,full_time,continuity_time desc,a.create_time
+    </select>
+
+    <select id="selectAllDataDate" resultType="java.lang.String">
+        SELECT DISTINCT data_date FROM hot_company_data
+        <if test="q != null and q.trim() !=''">
+            where data_date &lt;= #{q}
+        </if>
+        ORDER BY data_date desc
+        limit 20
+    </select>
+
+</mapper>

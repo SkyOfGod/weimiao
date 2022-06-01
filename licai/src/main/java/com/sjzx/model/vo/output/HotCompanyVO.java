@@ -1,14 +1,15 @@
 package com.sjzx.model.vo.output;
 
-import java.util.Date;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
+import java.util.Date;
 
 @Data
 @Accessors(chain = true)
 public class HotCompanyVO {
 
-    private Long id;
+    private Integer id;
 
     /**
      * 公司代码
@@ -34,6 +35,16 @@ public class HotCompanyVO {
      * 热点3
      */
     private String hotType3;
+
+    /**
+     * 热点4
+     */
+    private String hotType4;
+
+    /**
+     * 热点5
+     */
+    private String hotType5;
 
     /**
      * 最近连扳次数

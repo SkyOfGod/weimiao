@@ -1,6 +1,7 @@
 package com.sjzx.controller;
 
 
+import com.sjzx.entity.HotCompany;
 import com.sjzx.model.EasyUIResult;
 import com.sjzx.model.Response;
 import com.sjzx.model.vo.input.HotCompanyInputVO;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * <p>
@@ -42,16 +45,22 @@ public class HotCompanyController {
 
   @PostMapping("/update")
   @ApiOperation(value = "修改")
-  public Response updateHotType(HotCompanyVO vo) {
+  public Response updateHotCompany(HotCompanyVO vo) {
     hotCompanyService.updateHotCompany(vo);
     return Response.success();
   }
 
   @PostMapping("/delete")
   @ApiOperation(value = "删除")
-  public Response deleteHotType(HotCompanyVO vo) {
+  public Response deleteHotCompany(HotCompanyVO vo) {
     hotCompanyService.deleteHotCompany(vo);
     return Response.success();
+  }
+
+  @PostMapping("/combogrid")
+  @ApiOperation(value = "下拉框")
+  public List<HotCompany> combogrid(String q) {
+    return hotCompanyService.combogrid(q);
   }
 
 }

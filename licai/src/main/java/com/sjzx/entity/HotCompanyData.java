@@ -13,16 +13,16 @@ import java.util.Date;
 
 /**
  * <p>
- * 龙头战法热点公司
+ * 热点公司复盘表
  * </p>
  *
  * @author 
- * @since 2021-02-04
+ * @since 2022-05-21
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class HotCompany extends Model<HotCompany> {
+public class HotCompanyData extends Model<HotCompanyData> {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,29 +30,9 @@ public class HotCompany extends Model<HotCompany> {
     private Integer id;
 
     /**
-     * 公司代码
+     * 热点公司ID
      */
-    private String code;
-
-    /**
-     * 公司名称
-     */
-    private String name;
-
-    /**
-     * 热点集合
-     */
-    private String hotTypeIds;
-
-    /**
-     * 最近连扳次数
-     */
-    private Integer continuityTime;
-
-    /**
-     * 最近首板日期
-     */
-    private String firstTime;
+    private Integer hotCompanyId;
 
     /**
      * 当日隶属热点ID
@@ -68,6 +48,31 @@ public class HotCompany extends Model<HotCompany> {
      * 当前流通市值（亿元）
      */
     private BigDecimal circulationMarketValue;
+
+    /**
+     * 当日涨停时间
+     */
+    private String fullTime;
+
+    /**
+     * 当前连扳次数
+     */
+    private Integer continuityTime;
+
+    /**
+     * 封单金额
+     */
+    private BigDecimal noDeal;
+
+    /**
+     * 复盘时间
+     */
+    private String dataDate;
+
+    /**
+     * 排序
+     */
+    private Integer sort;
 
     /**
      * 备注

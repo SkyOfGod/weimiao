@@ -13,6 +13,10 @@ public class HotTypeInputVO extends BasePage {
      */
     private String name;
 
+    /**
+     *
+     */
+    private String dataDate;
 
 
 }

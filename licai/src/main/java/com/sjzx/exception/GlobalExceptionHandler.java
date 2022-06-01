@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
      * @param e
      * @return
      */
-    @ExceptionHandler(value = Exception.class)
+    @ExceptionHandler(Exception.class)
     public Response defaultErrorHandler(HttpServletRequest req, Exception e) {
         String errorPosition = "";
         //如果错误堆栈信息存在
@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
             int lineNumber = element.getLineNumber();
             errorPosition = fileName + ":" + lineNumber;
         }
-        Response response = new Response(ErrorEnum.E_500.getErrorMsg(), ErrorEnum.E_500.getErrorCode());
+        Response response = new Response(e.getMessage(), ErrorEnum.E_500.getErrorCode());
 
         JSONObject errorObject = new JSONObject();
         errorObject.put("errorLocation", e.toString() + "    错误位置:" + errorPosition);

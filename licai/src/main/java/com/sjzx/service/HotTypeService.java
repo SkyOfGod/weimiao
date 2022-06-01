@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.sjzx.entity.HotType;
 import com.sjzx.model.EasyUIResult;
 import com.sjzx.model.vo.input.HotTypeInputVO;
+import com.sjzx.model.vo.output.HotTypeVO;
+
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +19,7 @@ import java.util.Map;
  */
 public interface HotTypeService extends IService<HotType> {
 
-  EasyUIResult<HotType> listPage(HotTypeInputVO vo);
+  EasyUIResult<HotTypeVO> listPage(HotTypeInputVO vo);
 
   void addHotType(HotType vo);
 

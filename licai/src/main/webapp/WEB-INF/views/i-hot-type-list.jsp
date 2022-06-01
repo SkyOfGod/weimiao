@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div style="width: 100%;height: 40px">
-    名称:&nbsp;&nbsp;<input class="easyui-numberbox" id="listi_searchName">
+    名称:&nbsp;&nbsp;<input class="easyui-textbox" id="listi_searchName">
+    日期:&nbsp;&nbsp;<input class="easyui-textbox" id="listi_searchDataDate">
     <button class="easyui-linkbutton" iconCls="icon-search" onclick="hotTypeListSearch()">搜索</button>
 </div>
-<table id="hot-type-list" style="width:100%;height:600px"></table>
+<table id="hot-type-list" style="width:100%;height:1120px"></table>
 
 <div id="editHotType" class="easyui-dialog" data-options="closed:true">
     <form id="editHotTypeForm" method="post">
@@ -43,6 +44,19 @@
 
 <script type="text/javascript" charset="utf-8">
 
+    $("#listi_searchDataDate").combogrid({
+        panelWidth: 170,
+        idField: 'key',
+        textField: 'key',
+        url: '/hotCompanyData/dataDateCombogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'key', title: '日期', width: 110, align: 'center'},
+            {field: 'value', title: '星期', width: 50, align: 'center'}
+        ]],
+    });
+
     $('#hot-type-list').datagrid({
         url: '/hotType/listPage',
         title: '热点类型列表',
@@ -51,7 +65,7 @@
         rownumbers: true,
         collapsible: true,
         pagination: true,
-        pageSize: 20,
+        pageSize: 100,
         pageList: [20, 50, 100],
         toolbar: [{
             text: '新增',
@@ -75,7 +89,27 @@
         ],
         columns: [[
             {field: 'id', checkbox: true},
-            {field: 'name', title: '名称', width: 150, align: 'center'},
+            {field: 'name', title: '名称', width: 120, align: 'center'},
+            {field: 'count1', title: '近1天', width: 100, align: 'center'},
+            {field: 'count2', title: '近2天', width: 100, align: 'center'},
+            {field: 'count3', title: '近3天', width: 100, align: 'center'},
+            {field: 'count4', title: '近4天', width: 100, align: 'center'},
+            {field: 'count5', title: '近5天', width: 100, align: 'center'},
+            {field: 'count6', title: '近6天', width: 100, align: 'center'},
+            {field: 'count7', title: '近7天', width: 100, align: 'center'},
+            {field: 'count8', title: '近8天', width: 100, align: 'center'},
+            {field: 'count9', title: '近9天', width: 100, align: 'center'},
+            {field: 'count10', title: '近10天', width: 100, align: 'center'},
+            {field: 'count11', title: '近11天', width: 100, align: 'center'},
+            {field: 'count12', title: '近12天', width: 100, align: 'center'},
+            {field: 'count13', title: '近13天', width: 100, align: 'center'},
+            {field: 'count14', title: '近14天', width: 100, align: 'center'},
+            {field: 'count15', title: '近15天', width: 100, align: 'center'},
+            {field: 'count16', title: '近16天', width: 100, align: 'center'},
+            {field: 'count17', title: '近17天', width: 100, align: 'center'},
+            {field: 'count18', title: '近18天', width: 100, align: 'center'},
+            {field: 'count19', title: '近19天', width: 100, align: 'center'},
+            {field: 'count20', title: '近20天', width: 100, align: 'center'},
             {field: 'sort', title: '排序', width: 80, align: 'center'},
             {field: 'state', title: '状态', width: 80, align: 'center',
               formatter: function (value, row, index) {
@@ -95,6 +129,7 @@
             param.pageNo = param.page;
             param.pageSize = param.rows;
             param.name = $('#listi_searchName').val();
+            param.dataDate = $('#listi_searchDataDate').val();
             return true;
         }
     });
@@ -111,6 +146,8 @@
             modal: true,
             buttons: [{
                 text: '保存',
+                width: 450,
+                height: 50,
                 handler: function () {
                     if (!$("#editHotTypeForm").form('validate')) {
                         return false;
@@ -128,12 +165,12 @@
                         }
                     });
                 }
-            }, {
+            }/*, {
                 text: '关闭',
                 handler: function () {
                     $("#editHotType").dialog("close");
                 }
-            }],
+            }*/],
             onBeforeClose: function () {
                 $("#editHotTypeForm").form("clear");
             }

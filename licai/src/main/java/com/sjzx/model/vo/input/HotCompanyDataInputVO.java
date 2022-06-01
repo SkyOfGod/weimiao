@@ -6,7 +6,12 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class HotCompanyInputVO extends BasePage {
+public class HotCompanyDataInputVO extends BasePage {
+
+    /**
+     * 复盘日期
+     */
+    private String dataDate;
 
     /**
      * 热点ID
@@ -14,10 +19,13 @@ public class HotCompanyInputVO extends BasePage {
     private Integer hotTypeId;
 
     /**
-     * 公司
+     * 公司ID
      */
-    private String hotCompany;
+    private Integer hotCompanyId;
 
-
+    /**
+     * 连扳次数
+     */
+    private Integer continuityTime;
 
 }

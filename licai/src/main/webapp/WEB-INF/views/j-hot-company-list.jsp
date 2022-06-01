@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div style="width: 100%;height: 40px">
-    名称:&nbsp;&nbsp;<input class="easyui-numberbox" id="listj_searchName">
+    热点名称:&nbsp;&nbsp;<input class="easyui-textbox" id="listj_searchHotTypeId">
+    公司:  <input class="easyui-textbox" id="listj_searchCompany">
     <button class="easyui-linkbutton" iconCls="icon-search" onclick="hotCompanyListSearch()">搜索</button>
 </div>
-<table id="hot-company-list" style="width:100%;height:600px"></table>
+<table id="hot-company-list" style="width:100%;height:1120px"></table>
 
 <div id="editHotCompany" class="easyui-dialog" data-options="closed:true">
     <form id="editHotCompanyForm" method="post">
@@ -38,6 +39,18 @@
                 </td>
             </tr>
             <tr>
+                <td>热点3:</td>
+                <td>
+                    <input class="easyui-textbox" name="hotType4" style="width: 180px;" data-options="editable:true"/>
+                </td>
+            </tr>
+            <tr>
+                <td>热点3:</td>
+                <td>
+                    <input class="easyui-textbox" name="hotType5" style="width: 180px;" data-options="editable:true"/>
+                </td>
+            </tr>
+            <tr>
                 <td>最近连扳次数:</td>
                 <td>
                     <input class="easyui-textbox" name="continuityTime" value="0" style="width: 300px;"
@@ -62,47 +75,89 @@
 
 <script type="text/javascript" charset="utf-8">
 
-  $("#editHotCompanyForm [name='hotType1']").combogrid({
-    panelWidth: 200,
-    idField: 'id',
-    textField: 'name',
-    url: '/hotType/combogrid',
-    mode: 'remote',
-    delay: 500,
-    columns: [[
-      {field: 'id', title: '主键', width: 40, align: 'center'},
-      {field: 'name', title: '名称', width: 100, align: 'center'},
-      {field: 'sort', title: '排序', width: 40, align: 'center'},
-    ]],
-  });
+    $("#listj_searchHotTypeId").combogrid({
+        panelWidth: 200,
+        idField: 'id',
+        textField: 'name',
+        url: '/hotType/combogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'id', title: '主键', width: 40, align: 'center'},
+            {field: 'name', title: '名称', width: 100, align: 'center'},
+            {field: 'sort', title: '排序', width: 40, align: 'center'},
+        ]],
+    });
 
-  $("#editHotCompanyForm [name='hotType2']").combogrid({
-    panelWidth: 200,
-    idField: 'id',
-    textField: 'name',
-    url: '/hotType/combogrid',
-    mode: 'remote',
-    delay: 500,
-    columns: [[
-      {field: 'id', title: '主键', width: 40, align: 'center'},
-      {field: 'name', title: '名称', width: 100, align: 'center'},
-      {field: 'sort', title: '排序', width: 40, align: 'center'},
-    ]],
-  });
+    $("#editHotCompanyForm [name='hotType1']").combogrid({
+        panelWidth: 200,
+        idField: 'id',
+        textField: 'name',
+        url: '/hotType/combogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'id', title: '主键', width: 40, align: 'center'},
+            {field: 'name', title: '名称', width: 100, align: 'center'},
+            {field: 'sort', title: '排序', width: 40, align: 'center'},
+        ]],
+    });
 
-  $("#editHotCompanyForm [name='hotType3']").combogrid({
-    panelWidth: 200,
-    idField: 'id',
-    textField: 'name',
-    url: '/hotType/combogrid',
-    mode: 'remote',
-    delay: 500,
-    columns: [[
-      {field: 'id', title: '主键', width: 40, align: 'center'},
-      {field: 'name', title: '名称', width: 100, align: 'center'},
-      {field: 'sort', title: '排序', width: 40, align: 'center'},
-    ]],
-  });
+    $("#editHotCompanyForm [name='hotType2']").combogrid({
+        panelWidth: 200,
+        idField: 'id',
+        textField: 'name',
+        url: '/hotType/combogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'id', title: '主键', width: 40, align: 'center'},
+            {field: 'name', title: '名称', width: 100, align: 'center'},
+            {field: 'sort', title: '排序', width: 40, align: 'center'},
+        ]],
+    });
+
+    $("#editHotCompanyForm [name='hotType3']").combogrid({
+        panelWidth: 200,
+        idField: 'id',
+        textField: 'name',
+        url: '/hotType/combogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'id', title: '主键', width: 40, align: 'center'},
+            {field: 'name', title: '名称', width: 100, align: 'center'},
+            {field: 'sort', title: '排序', width: 40, align: 'center'},
+        ]],
+    });
+
+    $("#editHotCompanyForm [name='hotType4']").combogrid({
+        panelWidth: 200,
+        idField: 'id',
+        textField: 'name',
+        url: '/hotType/combogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'id', title: '主键', width: 40, align: 'center'},
+            {field: 'name', title: '名称', width: 100, align: 'center'},
+            {field: 'sort', title: '排序', width: 40, align: 'center'},
+        ]],
+    });
+
+    $("#editHotCompanyForm [name='hotType5']").combogrid({
+        panelWidth: 200,
+        idField: 'id',
+        textField: 'name',
+        url: '/hotType/combogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'id', title: '主键', width: 40, align: 'center'},
+            {field: 'name', title: '名称', width: 100, align: 'center'},
+            {field: 'sort', title: '排序', width: 40, align: 'center'},
+        ]],
+    });
 
     $('#hot-company-list').datagrid({
         url: '/hotCompany/listPage',
@@ -112,7 +167,7 @@
         rownumbers: true,
         collapsible: true,
         pagination: true,
-        pageSize: 20,
+        pageSize: 100,
         pageList: [20, 50, 100],
         toolbar: [{
             text: '新增',
@@ -127,22 +182,24 @@
                 editHotCompany();
             }
         }, '-', {
-                text: '删除',
-                iconCls: 'icon-cancel',
-                handler: function () {
-                    deleteHotCompany();
-                }
+            text: '删除',
+            iconCls: 'icon-cancel',
+            handler: function () {
+                deleteHotCompany();
             }
+        }
         ],
         columns: [[
             {field: 'id', checkbox: true},
             {field: 'code', title: '股票代码', width: 100, align: 'center'},
             {field: 'name', title: '公司名称', width: 150, align: 'center'},
-            {field: 'hotType1', title: '热点1', width: 80, align: 'center'},
-            {field: 'hotType2', title: '热点2', width: 80, align: 'center'},
-            {field: 'hotType3', title: '热点3', width: 80, align: 'center'},
+            {field: 'hotType1', title: '热点1', width: 100, align: 'center'},
+            {field: 'hotType2', title: '热点2', width: 100, align: 'center'},
+            {field: 'hotType3', title: '热点3', width: 100, align: 'center'},
+            {field: 'hotType4', title: '热点4', width: 100, align: 'center'},
+            {field: 'hotType5', title: '热点5', width: 100, align: 'center'},
             {field: 'continuityTime', title: '最近连扳次数', width: 100, align: 'center'},
-            {field: 'firstTime', title: '首板日期', width: 100, align: 'center'},
+            {field: 'firstTime', title: '最近首板日期', width: 100, align: 'center'},
             {field: 'remark', title: '备注', width: 300, align: 'left'},
             {field: 'createTime', title: '创建时间', width: 150, align: 'center'},
             {field: 'updateTime', title: '修改时间', width: 150, align: 'center'},
@@ -150,16 +207,17 @@
         onBeforeLoad: function (param) {
             param.pageNo = param.page;
             param.pageSize = param.rows;
-            param.name = $('#listj_searchName').val();
+            param.hotTypeId = $('#listj_searchHotTypeId').val();
+            param.hotCompany = $('#listj_searchCompany').val();
             return true;
         }
     });
 
     addHotCompany = function () {
         $("#editHotCompany").dialog({
-            title: '新增指标',
+            title: '新增热点公司',
             width: 500,
-            height: 500,
+            height: 600,
             top: 60,
             left: 150,
             closed: false,
@@ -207,9 +265,9 @@
             return;
         }
         $("#editHotCompany").dialog({
-            title: '编辑指标',
+            title: '编辑热点公司',
             width: 500,
-            height: 500,
+            height: 600,
             top: 60,
             left: 150,
             closed: false,
@@ -222,6 +280,7 @@
                         return false;
                     }
                     var params = $("#editHotCompanyForm").serialize();
+
                     $.post("/hotCompany/update", params, function (data) {
                         if (data.code == 200) {
                             $.messager.alert('提示', '修改成功!', 'info',
@@ -254,7 +313,7 @@
             $.messager.alert('提示', '未选中数据!');
             return;
         }
-        $.messager.confirm('确认', '确定删除ID为 ' + ids + ' 的公司详情吗？', function (r) {
+        $.messager.confirm('确认', '确定删除ID为 ' + ids + ' 的热点公司吗？', function (r) {
             if (r) {
                 var params = {"id": ids};
                 $.post("/hotCompany/delete", params, function (data) {

@@ -21,8 +21,6 @@
 					<li data-options="attributes:{'url':'/page/a-combine-consolidated-assets-liabilities-list'}">公司-合并资产负债表</li>
 					<li data-options="attributes:{'url':'/page/c-combine-profit-list'}">公司-合并利润表</li>
 					<li data-options="attributes:{'url':'/page/e-combine-cash-flow-list'}">公司-合并现金流量表</li>
-					<%--<li data-options="attributes:{'url':'/page/item-img-list'}">查询商品图片</li>
-					<li data-options="attributes:{'url':'/page/item-img-category-list'}">查询商品图片类目</li>--%>
 	         	</ul>
          	</li>
          	<li>
@@ -43,8 +41,9 @@
 			<li>
                 <span>热点管理</span>
                 <ul>
-                    <li data-options="attributes:{'url':'/page/i-hot-type-list'}">查询热点类型</li>
+                    <li data-options="attributes:{'url':'/page/i-hot-type-list'}">热点类型</li>
                     <li data-options="attributes:{'url':'/page/j-hot-company-list'}">热点公司</li>
+                    <li data-options="attributes:{'url':'/page/m-hot-company-data-list'}">每日复盘</li>
                 </ul>
             </li>
 			<li>
