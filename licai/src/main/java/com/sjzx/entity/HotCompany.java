@@ -70,6 +70,11 @@ public class HotCompany extends Model<HotCompany> {
     private BigDecimal circulationMarketValue;
 
     /**
+     * 十大流通股占比(%)
+     */
+    private BigDecimal percent;
+
+    /**
      * 备注
      */
     private String remark;

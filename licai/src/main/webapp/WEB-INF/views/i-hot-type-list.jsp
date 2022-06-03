@@ -45,13 +45,14 @@
 <script type="text/javascript" charset="utf-8">
 
     $("#listi_searchDataDate").combogrid({
-        panelWidth: 170,
+        panelWidth: 240,
         idField: 'key',
         textField: 'key',
         url: '/hotCompanyData/dataDateCombogrid',
         mode: 'remote',
         delay: 500,
         columns: [[
+            {field: 'sort', title: '近?天', width: 50, align: 'center'},
             {field: 'key', title: '日期', width: 110, align: 'center'},
             {field: 'value', title: '星期', width: 50, align: 'center'}
         ]],
@@ -65,8 +66,8 @@
         rownumbers: true,
         collapsible: true,
         pagination: true,
-        pageSize: 100,
-        pageList: [20, 50, 100],
+        pageSize: 30,
+        pageList: [30, 50, 100],
         toolbar: [{
             text: '新增',
             iconCls: 'icon-add',

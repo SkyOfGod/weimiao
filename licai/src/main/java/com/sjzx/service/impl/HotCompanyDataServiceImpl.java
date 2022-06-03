@@ -161,8 +161,11 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
         List<String> dataList = baseMapper.selectAllDataDate(q);
 
         List<Map<String, String>> list = new ArrayList<>();
+        int i = 0;
         for (String dataDate : dataList) {
+            i++;
             Map<String, String> map = new HashMap<>();
+            map.put("sort", i + "");
             map.put("key", dataDate);
             LocalDate localDate = LocalDate.of(Integer.parseInt(dataDate.substring(0, 4)),
                     Integer.parseInt(dataDate.substring(5, 7)), Integer.parseInt(dataDate.substring(8, 10)));

@@ -2,7 +2,9 @@ package com.sjzx.model.vo.output;
 
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -48,7 +50,7 @@ public class HotTypeVO {
     private Date updateTime;
 
 
-    private String dataDate;
+    private List<LocalDate> dataDate;
     private String count1;
     private String count2;
     private String count3;

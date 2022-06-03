@@ -79,6 +79,21 @@ public class HotCompanyServiceImpl extends ServiceImpl<HotCompanyMapper, HotComp
                             t.setHotType4(list.get(3).getName());
                             if (list.size() > 4) {
                                 t.setHotType5(list.get(4).getName());
+                                if (list.size() > 5) {
+                                    t.setHotType6(list.get(5).getName());
+                                    if (list.size() > 6) {
+                                        t.setHotType7(list.get(6).getName());
+                                        if (list.size() > 7) {
+                                            t.setHotType8(list.get(7).getName());
+                                            if (list.size() > 8) {
+                                                t.setHotType9(list.get(8).getName());
+                                                if (list.size() > 9) {
+                                                    t.setHotType10(list.get(9).getName());
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

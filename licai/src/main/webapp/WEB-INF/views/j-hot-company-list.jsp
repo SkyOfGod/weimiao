@@ -21,33 +21,40 @@
                 <td><input class="easyui-textbox" name="name" style="width: 300px;" data-options="editable:true,required:true"/></td>
             </tr>
             <tr>
-                <td>热点1:</td>
+                <td>概念1:</td>
                 <td>
                     <input class="easyui-textbox" name="hotType1" style="width: 180px;" data-options="editable:true,required:true"/>
                 </td>
             </tr>
             <tr>
-                <td>热点2:</td>
+                <td>概念2:</td>
                 <td>
                     <input class="easyui-textbox" name="hotType2" style="width: 180px;" data-options="editable:true"/>
                 </td>
             </tr>
             <tr>
-                <td>热点3:</td>
+                <td>概念3:</td>
                 <td>
                     <input class="easyui-textbox" name="hotType3" style="width: 180px;" data-options="editable:true"/>
                 </td>
             </tr>
             <tr>
-                <td>热点3:</td>
+                <td>概念4:</td>
                 <td>
                     <input class="easyui-textbox" name="hotType4" style="width: 180px;" data-options="editable:true"/>
                 </td>
             </tr>
             <tr>
-                <td>热点3:</td>
+                <td>概念5:</td>
                 <td>
                     <input class="easyui-textbox" name="hotType5" style="width: 180px;" data-options="editable:true"/>
+                </td>
+            </tr>
+            <tr>
+                <td>十大流通股占比(%):</td>
+                <td>
+                    <input class="easyui-textbox" name="percent" value="0" style="width: 300px;"
+                           data-options="editable:true,required:false"/>
                 </td>
             </tr>
             <tr>
@@ -193,11 +200,17 @@
             {field: 'id', checkbox: true},
             {field: 'code', title: '股票代码', width: 100, align: 'center'},
             {field: 'name', title: '公司名称', width: 150, align: 'center'},
-            {field: 'hotType1', title: '热点1', width: 100, align: 'center'},
-            {field: 'hotType2', title: '热点2', width: 100, align: 'center'},
-            {field: 'hotType3', title: '热点3', width: 100, align: 'center'},
-            {field: 'hotType4', title: '热点4', width: 100, align: 'center'},
-            {field: 'hotType5', title: '热点5', width: 100, align: 'center'},
+            {field: 'hotType1', title: '概念1', width: 100, align: 'center'},
+            {field: 'hotType2', title: '概念2', width: 100, align: 'center'},
+            {field: 'hotType3', title: '概念3', width: 100, align: 'center'},
+            {field: 'hotType4', title: '概念4', width: 100, align: 'center'},
+            {field: 'hotType5', title: '概念5', width: 100, align: 'center'},
+            {field: 'hotType6', title: '概念6', width: 100, align: 'center'},
+            {field: 'hotType7', title: '概念7', width: 100, align: 'center'},
+            {field: 'hotType8', title: '概念8', width: 100, align: 'center'},
+            {field: 'hotType9', title: '概念9', width: 100, align: 'center'},
+            {field: 'hotType10', title: '概念10', width: 100, align: 'center'},
+            {field: 'percent', title: '十大流通股占比(%)', width: 100, align: 'center'},
             {field: 'continuityTime', title: '最近连扳次数', width: 100, align: 'center'},
             {field: 'firstTime', title: '最近首板日期', width: 100, align: 'center'},
             {field: 'remark', title: '备注', width: 300, align: 'left'},

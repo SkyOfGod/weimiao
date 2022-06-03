@@ -45,9 +45,6 @@ public class HotTypeServiceImpl extends ServiceImpl<HotTypeMapper, HotType> impl
         LocalDate date;
         if (StringUtils.isEmpty(vo.getDataDate())) {
             date = now.toLocalDate();
-            if (hotCompanyDataService.selectCountByDataDate(date) == 0) {
-                date = date.minusDays(1);
-            }
         } else {
             date = LocalDate.of(Integer.parseInt(vo.getDataDate().substring(0, 4)),
                     Integer.parseInt(vo.getDataDate().substring(5, 7)), Integer.parseInt(vo.getDataDate().substring(8, 10)));
@@ -63,6 +60,9 @@ public class HotTypeServiceImpl extends ServiceImpl<HotTypeMapper, HotType> impl
                     date = date.minusDays(2);
                 }
             }
+            if (hotCompanyDataService.selectCountByDataDate(date) == 0) {
+                date = date.minusDays(1);
+            }
             dateList.add(date);
             date = date.minusDays(1);
         }
@@ -77,6 +77,7 @@ public class HotTypeServiceImpl extends ServiceImpl<HotTypeMapper, HotType> impl
 
         return new EasyUIResult<>(iPage.getTotal(), BeanUtils.copyProperties(iPage.getRecords(), HotTypeVO::new,
                 (s, t) -> {
+                    t.setDataDate(dateList);
                     List<HotCompanyData> list = hotCompanyDataService.select(s.getId(), dateList);
                     Map<String, List<HotCompanyData>> map = list.stream().collect(Collectors.groupingBy(HotCompanyData::getDataDate));
                     t.setCount1(count(map, dateList.get(0)));
@@ -141,7 +142,7 @@ public class HotTypeServiceImpl extends ServiceImpl<HotTypeMapper, HotType> impl
         removeById(vo.getId());
     }
 
-    public HotType selectByName(String name) {
+    private HotType selectByName(String name) {
         LambdaQueryWrapper<HotType> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(HotType::getName, name);
         return getOne(wrapper);

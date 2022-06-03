@@ -12,7 +12,7 @@
 (select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 5 and data_date &lt; a.data_date) fifthTime,
 (select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 6 and data_date &lt; a.data_date) sixthTime,
 (select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 7 and data_date &lt; a.data_date) seventhTime,
-                b.name,b.code,b.hot_type_ids,c.name hotType
+                b.name,b.code,b.hot_type_ids,b.percent,c.name hotType
         from hot_company_data a
         join hot_company b on b.id = a.hot_company_id
         join hot_type c on c.id = a.hot_type_id
