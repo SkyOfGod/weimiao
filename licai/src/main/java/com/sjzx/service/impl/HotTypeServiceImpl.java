@@ -40,22 +40,19 @@ public class HotTypeServiceImpl extends ServiceImpl<HotTypeMapper, HotType> impl
 
     @Override
     public EasyUIResult<HotTypeVO> listPage(HotTypeInputVO vo) {
-        LambdaQueryWrapper<HotType> wrapper = new LambdaQueryWrapper<>();
-        if (StringUtils.hasText(vo.getName())) {
-            wrapper.like(HotType::getName, vo.getName());
-        }
-        wrapper.orderByDesc(HotType::getUpdateTime).orderByDesc(HotType::getSort);
-        IPage<HotType> iPage = new Page<>(vo.getPageNo(), vo.getPageSize());
-        page(iPage, wrapper);
-
         LocalDateTime now = LocalDateTime.now();
         List<LocalDate> dateList = new ArrayList<>();
         LocalDate date;
         if (StringUtils.isEmpty(vo.getDataDate())) {
             date = now.toLocalDate();
+            if (hotCompanyDataService.selectCountByDataDate(date) == 0) {
+                date = date.minusDays(1);
+            }
         } else {
             date = LocalDate.of(Integer.parseInt(vo.getDataDate().substring(0, 4)),
                     Integer.parseInt(vo.getDataDate().substring(5, 7)), Integer.parseInt(vo.getDataDate().substring(8, 10)));
+            // 更新查询日期所在热点更新时间
+            baseMapper.updateUpdateTimeByDataDate(vo.getDataDate());
         }
         while (dateList.size() < 20) {
             if (Arrays.asList(6, 7).contains(date.getDayOfWeek().getValue())) {
@@ -69,6 +66,15 @@ public class HotTypeServiceImpl extends ServiceImpl<HotTypeMapper, HotType> impl
             dateList.add(date);
             date = date.minusDays(1);
         }
+
+        LambdaQueryWrapper<HotType> wrapper = new LambdaQueryWrapper<>();
+        if (StringUtils.hasText(vo.getName())) {
+            wrapper.like(HotType::getName, vo.getName());
+        }
+        wrapper.orderByDesc(HotType::getUpdateTime).orderByDesc(HotType::getSort);
+        IPage<HotType> iPage = new Page<>(vo.getPageNo(), vo.getPageSize());
+        page(iPage, wrapper);
+
         return new EasyUIResult<>(iPage.getTotal(), BeanUtils.copyProperties(iPage.getRecords(), HotTypeVO::new,
                 (s, t) -> {
                     List<HotCompanyData> list = hotCompanyDataService.select(s.getId(), dateList);

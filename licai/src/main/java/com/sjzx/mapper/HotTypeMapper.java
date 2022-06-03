@@ -2,6 +2,7 @@ package com.sjzx.mapper;
 
 import com.sjzx.entity.HotType;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface HotTypeMapper extends BaseMapper<HotType> {
 
+    void updateUpdateTimeByDataDate(@Param("dataDate") String dataDate);
 }

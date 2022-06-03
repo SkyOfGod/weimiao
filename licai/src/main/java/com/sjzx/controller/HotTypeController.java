@@ -20,48 +20,48 @@ import java.util.List;
  * 热点类型 前端控制器
  * </p>
  *
- * @author 
+ * @author
  * @since 2021-02-04
  */
 @RestController
 @RequestMapping("/hotType")
 public class HotTypeController {
 
-  @Autowired
-  private HotTypeService hotTypeService;
+    @Autowired
+    private HotTypeService hotTypeService;
 
-  @PostMapping("/listPage")
-  @ApiOperation(value = "数据分页")
-  public EasyUIResult<HotTypeVO> listPage(HotTypeInputVO vo) {
-    return hotTypeService.listPage(vo);
-  }
+    @PostMapping("/listPage")
+    @ApiOperation(value = "数据分页")
+    public EasyUIResult<HotTypeVO> listPage(HotTypeInputVO vo) {
+        return hotTypeService.listPage(vo);
+    }
 
-  @PostMapping("/add")
-  @ApiOperation(value = "添加")
-  public Response addHotType(HotType vo) {
-    hotTypeService.addHotType(vo);
-    return Response.success();
-  }
+    @PostMapping("/add")
+    @ApiOperation(value = "添加")
+    public Response addHotType(HotType vo) {
+        hotTypeService.addHotType(vo);
+        return Response.success();
+    }
 
-  @PostMapping("/update")
-  @ApiOperation(value = "修改")
-  public Response updateHotType(HotType vo) {
-    hotTypeService.updateHotType(vo);
-    return Response.success();
-  }
+    @PostMapping("/update")
+    @ApiOperation(value = "修改")
+    public Response updateHotType(HotType vo) {
+        hotTypeService.updateHotType(vo);
+        return Response.success();
+    }
 
-  @PostMapping("/delete")
-  @ApiOperation(value = "删除")
-  public Response deleteHotType(HotType vo) {
-    hotTypeService.deleteHotType(vo);
-    return Response.success();
-  }
+    @PostMapping("/delete")
+    @ApiOperation(value = "删除")
+    public Response deleteHotType(HotType vo) {
+        hotTypeService.deleteHotType(vo);
+        return Response.success();
+    }
 
-  @PostMapping("/combogrid")
-  @ApiOperation(value = "下拉框")
-  public List<HotType> combogrid(String q) {
-    return hotTypeService.combogrid(q);
-  }
+    @PostMapping("/combogrid")
+    @ApiOperation(value = "下拉框")
+    public List<HotType> combogrid(String q) {
+        return hotTypeService.combogrid(q);
+    }
 
 
 }

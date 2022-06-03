@@ -48,7 +48,7 @@
             where data_date &lt;= #{q}
         </if>
         ORDER BY data_date desc
-        limit 20
+        limit 50
     </select>
 
 </mapper>

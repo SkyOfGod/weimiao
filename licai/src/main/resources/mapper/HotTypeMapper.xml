@@ -2,4 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sjzx.mapper.HotTypeMapper">
 
+    <update id="updateUpdateTimeByDataDate">
+        update hot_type set update_time = now()
+        where id in (select hot_type_id from hot_company_data where data_date = #{dataDate})
+    </update>
+
 </mapper>

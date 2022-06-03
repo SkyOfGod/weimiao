@@ -26,7 +26,7 @@
             <tr>
                 <td>状态:</td>
                 <td>
-                    <select class="easyui-combobox" name="state" style="width: 150px;" data-options="required:true">
+                    <select class="easyui-combobox" name="state" style="width: 150px;" data-options="editable:false,required:true">
                         <option value="1">启用</option>
                         <option value="0">关闭</option>
                     </select>

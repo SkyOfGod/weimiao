@@ -40,7 +40,7 @@
                 <td>涨停时间:</td>
                 <td>
                     <input class="easyui-datetimebox" name="fullTime" value="0" style="width: 300px;"
-                           data-options="editable:true,required:true"/>
+                           data-options="editable:false,required:true"/>
                 </td>
             </tr>
             <tr>

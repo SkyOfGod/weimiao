@@ -32,4 +32,6 @@ public interface HotCompanyDataService extends IService<HotCompanyData> {
     List<HotCompanyData> select(Integer hotTypeId, List<LocalDate> dataDateList);
 
     List<Map<String, String>> getDataDateCombobox(String q);
+
+    int selectCountByDataDate(LocalDate date);
 }

@@ -19,6 +19,7 @@ import com.sjzx.service.HotTypeService;
 import com.sjzx.utils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
@@ -92,6 +93,7 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
     }
 
     @Override
+    @Transactional
     public void addHotCompanyData(HotCompanyDataAddVO vo) {
         String dataDate = vo.getFullTime().substring(0, 10);
         HotCompany hotCompany = hotCompanyService.selectByCode(vo.getCode());
@@ -168,6 +170,13 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
             list.add(map);
         }
         return list;
+    }
+
+    @Override
+    public int selectCountByDataDate(LocalDate date) {
+        LambdaQueryWrapper<HotCompanyData> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(HotCompanyData::getDataDate, date);
+        return count(wrapper);
     }
 
 }
