@@ -52,7 +52,7 @@ public class HotCompany extends Model<HotCompany> {
     /**
      * 最近首板日期
      */
-    private String firstTime;
+    private String firstDate;
 
     /**
      * 当日隶属热点ID

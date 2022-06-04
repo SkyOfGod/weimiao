@@ -229,8 +229,8 @@
         onSelect: function (index, value) {
             $("#editHotCompanyDataName").textbox('setValue', value.name);
             $("#editHotCompanyDataHotTypeId").textbox('setValue', value.hotTypeId);
-            $("#editHotCompanyDataCirculationMarketValue").textbox('setValue', value.circulationMarketValue);
-            $("#editHotCompanyDataContinuityTime").textbox('setValue', value.continuityTime + 1);
+            // $("#editHotCompanyDataCirculationMarketValue").textbox('setValue', value.circulationMarketValue);
+            // $("#editHotCompanyDataContinuityTime").textbox('setValue', value.continuityTime + 1);
             $("#editHotCompanyDataMaxChange").textbox('setValue', value.maxChange);
         }
     });

@@ -80,7 +80,7 @@ public class HotCompanyVO {
     /**
      * 首板日期
      */
-    private String firstTime;
+    private String firstDate;
 
     /**
      * 流通股占比(%)
@@ -101,6 +101,46 @@ public class HotCompanyVO {
      * 更新时间
      */
     private Date updateTime;
+
+    /**
+     * 流通市值(亿)
+     */
+    private BigDecimal circulationMarketValue;
+
+    /**
+     * 首扳数
+     */
+    private Integer firstTime;
+
+    /**
+     * 二扳数
+     */
+    private Integer secondTime;
+
+    /**
+     * 三扳数
+     */
+    private Integer thirdTime;
+
+    /**
+     * 四扳数
+     */
+    private Integer forthTime;
+
+    /**
+     * 五扳数
+     */
+    private Integer fifthTime;
+
+    /**
+     * 六扳数
+     */
+    private Integer sixthTime;
+
+    /**
+     * 七扳数
+     */
+    private Integer seventhTime;
 
 
 }

@@ -67,8 +67,8 @@
             <tr>
                 <td>首板日期:</td>
                 <td>
-                    <input class="easyui-datebox" name="firstTime" value="0" style="width: 300px;"
-                           data-options="editable:true,required:true"/>
+                    <input class="easyui-datebox" name="firstDate" value="0" style="width: 300px;"
+                           data-options="editable:true,required:false"/>
                 </td>
             </tr>
             <tr>
@@ -200,19 +200,34 @@
             {field: 'id', checkbox: true},
             {field: 'code', title: '股票代码', width: 100, align: 'center'},
             {field: 'name', title: '公司名称', width: 150, align: 'center'},
-            {field: 'hotType1', title: '概念1', width: 100, align: 'center'},
-            {field: 'hotType2', title: '概念2', width: 100, align: 'center'},
-            {field: 'hotType3', title: '概念3', width: 100, align: 'center'},
-            {field: 'hotType4', title: '概念4', width: 100, align: 'center'},
-            {field: 'hotType5', title: '概念5', width: 100, align: 'center'},
-            {field: 'hotType6', title: '概念6', width: 100, align: 'center'},
-            {field: 'hotType7', title: '概念7', width: 100, align: 'center'},
-            {field: 'hotType8', title: '概念8', width: 100, align: 'center'},
-            {field: 'hotType9', title: '概念9', width: 100, align: 'center'},
-            {field: 'hotType10', title: '概念10', width: 100, align: 'center'},
+            {field: 'circulationMarketValue', title: '流通市值(亿)', width: 80, align: 'center',
+                formatter: function (value, row, index) {
+                    if (value < 100) {
+                        return '<span style="color:red;">' + value + '</span>';
+                    }
+                    return value;
+                }
+            },
             {field: 'percent', title: '流通股占比(%)', width: 100, align: 'center'},
+            {field: 'hotType1', title: '概念1', width: 65, align: 'center'},
+            {field: 'hotType2', title: '概念2', width: 65, align: 'center'},
+            {field: 'hotType3', title: '概念3', width: 65, align: 'center'},
+            {field: 'hotType4', title: '概念4', width: 65, align: 'center'},
+            {field: 'hotType5', title: '概念5', width: 65, align: 'center'},
+            {field: 'hotType6', title: '概念6', width: 65, align: 'center'},
+            {field: 'hotType7', title: '概念7', width: 65, align: 'center'},
+            {field: 'hotType8', title: '概念8', width: 65, align: 'center'},
+            {field: 'hotType9', title: '概念9', width: 65, align: 'center'},
+            {field: 'hotType10', title: '概念10', width: 65, align: 'center'},
+            {field: 'firstTime', title: '首扳数', width: 65, align: 'center'},
+            {field: 'secondTime', title: '二扳数', width: 65, align: 'center'},
+            {field: 'thirdTime', title: '三扳数', width: 65, align: 'center'},
+            {field: 'forthTime', title: '四扳数', width: 65, align: 'center'},
+            {field: 'fifthTime', title: '五扳数', width: 65, align: 'center'},
+            {field: 'sixthTime', title: '六扳数', width: 65, align: 'center'},
+            {field: 'seventhTime', title: '七扳数', width: 65, align: 'center'},
             {field: 'continuityTime', title: '最近连扳次数', width: 100, align: 'center'},
-            {field: 'firstTime', title: '最近首板日期', width: 100, align: 'center'},
+            {field: 'firstDate', title: '最近首板日期', width: 100, align: 'center'},
             {field: 'remark', title: '备注', width: 300, align: 'left'},
             {field: 'createTime', title: '创建时间', width: 150, align: 'center'},
             {field: 'updateTime', title: '修改时间', width: 150, align: 'center'},

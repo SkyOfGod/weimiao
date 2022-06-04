@@ -51,4 +51,18 @@
         limit 50
     </select>
 
+    <select id="selectLtDataDate" resultType="java.time.LocalDate">
+        select data_date from hot_company_data
+        where data_date &lt;= #{date}
+        order by data_date desc
+        limit 1
+    </select>
+
+    <select id="selectRecentCirculationMarketValueByHotCompanyId" resultType="java.math.BigDecimal">
+        select ifnull(circulation_market_value, 0) from hot_company_data
+        where hot_company_id = #{hotCompanyId}
+        order by data_date desc
+        limit 1
+    </select>
+
 </mapper>

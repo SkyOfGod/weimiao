@@ -106,7 +106,7 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
                     .setHotTypeId(vo.getHotTypeId()).setMaxChange(vo.getMaxChange())
                     .setCirculationMarketValue(vo.getCirculationMarketValue());
             if (vo.getContinuityTime() == 1) {
-                hotCompany.setFirstTime(dataDate);
+                hotCompany.setFirstDate(dataDate);
             }
             hotCompany.setCreateTime(new Date()).insert();
         } else {
@@ -117,7 +117,7 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
             }
             hotCompany.setCirculationMarketValue(vo.getCirculationMarketValue());
             if (vo.getContinuityTime() == 1) {
-                hotCompany.setFirstTime(dataDate);
+                hotCompany.setFirstDate(dataDate);
             }
             if (!Arrays.asList(hotCompany.getHotTypeIds().split(",")).contains(vo.getHotTypeId() + "")) {
                 hotCompany.setHotTypeIds(hotCompany.getHotTypeIds() + "," + vo.getHotTypeId());
@@ -178,6 +178,24 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
         LambdaQueryWrapper<HotCompanyData> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(HotCompanyData::getDataDate, date);
         return count(wrapper);
+    }
+
+    @Override
+    public LocalDate selectLtDataDate(LocalDate date) {
+        return baseMapper.selectLtDataDate(date);
+    }
+
+    @Override
+    public BigDecimal selectRecentCirculationMarketValueByHotCompanyId(Integer hotCompanyId) {
+        return baseMapper.selectRecentCirculationMarketValueByHotCompanyId(hotCompanyId);
+    }
+
+    @Override
+    public List<HotCompanyData> selectByHotCompanyId(Integer hotCompanyId) {
+        LambdaQueryWrapper<HotCompanyData> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(HotCompanyData::getHotCompanyId, hotCompanyId)
+                .orderByDesc(HotCompanyData::getDataDate);
+        return list(wrapper);
     }
 
 }

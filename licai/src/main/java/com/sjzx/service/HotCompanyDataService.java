@@ -7,6 +7,7 @@ import com.sjzx.model.vo.input.HotCompanyDataAddVO;
 import com.sjzx.model.vo.input.HotCompanyDataInputVO;
 import com.sjzx.model.vo.output.HotCompanyDataVO;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -34,4 +35,10 @@ public interface HotCompanyDataService extends IService<HotCompanyData> {
     List<Map<String, String>> getDataDateCombobox(String q);
 
     int selectCountByDataDate(LocalDate date);
+
+    LocalDate selectLtDataDate(LocalDate date);
+
+    BigDecimal selectRecentCirculationMarketValueByHotCompanyId(Integer hotCompanyId);
+
+    List<HotCompanyData> selectByHotCompanyId(Integer hotCompanyId);
 }

@@ -46,22 +46,14 @@ public class HotTypeServiceImpl extends ServiceImpl<HotTypeMapper, HotType> impl
         if (StringUtils.isEmpty(vo.getDataDate())) {
             date = now.toLocalDate();
         } else {
-            date = LocalDate.of(Integer.parseInt(vo.getDataDate().substring(0, 4)),
-                    Integer.parseInt(vo.getDataDate().substring(5, 7)), Integer.parseInt(vo.getDataDate().substring(8, 10)));
+            date = toLocalDate(vo.getDataDate());
             // 更新查询日期所在热点更新时间
             baseMapper.updateUpdateTimeByDataDate(vo.getDataDate());
         }
         while (dateList.size() < 20) {
-            if (Arrays.asList(6, 7).contains(date.getDayOfWeek().getValue())) {
-                if (date.getDayOfWeek().getValue() == 6) {
-                    date = date.minusDays(1);
-                }
-                if (date.getDayOfWeek().getValue() == 7) {
-                    date = date.minusDays(2);
-                }
-            }
-            if (hotCompanyDataService.selectCountByDataDate(date) == 0) {
-                date = date.minusDays(1);
+            LocalDate selectDate = hotCompanyDataService.selectLtDataDate(date);
+            if (selectDate != null && selectDate.isBefore(date)) {
+                date = selectDate;
             }
             dateList.add(date);
             date = date.minusDays(1);
@@ -104,6 +96,11 @@ public class HotTypeServiceImpl extends ServiceImpl<HotTypeMapper, HotType> impl
         ));
     }
 
+    private LocalDate toLocalDate(String date) {
+        return LocalDate.of(Integer.parseInt(date.substring(0, 4)),
+                Integer.parseInt(date.substring(5, 7)), Integer.parseInt(date.substring(8, 10)));
+    }
+
     private String count(Map<String, List<HotCompanyData>> map, LocalDate finalDate) {
         final String split = ":";
         if (map.containsKey(finalDate.toString())) {
@@ -122,7 +119,7 @@ public class HotTypeServiceImpl extends ServiceImpl<HotTypeMapper, HotType> impl
         if (selectByName(vo.getName()) != null) {
             throw new ServiceException("名称已存在");
         }
-        vo.setCreateTime(new Date()).insert();
+        vo.setCreateTime(new Date()).setUpdateTime(new Date()).insert();
         if (vo.getSort() == null || vo.getSort() == 0) {
             vo.setSort(vo.getId()).updateById();
         }
