@@ -51,7 +51,7 @@
                 </td>
             </tr>
             <tr>
-                <td>十大流通股占比(%):</td>
+                <td>流通股占比(%):</td>
                 <td>
                     <input class="easyui-textbox" name="percent" value="0" style="width: 300px;"
                            data-options="editable:true,required:false"/>
@@ -210,7 +210,7 @@
             {field: 'hotType8', title: '概念8', width: 100, align: 'center'},
             {field: 'hotType9', title: '概念9', width: 100, align: 'center'},
             {field: 'hotType10', title: '概念10', width: 100, align: 'center'},
-            {field: 'percent', title: '十大流通股占比(%)', width: 100, align: 'center'},
+            {field: 'percent', title: '流通股占比(%)', width: 100, align: 'center'},
             {field: 'continuityTime', title: '最近连扳次数', width: 100, align: 'center'},
             {field: 'firstTime', title: '最近首板日期', width: 100, align: 'center'},
             {field: 'remark', title: '备注', width: 300, align: 'left'},

@@ -89,6 +89,11 @@
                         <option value="-8">-8</option>
                         <option value="-9">-9</option>
                         <option value="-10">-10</option>
+                        <option value="-11">-11</option>
+                        <option value="-12">-12</option>
+                        <option value="-13">-13</option>
+                        <option value="-14">-14</option>
+                        <option value="-15">-15</option>
                     </select>
                 </td>
             </tr>
@@ -291,7 +296,7 @@
             {field: 'circulationMarketValue', title: '流通市值(亿)', width: 80, align: 'center'},
             {field: 'safeChange', title: '安全换手%', width: 80, align: 'center'},
             {field: 'maxChange', title: '参考换手%', width: 80, align: 'center'},
-            {field: 'percent', title: '十大流通股占比(%)', width: 60, align: 'center'},
+            {field: 'percent', title: '流通股占比(%)', width: 60, align: 'center'},
             // {field: 'noDealPercent', title: '封单率%', width: 60, align: 'center'},
             // {field: 'noDeal', title: '封单(亿)', width: 60, align: 'center'},
             {field: 'fullTime', title: '涨停时间', width: 150, align: 'center'},

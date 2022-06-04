@@ -115,9 +115,7 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
             if (hotCompany.getMaxChange() == null || (vo.getMaxChange() != null && vo.getMaxChange().compareTo(hotCompany.getMaxChange()) > 0)) {
                 hotCompany.setMaxChange(vo.getMaxChange());
             }
-            if (hotCompany.getCirculationMarketValue() == null || vo.getCirculationMarketValue().compareTo(hotCompany.getCirculationMarketValue()) > 0) {
-                hotCompany.setCirculationMarketValue(vo.getCirculationMarketValue());
-            }
+            hotCompany.setCirculationMarketValue(vo.getCirculationMarketValue());
             if (vo.getContinuityTime() == 1) {
                 hotCompany.setFirstTime(dataDate);
             }

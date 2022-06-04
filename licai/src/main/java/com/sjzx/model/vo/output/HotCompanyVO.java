@@ -83,7 +83,7 @@ public class HotCompanyVO {
     private String firstTime;
 
     /**
-     * 十大流通股占比(%)
+     * 流通股占比(%)
      */
     private BigDecimal percent;
 
