@@ -58,7 +58,7 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
             hotCompanyDataVO.setMaxChange(maxChange.toString());
 
             BigDecimal safeChange = maxChange.multiply(PERCENT).setScale(2, BigDecimal.ROUND_HALF_UP);
-            hotCompanyDataVO.setSafeChange(safeChange + "%");
+            hotCompanyDataVO.setSafeChange(safeChange);
             hotCompanyDataVO.setSafeChangeMarketValue(safeChange.multiply(hotCompanyDataVO.getCirculationMarketValue()).divide(new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP));
             hotCompanyDataVO.setNoDealPercent(hotCompanyDataVO.getNoDeal().multiply(new BigDecimal("100")).divide(hotCompanyDataVO.getCirculationMarketValue(), 2, BigDecimal.ROUND_HALF_UP));
 
@@ -71,7 +71,7 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
                     list.add(map.get(id));
                 }
             }
-            list.sort((a, b) -> Integer.compare(b.getSort(), a.getSort()));
+            list.sort((a, b) -> b.getUpdateTime().compareTo(a.getUpdateTime()));
             if (list.size() > 0) {
                 hotCompanyDataVO.setHotType1(list.get(0).getName());
                 if (list.size() > 1) {
@@ -96,6 +96,7 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
     @Transactional
     public void addHotCompanyData(HotCompanyDataAddVO vo) {
         String dataDate = vo.getFullTime().substring(0, 10);
+        vo.setFullTime(vo.getFullTime().substring(11, 19));
         HotCompany hotCompany = hotCompanyService.selectByCode(vo.getCode());
         if (hotCompany == null) {
             if (StringUtils.isEmpty(vo.getName())) {
@@ -135,8 +136,8 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
     public void updateHotCompanyData(HotCompanyDataAddVO vo) {
         new HotCompanyData().setId(vo.getId())
                 .setMaxChange(vo.getMaxChange()).setCirculationMarketValue(vo.getCirculationMarketValue())
-                .setContinuityTime(vo.getContinuityTime()).setFullTime(vo.getFullTime())
-                .setDataDate(vo.getFullTime().substring(0, 10)).setSort(vo.getSort())
+                .setContinuityTime(vo.getContinuityTime()).setSort(vo.getSort())
+                .setDataDate(vo.getFullTime().substring(0, 10)).setFullTime(vo.getFullTime().substring(11, 19))
                 .setRemark(vo.getRemark()).setUpdateTime(new Date())
                 .setNoDeal(vo.getNoDeal()).updateById();
     }

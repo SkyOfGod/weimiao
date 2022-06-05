@@ -292,28 +292,56 @@
                     return value;
                 }
             },
-            {field: 'safeChangeMarketValue', title: '安全换值(亿)', width: 80, align: 'center'},
+            {field: 'safeChangeMarketValue', title: '安全换值(亿)', width: 80, align: 'center',
+                formatter: function (value, row, index) {
+                    if (value > 0) {
+                        return value + '亿'
+                    }
+                    return value;
+                }
+            },
             {field: 'circulationMarketValue', title: '流通市值(亿)', width: 80, align: 'center'},
-            {field: 'safeChange', title: '安全换手%', width: 80, align: 'center'},
+            {field: 'safeChange', title: '安全换手%', width: 80, align: 'center',
+                formatter: function (value, row, index) {
+                    if (value > 0) {
+                        return value + '%'
+                    }
+                    return value;
+                }
+            },
             {field: 'maxChange', title: '参考换手%', width: 80, align: 'center'},
-            {field: 'percent', title: '流通股占比(%)', width: 60, align: 'center'},
+            {field: 'percent', title: '流通股占比(%)', width: 60, align: 'center',
+                formatter: function (value, row, index) {
+                    if (value > 0) {
+                        return value + '%'
+                    }
+                    return value;
+                }
+            },
             // {field: 'noDealPercent', title: '封单率%', width: 60, align: 'center'},
             // {field: 'noDeal', title: '封单(亿)', width: 60, align: 'center'},
-            {field: 'fullTime', title: '涨停时间', width: 150, align: 'center'},
-            {field: 'hotType1', title: '概念1', width: 65, align: 'center'},
-            {field: 'hotType2', title: '概念2', width: 65, align: 'center'},
-            {field: 'hotType3', title: '概念3', width: 65, align: 'center'},
-            {field: 'hotType4', title: '概念4', width: 65, align: 'center'},
-            {field: 'hotType5', title: '概念5', width: 65, align: 'center'},
-            {field: 'remark', title: '备注', width: 300, align: 'left'},
-            {field: 'firstTime', title: '首扳数', width: 65, align: 'center'},
-            {field: 'secondTime', title: '二扳数', width: 65, align: 'center'},
-            {field: 'thirdTime', title: '三扳数', width: 65, align: 'center'},
-            {field: 'forthTime', title: '四扳数', width: 65, align: 'center'},
-            {field: 'fifthTime', title: '五扳数', width: 65, align: 'center'},
-            {field: 'sixthTime', title: '六扳数', width: 65, align: 'center'},
-            {field: 'seventhTime', title: '七扳数', width: 65, align: 'center'},
-            {field: 'dataDate', title: '复盘日期', width: 100, align: 'center'},
+            {field: 'fullTime', title: '涨停时间', width: 70, align: 'center'},
+            {field: 'dataDate', title: '复盘日期', width: 90, align: 'center'},
+            {field: 'hotType1', title: '概念1', width: 80, align: 'center'},
+            {field: 'hotType2', title: '概念2', width: 80, align: 'center'},
+            {field: 'hotType3', title: '概念3', width: 80, align: 'center'},
+            {field: 'hotType4', title: '概念4', width: 80, align: 'center'},
+            {field: 'hotType5', title: '概念5', width: 80, align: 'center'},
+            {field: 'remark', title: '备注', width: 300, align: 'left',
+                formatter: function (value, row, index) {
+                    if (value == null) {
+                        return value;
+                    }
+                    return '<span title="' + value + '">' + value + '</span>';
+                }
+            },
+            {field: 'firstTime', title: '首扳数', width: 48, align: 'center'},
+            {field: 'secondTime', title: '二扳数', width: 48, align: 'center'},
+            {field: 'thirdTime', title: '三扳数', width: 48, align: 'center'},
+            {field: 'forthTime', title: '四扳数', width: 48, align: 'center'},
+            {field: 'fifthTime', title: '五扳数', width: 48, align: 'center'},
+            {field: 'sixthTime', title: '六扳数', width: 48, align: 'center'},
+            {field: 'seventhTime', title: '七扳数', width: 48, align: 'center'},
             {field: 'sort', title: '排序', width: 40, align: 'center'},
             {field: 'createTime', title: '创建时间', width: 150, align: 'center'},
             {field: 'updateTime', title: '修改时间', width: 150, align: 'center'},
@@ -334,7 +362,7 @@
             title: '新增复盘数据',
             width: 500,
             height: 600,
-            top: 60,
+            top: 70,
             left: 150,
             closed: false,
             cache: false,
@@ -386,13 +414,15 @@
             title: '编辑复盘数据',
             width: 500,
             height: 600,
-            top: 60,
+            top: 70,
             left: 150,
             closed: false,
             cache: false,
             modal: true,
             buttons: [{
                 text: '保存',
+                width: 450,
+                height: 50,
                 handler: function () {
                     if (!$("#editHotCompanyDataForm").form('validate')) {
                         return false;
@@ -410,12 +440,12 @@
                         }
                     });
                 }
-            }, {
+            }/*, {
                 text: '关闭',
                 handler: function () {
                     $("#editHotCompanyData").dialog("close");
                 }
-            }],
+            }*/],
             onBeforeClose: function () {
                 $("#editHotCompanyDataForm").form("clear");
             }

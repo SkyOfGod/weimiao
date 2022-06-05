@@ -33,7 +33,7 @@
                 and a.continuity_time > 2
             </if>
             <if test="vo.continuityTime != null and vo.continuityTime == -20">
-                and SUBSTR(a.full_time, 12, 8) = '09:30:00'
+                and a.full_time = '09:30:00'
             </if>
             <if test="vo.continuityTime != null and vo.continuityTime > 0">
                 and a.continuity_time = {vo.continuityTime}

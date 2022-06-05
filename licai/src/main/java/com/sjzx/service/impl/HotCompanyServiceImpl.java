@@ -46,7 +46,7 @@ public class HotCompanyServiceImpl extends ServiceImpl<HotCompanyMapper, HotComp
     public EasyUIResult<HotCompanyVO> listPage(HotCompanyInputVO vo) {
         LambdaQueryWrapper<HotCompany> wrapper = new LambdaQueryWrapper<>();
         wrapper.like(HotCompany::getCode, vo.getHotCompany()).or().like(HotCompany::getName, vo.getHotCompany())
-                .orderByDesc(HotCompany::getUpdateTime).orderByDesc(HotCompany::getCreateTime);
+                .orderByAsc(HotCompany::getCode);
 
         List<HotCompany> allList = list(wrapper);
         Map<String, HotType> map = hotTypeService.selectMap();

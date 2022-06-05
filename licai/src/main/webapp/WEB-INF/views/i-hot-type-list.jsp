@@ -122,7 +122,11 @@
                 return value;
               }
             },
-            {field: 'remark', title: '备注', width: 500, align: 'left'},
+            {field: 'remark', title: '备注', width: 500, align: 'left',
+                formatter: function (value, row, index) {
+                    return '<span title="' + value + '">' + value + '</span>';
+                }
+            },
             {field: 'createTime', title: '创建时间', width: 150, align: 'center'},
             {field: 'updateTime', title: '修改时间', width: 150, align: 'center'},
         ]],
@@ -140,7 +144,7 @@
             title: '新增指标',
             width: 500,
             height: 500,
-            top: 60,
+            top: 70,
             left: 150,
             closed: false,
             cache: false,
@@ -192,7 +196,7 @@
             title: '编辑指标',
             width: 500,
             height: 500,
-            top: 60,
+            top: 70,
             left: 150,
             closed: false,
             cache: false,

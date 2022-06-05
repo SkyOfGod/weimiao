@@ -55,7 +55,7 @@ public class HotCompanyDataVO {
     /**
      * 安全换手
      */
-    private String safeChange;
+    private BigDecimal safeChange;
 
     /**
      * 安全换值(亿)
