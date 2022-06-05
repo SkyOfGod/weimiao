@@ -451,6 +451,7 @@
             }
         });
         var data = $("#hot-company-data-list").datagrid("getSelected");
+        data.fullTime = data.dataDate + ' ' + data.fullTime;
         $("#editHotCompanyDataForm").form("load", data);
     }
 
