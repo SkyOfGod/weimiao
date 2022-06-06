@@ -176,9 +176,9 @@
                     $("#editHotType").dialog("close");
                 }
             }*/],
-            onBeforeClose: function () {
+            /*onBeforeClose: function () {
                 $("#editHotTypeForm").form("clear");
-            }
+            }*/
         });
     }
 
@@ -203,6 +203,8 @@
             modal: true,
             buttons: [{
                 text: '保存',
+                width: 450,
+                height: 50,
                 handler: function () {
                     if (!$("#editHotTypeForm").form('validate')) {
                         return false;
@@ -220,12 +222,12 @@
                         }
                     });
                 }
-            }, {
+            }/*, {
                 text: '关闭',
                 handler: function () {
                     $("#editHotType").dialog("close");
                 }
-            }],
+            }*/],
             onBeforeClose: function () {
                 $("#editHotTypeForm").form("clear");
             }

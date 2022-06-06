@@ -11,6 +11,7 @@ import com.sjzx.exception.ServiceException;
 import com.sjzx.mapper.HotCompanyMapper;
 import com.sjzx.model.EasyUIResult;
 import com.sjzx.model.vo.input.HotCompanyInputVO;
+import com.sjzx.model.vo.output.HotCompanyCombogridVO;
 import com.sjzx.model.vo.output.HotCompanyVO;
 import com.sjzx.service.HotCompanyDataService;
 import com.sjzx.service.HotCompanyService;
@@ -200,15 +201,23 @@ public class HotCompanyServiceImpl extends ServiceImpl<HotCompanyMapper, HotComp
     }
 
     @Override
-    public List<HotCompany> combogrid(String q) {
-        LambdaQueryWrapper<HotCompany> wrapper = new LambdaQueryWrapper<>();
+    public List<HotCompanyCombogridVO> combogrid(String q) {
+        /*LambdaQueryWrapper<HotCompany> wrapper = new LambdaQueryWrapper<>();
         if (StringUtils.hasText(q)) {
             wrapper.like(HotCompany::getCode, q).or().like(HotCompany::getName, q);
         }
         wrapper.orderByDesc(HotCompany::getUpdateTime).orderByDesc(HotCompany::getId);
         IPage<HotCompany> iPage = new Page<>(1, 20);
         page(iPage, wrapper);
-        return iPage.getRecords();
+
+        HotCompanyData hotCompanyData = hotCompanyDataService.selectMaxIdData();
+        return BeanUtils.copyProperties(iPage.getRecords(), HotCompanyCombogridVO::new, (s, t) -> {
+            if (hotCompanyData != null) {
+                t.setFullTime(hotCompanyData.getDataDate() + " " + hotCompanyData.getFullTime());
+                t.setSort(hotCompanyData.getSort());
+            }
+        });*/
+        return baseMapper.combogridMax(q);
     }
 
 }

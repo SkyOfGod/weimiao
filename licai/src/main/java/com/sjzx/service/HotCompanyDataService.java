@@ -41,4 +41,6 @@ public interface HotCompanyDataService extends IService<HotCompanyData> {
     BigDecimal selectRecentCirculationMarketValueByHotCompanyId(Integer hotCompanyId);
 
     List<HotCompanyData> selectByHotCompanyId(Integer hotCompanyId);
+
+    HotCompanyData selectMaxIdData();
 }

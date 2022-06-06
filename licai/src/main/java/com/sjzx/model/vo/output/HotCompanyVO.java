@@ -23,6 +23,11 @@ public class HotCompanyVO {
     private String name;
 
     /**
+     * 历史最大换手，百分比存4位数
+     */
+    private BigDecimal maxChange;
+
+    /**
      * 概念1
      */
     private String hotType1;

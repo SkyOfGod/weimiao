@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.sjzx.entity.HotCompany;
 import com.sjzx.model.EasyUIResult;
 import com.sjzx.model.vo.input.HotCompanyInputVO;
+import com.sjzx.model.vo.output.HotCompanyCombogridVO;
 import com.sjzx.model.vo.output.HotCompanyVO;
 
 import java.util.List;
@@ -28,5 +29,5 @@ public interface HotCompanyService extends IService<HotCompany> {
 
     HotCompany selectByCode(String code);
 
-    List<HotCompany> combogrid(String q);
+    List<HotCompanyCombogridVO> combogrid(String q);
 }

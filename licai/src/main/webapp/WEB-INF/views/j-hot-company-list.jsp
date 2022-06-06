@@ -58,16 +58,9 @@
                 </td>
             </tr>
             <tr>
-                <td>最近连扳次数:</td>
+                <td>最大换手:</td>
                 <td>
-                    <input class="easyui-textbox" name="continuityTime" value="0" style="width: 300px;"
-                           data-options="editable:true,required:true"/>
-                </td>
-            </tr>
-            <tr>
-                <td>首板日期:</td>
-                <td>
-                    <input class="easyui-datebox" name="firstDate" value="0" style="width: 300px;"
+                    <input class="easyui-textbox" name="maxChange" value="0" style="width: 300px;"
                            data-options="editable:true,required:false"/>
                 </td>
             </tr>
@@ -234,6 +227,7 @@
                     return '<span title="' + value + '">' + value + '</span>';
                 }
             },
+            {field: 'maxChange', title: '最大换手%', width: 80, align: 'center'},
             {field: 'continuityTime', title: '最近连扳次数', width: 100, align: 'center'},
             {field: 'firstDate', title: '最近首板日期', width: 100, align: 'center'},
             {field: 'createTime', title: '创建时间', width: 150, align: 'center'},
@@ -260,6 +254,8 @@
             modal: true,
             buttons: [{
                 text: '保存',
+                width: 450,
+                height: 50,
                 handler: function () {
                     if (!$("#editHotCompanyForm").form('validate')) {
                         return false;
@@ -277,12 +273,12 @@
                         }
                     });
                 }
-            }, {
+            }/*, {
                 text: '关闭',
                 handler: function () {
                     $("#editHotCompany").dialog("close");
                 }
-            }],
+            }*/],
             onBeforeClose: function () {
                 $("#editHotCompanyForm").form("clear");
             }
@@ -310,6 +306,8 @@
             modal: true,
             buttons: [{
                 text: '保存',
+                width: 450,
+                height: 50,
                 handler: function () {
                     if (!$("#editHotCompanyForm").form('validate')) {
                         return false;
@@ -328,12 +326,12 @@
                         }
                     });
                 }
-            }, {
+            }/*, {
                 text: '关闭',
                 handler: function () {
                     $("#editHotCompany").dialog("close");
                 }
-            }],
+            }*/],
             onBeforeClose: function () {
                 $("#editHotCompanyForm").form("clear");
             }

@@ -37,7 +37,8 @@ import java.util.*;
 @Service
 public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper, HotCompanyData> implements HotCompanyDataService {
 
-    private final static BigDecimal PERCENT = new BigDecimal("1");
+    private final static BigDecimal PERCENT = new BigDecimal("0.7");
+//    private final static BigDecimal PERCENT = new BigDecimal("1");
 
     @Autowired
     private HotTypeService hotTypeService;
@@ -197,6 +198,19 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
         wrapper.eq(HotCompanyData::getHotCompanyId, hotCompanyId)
                 .orderByDesc(HotCompanyData::getDataDate);
         return list(wrapper);
+    }
+
+    @Override
+    public HotCompanyData selectMaxIdData() {
+        LambdaQueryWrapper<HotCompanyData> wrapper = new LambdaQueryWrapper<>();
+        wrapper.orderByDesc(HotCompanyData::getId);
+
+        IPage<HotCompanyData> iPage = new Page<>(1, 1);
+        page(iPage, wrapper);
+        if (iPage.getTotal() > 0) {
+            return iPage.getRecords().get(0);
+        }
+        return null;
     }
 
 }

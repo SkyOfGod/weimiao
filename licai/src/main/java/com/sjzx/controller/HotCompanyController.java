@@ -5,6 +5,7 @@ import com.sjzx.entity.HotCompany;
 import com.sjzx.model.EasyUIResult;
 import com.sjzx.model.Response;
 import com.sjzx.model.vo.input.HotCompanyInputVO;
+import com.sjzx.model.vo.output.HotCompanyCombogridVO;
 import com.sjzx.model.vo.output.HotCompanyVO;
 import com.sjzx.service.HotCompanyService;
 import io.swagger.annotations.ApiOperation;
@@ -59,7 +60,7 @@ public class HotCompanyController {
 
   @PostMapping("/combogrid")
   @ApiOperation(value = "下拉框")
-  public List<HotCompany> combogrid(String q) {
+  public List<HotCompanyCombogridVO> combogrid(String q) {
     return hotCompanyService.combogrid(q);
   }
 

@@ -26,7 +26,7 @@
             <tr>
                 <td>板块:</td>
                 <td>
-                    <input id="editHotCompanyDataHotTypeId" class="easyui-textbox" name="hotTypeId" style="width: 180px;" data-options="editable:true,required:true"/>
+                    <input id="editHotCompanyDataHotTypeId" class="easyui-textbox" name="hotTypeId" style="width: 150px;" data-options="editable:true,required:true"/>
                 </td>
             </tr>
             <tr>
@@ -39,7 +39,7 @@
             <tr>
                 <td>涨停时间:</td>
                 <td>
-                    <input class="easyui-datetimebox" name="fullTime" value="0" style="width: 300px;"
+                    <input id="editHotCompanyDataFullTime" class="easyui-datetimebox" name="fullTime" value="0" style="width: 300px;"
                            data-options="editable:false,required:true"/>
                 </td>
             </tr>
@@ -67,7 +67,7 @@
             <tr>
                 <td>排序:</td>
                 <td>
-                    <select class="easyui-combobox" name="sort" style="width: 100px;" data-options="editable:false,required:true">
+                    <select id="editHotCompanyDataSort" class="easyui-combobox" name="sort" style="width: 100px;" data-options="editable:false,required:true">
                         <option value="10">10</option>
                         <option value="9">9</option>
                         <option value="8">8</option>
@@ -224,13 +224,16 @@
         columns: [[
             {field: 'id', title: '主键', width: 40, align: 'center'},
             {field: 'code', title: '编码', width: 80, align: 'center'},
-            {field: 'name', title: '名称', width: 80, align: 'center'}
+            {field: 'name', title: '名称', width: 80, align: 'center'},
+            {field: 'hotTypeName', title: '概念', width: 80, align: 'center'}
         ]],
         onSelect: function (index, value) {
             $("#editHotCompanyDataName").textbox('setValue', value.name);
             $("#editHotCompanyDataHotTypeId").textbox('setValue', value.hotTypeId);
-            // $("#editHotCompanyDataCirculationMarketValue").textbox('setValue', value.circulationMarketValue);
+            $("#editHotCompanyDataFullTime").textbox('setValue', value.fullTime);
+            $("#editHotCompanyDataSort").textbox('setValue', value.sort);
             // $("#editHotCompanyDataContinuityTime").textbox('setValue', value.continuityTime + 1);
+            $("#editHotCompanyDataContinuityTime").textbox('setValue', 1);
             $("#editHotCompanyDataMaxChange").textbox('setValue', value.maxChange);
         }
     });
