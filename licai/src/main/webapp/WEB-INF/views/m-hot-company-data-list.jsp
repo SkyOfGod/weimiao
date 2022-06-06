@@ -215,7 +215,7 @@
     });
 
     $("#editHotCompanyData [name='code']").combogrid({
-        panelWidth: 300,
+        panelWidth: 600,
         idField: 'code',
         textField: 'name',
         url: '/hotCompany/combogrid',
@@ -223,9 +223,9 @@
         delay: 500,
         columns: [[
             {field: 'id', title: '主键', width: 40, align: 'center'},
-            {field: 'code', title: '编码', width: 80, align: 'center'},
-            {field: 'name', title: '名称', width: 80, align: 'center'},
-            {field: 'hotTypeName', title: '概念', width: 80, align: 'center'}
+            {field: 'code', title: '编码', width: 65, align: 'center'},
+            {field: 'name', title: '名称', width: 65, align: 'center'},
+            {field: 'hotTypeName', title: '概念', width: 400, align: 'center'}
         ]],
         onSelect: function (index, value) {
             $("#editHotCompanyDataName").textbox('setValue', value.name);

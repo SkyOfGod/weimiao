@@ -202,22 +202,20 @@ public class HotCompanyServiceImpl extends ServiceImpl<HotCompanyMapper, HotComp
 
     @Override
     public List<HotCompanyCombogridVO> combogrid(String q) {
-        /*LambdaQueryWrapper<HotCompany> wrapper = new LambdaQueryWrapper<>();
-        if (StringUtils.hasText(q)) {
-            wrapper.like(HotCompany::getCode, q).or().like(HotCompany::getName, q);
-        }
-        wrapper.orderByDesc(HotCompany::getUpdateTime).orderByDesc(HotCompany::getId);
-        IPage<HotCompany> iPage = new Page<>(1, 20);
-        page(iPage, wrapper);
-
-        HotCompanyData hotCompanyData = hotCompanyDataService.selectMaxIdData();
-        return BeanUtils.copyProperties(iPage.getRecords(), HotCompanyCombogridVO::new, (s, t) -> {
-            if (hotCompanyData != null) {
-                t.setFullTime(hotCompanyData.getDataDate() + " " + hotCompanyData.getFullTime());
-                t.setSort(hotCompanyData.getSort());
+        List<HotCompanyCombogridVO> list = baseMapper.combogridMax(q);
+        if (!list.isEmpty()) {
+            Map<String, HotType> map = hotTypeService.selectMap();
+            for (HotCompanyCombogridVO combogridVO : list) {
+                Set<String> names = new HashSet<>();
+                for (String hotTypeId : combogridVO.getHotTypeIds().split(",")) {
+                    if (map.containsKey(hotTypeId)) {
+                        names.add(map.get(hotTypeId).getName());
+                    }
+                }
+                combogridVO.setHotTypeName(String.join(",", names));
             }
-        });*/
-        return baseMapper.combogridMax(q);
+        }
+        return list;
     }
 
 }

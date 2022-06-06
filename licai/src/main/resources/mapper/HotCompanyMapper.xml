@@ -3,11 +3,10 @@
 <mapper namespace="com.sjzx.mapper.HotCompanyMapper">
 
     <select id="combogridMax" resultType="com.sjzx.model.vo.output.HotCompanyCombogridVO">
-        select a.id, a.code, a.name, a.hot_type_id, b.name hotTypeName, a.max_change, a.continuity_time,
+        select a.id, a.code, a.name, a.hot_type_id, a.hot_type_ids, a.max_change, a.continuity_time,
         (select concat(data_date, ' ', full_time) from hot_company_data order by id desc limit 1) fullTime,
         (select sort from hot_company_data order by id desc limit 1) sort
         from hot_company a
-        join hot_type b on b.id = a.hot_type_id
         <where>
             <if test="q != null and q.trim() != ''">
                 and a.code like concat(#{q}, '%') or a.name like concat('%', #{q}, '%')

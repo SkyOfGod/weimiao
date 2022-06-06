@@ -23,6 +23,11 @@ public class HotCompanyCombogridVO {
     private String name;
 
     /**
+     * 热点ID
+     */
+    private String hotTypeIds;
+
+    /**
      * 当日隶属热点ID
      */
     private Integer hotTypeId;
