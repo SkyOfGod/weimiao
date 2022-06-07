@@ -61,7 +61,7 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
             BigDecimal safeChange = maxChange.multiply(PERCENT).setScale(2, BigDecimal.ROUND_HALF_UP);
             hotCompanyDataVO.setSafeChange(safeChange);
             hotCompanyDataVO.setSafeChangeMarketValue(safeChange.multiply(hotCompanyDataVO.getCirculationMarketValue()).divide(new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP));
-            hotCompanyDataVO.setNoDealPercent(hotCompanyDataVO.getNoDeal().multiply(new BigDecimal("100")).divide(hotCompanyDataVO.getCirculationMarketValue(), 2, BigDecimal.ROUND_HALF_UP));
+            //hotCompanyDataVO.setNoDealPercent(hotCompanyDataVO.getNoDeal().multiply(new BigDecimal("100")).divide(hotCompanyDataVO.getCirculationMarketValue(), 2, BigDecimal.ROUND_HALF_UP));
 
             if (StringUtils.isEmpty(hotCompanyDataVO.getHotTypeIds())) {
                 continue;
@@ -130,7 +130,7 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
         hotCompanyData.setHotCompanyId(hotCompany.getId()).setDataDate(dataDate)
                 .setCreateTime(new Date()).insert();
 
-        //new HotType().setId(vo.getHotTypeId()).setUpdateTime(new Date()).updateById();
+        new HotType().setId(vo.getHotTypeId()).setUpdateTime(new Date()).updateById();
     }
 
     @Override
