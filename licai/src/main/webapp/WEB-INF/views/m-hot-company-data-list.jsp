@@ -275,8 +275,8 @@
         rownumbers: true,
         collapsible: true,
         pagination: true,
-        pageSize: 100,
-        pageList: [20, 50, 100],
+        pageSize: 30,
+        pageList: [30, 100],
         toolbar: [{
             text: '新增',
             iconCls: 'icon-add',
@@ -353,6 +353,14 @@
                     return '<span title="' + value + '">' + value + '</span>';
                 }
             },
+            {field: 'totalRemark', title: '总备注', width: 300, align: 'left',
+                formatter: function (value, row, index) {
+                    if (value == null) {
+                        return value;
+                    }
+                    return '<span title="' + value + '">' + value + '</span>';
+                }
+            },
             {field: 'firstTime', title: '首扳数', width: 48, align: 'center'},
             {field: 'secondTime', title: '二扳数', width: 48, align: 'center'},
             {field: 'thirdTime', title: '三扳数', width: 48, align: 'center'},
@@ -396,11 +404,12 @@
                     var params = $("#editHotCompanyDataForm").serialize();
                     $.post("/hotCompanyData/add", params, function (data) {
                         if (data.code == 200) {
-                            $.messager.alert('提示', '新增成功!', 'info',
-                                function () {
-                                    $("#editHotCompanyData").dialog('close');
+                            // $.messager.alert('提示', '新增成功!', 'info',
+                            //     function () {
+                            //         $("#editHotCompanyData").dialog('close');
                                     $("#hot-company-data-list").datagrid("reload");
-                                });
+                            $("#editHotCompanyDataForm").form("clear");
+                                // });
                         } else {
                             $.messager.alert('提示', data.msg, 'warning');
                         }

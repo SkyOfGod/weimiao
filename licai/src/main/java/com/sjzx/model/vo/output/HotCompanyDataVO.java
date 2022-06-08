@@ -153,6 +153,11 @@ public class HotCompanyDataVO {
     private String remark;
 
     /**
+     * 总备注
+     */
+    private String totalRemark;
+
+    /**
      * 创建时间
      */
     private Date createTime;

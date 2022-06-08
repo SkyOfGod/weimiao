@@ -4,7 +4,7 @@
 
     <select id="listPage" resultType="com.sjzx.model.vo.output.HotCompanyDataVO">
         select a.id,a.hot_type_id,a.max_change,a.circulation_market_value,a.full_time,a.continuity_time,
-               a.sort,a.data_date,a.remark,a.create_time,a.update_time,a.no_deal,
+               a.sort,a.data_date,a.remark,b.remark totalRemark,a.create_time,a.update_time,a.no_deal,
 (select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 1 and data_date &lt; a.data_date) firstTime,
 (select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 2 and data_date &lt; a.data_date) secondTime,
 (select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 3 and data_date &lt; a.data_date) thirdTime,
