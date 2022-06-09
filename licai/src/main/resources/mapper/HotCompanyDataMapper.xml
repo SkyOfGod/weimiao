@@ -51,7 +51,7 @@
                 and a.full_time = '09:30:00'
             </if>
             <if test="vo.continuityTime != null and vo.continuityTime > 0">
-                and a.continuity_time = {vo.continuityTime}
+                and a.continuity_time = #{vo.continuityTime}
             </if>
         </where>
         order by data_date desc,sort desc,full_time,continuity_time desc,a.create_time
