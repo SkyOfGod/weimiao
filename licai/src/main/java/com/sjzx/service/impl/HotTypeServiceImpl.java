@@ -14,6 +14,7 @@ import com.sjzx.model.vo.output.HotTypeVO;
 import com.sjzx.service.HotCompanyDataService;
 import com.sjzx.service.HotTypeService;
 import com.sjzx.utils.BeanUtils;
+import com.sjzx.utils.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -46,7 +47,7 @@ public class HotTypeServiceImpl extends ServiceImpl<HotTypeMapper, HotType> impl
         if (StringUtils.isEmpty(vo.getDataDate())) {
             date = now.toLocalDate();
         } else {
-            date = toLocalDate(vo.getDataDate());
+            date = NumberUtils.toLocalDate(vo.getDataDate());
             // 更新查询日期所在热点更新时间
             baseMapper.updateUpdateTimeByDataDate(vo.getDataDate());
         }
@@ -94,11 +95,6 @@ public class HotTypeServiceImpl extends ServiceImpl<HotTypeMapper, HotType> impl
                     t.setCount20(count(map, dateList.get(19)));
                 }
         ));
-    }
-
-    private LocalDate toLocalDate(String date) {
-        return LocalDate.of(Integer.parseInt(date.substring(0, 4)),
-                Integer.parseInt(date.substring(5, 7)), Integer.parseInt(date.substring(8, 10)));
     }
 
     private String count(Map<String, List<HotCompanyData>> map, LocalDate finalDate) {

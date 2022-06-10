@@ -98,6 +98,20 @@
                 </td>
             </tr>
             <tr>
+                <td>近期对手换手%:</td>
+                <td>
+                    <input class="easyui-textbox" name="nearChange" value="0" style="width: 300px;"
+                           data-options="editable:true,required:false"/>
+                </td>
+            </tr>
+            <tr>
+                <td>一分钟爆量(亿):</td>
+                <td>
+                    <input class="easyui-textbox" name="oneMinuteValue" value="0" style="width: 300px;"
+                           data-options="editable:true,required:false"/>
+                </td>
+            </tr>
+            <tr>
                 <td>最大换手%:</td>
                 <td>
                     <input id="editHotCompanyDataMaxChange" class="easyui-textbox" name="maxChange" value="0" style="width: 300px;"
@@ -310,7 +324,7 @@
                     return value;
                 }
             },
-            {field: 'safeChangeMarketValue', title: '安全换值(亿)', width: 80, align: 'center',
+            {field: 'oneMinuteValue', title: '爆量(亿)', width: 60, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
                         return value + '亿'
@@ -319,6 +333,33 @@
                 }
             },
             {field: 'circulationMarketValue', title: '流通市值(亿)', width: 80, align: 'center'},
+            {field: 'oneMinuteValuePercent', title: '%爆量占比', width: 60, align: 'center',
+                formatter: function (value, row, index) {
+                    if (value > 0) {
+                        return value + '%'
+                    }
+                    return value;
+                }
+            },
+            {field: 'nearChange', title: '%对手换手', width: 60, align: 'center'},
+            {field: 'percent', title: '%流通股占比', width: 60, align: 'center',
+                formatter: function (value, row, index) {
+                    if (value > 0) {
+                        return value + '%'
+                    }
+                    return value;
+                }
+            },
+            {field: 'fullTime', title: '涨停时间', width: 70, align: 'center'},
+            {field: 'dataDate', title: '复盘日期', width: 90, align: 'center'},
+            {field: 'safeChangeMarketValue', title: '安全换值(亿)', width: 80, align: 'center',
+                formatter: function (value, row, index) {
+                    if (value > 0) {
+                        return value + '亿'
+                    }
+                    return value;
+                }
+            },
             {field: 'safeChange', title: '安全换手%', width: 80, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
@@ -327,8 +368,9 @@
                     return value;
                 }
             },
-            {field: 'maxChange', title: '参考换手%', width: 80, align: 'center'},
-            {field: 'percent', title: '流通股占比(%)', width: 60, align: 'center',
+            {field: 'maxChange', title: '%最大换手', width: 60, align: 'center'},
+            {field: 'yesterdayNoDeal', title: '(亿)昨日封单', width: 60, align: 'center'},
+            {field: 'yesterdayNoDealPercent', title: '%昨日封单率', width: 60, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
                         return value + '%'
@@ -336,16 +378,13 @@
                     return value;
                 }
             },
-            // {field: 'noDealPercent', title: '封单率%', width: 60, align: 'center'},
-            // {field: 'noDeal', title: '封单(亿)', width: 60, align: 'center'},
-            {field: 'fullTime', title: '涨停时间', width: 70, align: 'center'},
-            {field: 'dataDate', title: '复盘日期', width: 90, align: 'center'},
+            {field: 'noDeal', title: '(亿)今日封单', width: 60, align: 'center'},
             {field: 'hotType1', title: '概念1', width: 80, align: 'center'},
             {field: 'hotType2', title: '概念2', width: 80, align: 'center'},
             {field: 'hotType3', title: '概念3', width: 80, align: 'center'},
             {field: 'hotType4', title: '概念4', width: 80, align: 'center'},
             {field: 'hotType5', title: '概念5', width: 80, align: 'center'},
-            {field: 'remark', title: '备注', width: 300, align: 'left',
+            {field: 'remark', title: '备注', width: 150, align: 'left',
                 formatter: function (value, row, index) {
                     if (value == null) {
                         return value;
@@ -353,7 +392,7 @@
                     return '<span title="' + value + '">' + value + '</span>';
                 }
             },
-            {field: 'totalRemark', title: '总备注', width: 300, align: 'left',
+            {field: 'totalRemark', title: '总备注', width: 150, align: 'left',
                 formatter: function (value, row, index) {
                     if (value == null) {
                         return value;

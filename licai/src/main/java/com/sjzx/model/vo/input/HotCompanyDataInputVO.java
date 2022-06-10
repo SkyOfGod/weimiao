@@ -28,4 +28,9 @@ public class HotCompanyDataInputVO extends BasePage {
      */
     private Integer continuityTime;
 
+    /**
+     * 复盘上一个交易日日期
+     */
+    private String yesterdayDataDate;
+
 }

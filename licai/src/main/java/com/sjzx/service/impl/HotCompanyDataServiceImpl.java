@@ -17,6 +17,7 @@ import com.sjzx.service.HotCompanyDataService;
 import com.sjzx.service.HotCompanyService;
 import com.sjzx.service.HotTypeService;
 import com.sjzx.utils.BeanUtils;
+import com.sjzx.utils.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,6 +49,10 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
 
     @Override
     public EasyUIResult<HotCompanyDataVO> listPage(HotCompanyDataInputVO vo) {
+        List<String> dataList = baseMapper.selectAllDataDate(vo.getDataDate());
+        if (dataList.size() > 1) {
+            vo.setYesterdayDataDate(dataList.get(1));
+        }
         IPage<HotCompanyDataVO> iPage = new Page<>(vo.getPageNo(), vo.getPageSize());
         baseMapper.listPage(iPage, vo);
 
@@ -61,7 +66,14 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
             BigDecimal safeChange = maxChange.multiply(PERCENT).setScale(2, BigDecimal.ROUND_HALF_UP);
             hotCompanyDataVO.setSafeChange(safeChange);
             hotCompanyDataVO.setSafeChangeMarketValue(safeChange.multiply(hotCompanyDataVO.getCirculationMarketValue()).divide(new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP));
-            //hotCompanyDataVO.setNoDealPercent(hotCompanyDataVO.getNoDeal().multiply(new BigDecimal("100")).divide(hotCompanyDataVO.getCirculationMarketValue(), 2, BigDecimal.ROUND_HALF_UP));
+            if (hotCompanyDataVO.getYesterdayNoDeal() != null) {
+                hotCompanyDataVO.setYesterdayNoDealPercent(hotCompanyDataVO.getYesterdayNoDeal().multiply(new BigDecimal("100")).divide(hotCompanyDataVO.getCirculationMarketValue(), 2, BigDecimal.ROUND_HALF_UP));
+            }
+            if (hotCompanyDataVO.getNearChange().compareTo(BigDecimal.ZERO) > 0) {
+                hotCompanyDataVO.setYesterdayNoDealPercent(hotCompanyDataVO.getOneMinuteValue().multiply(new BigDecimal("10000"))
+                        .divide(hotCompanyDataVO.getCirculationMarketValue().multiply(hotCompanyDataVO.getNearChange()), 2, BigDecimal.ROUND_HALF_UP));
+            }
+
 
             if (StringUtils.isEmpty(hotCompanyDataVO.getHotTypeIds())) {
                 continue;
@@ -167,8 +179,7 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
             Map<String, String> map = new HashMap<>();
             map.put("sort", i + "");
             map.put("key", dataDate);
-            LocalDate localDate = LocalDate.of(Integer.parseInt(dataDate.substring(0, 4)),
-                    Integer.parseInt(dataDate.substring(5, 7)), Integer.parseInt(dataDate.substring(8, 10)));
+            LocalDate localDate = NumberUtils.toLocalDate(dataDate);
             map.put("value", "周" + localDate.getDayOfWeek().getValue());
             list.add(map);
         }

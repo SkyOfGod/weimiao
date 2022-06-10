@@ -3,6 +3,7 @@ package com.sjzx.utils;
 import com.sjzx.exception.ServiceException;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,6 +14,11 @@ import java.util.regex.Pattern;
  * @Date: 2020-11-02 19:08
  */
 public class NumberUtils {
+
+    public static LocalDate toLocalDate(String date) {
+        return LocalDate.of(Integer.parseInt(date.substring(0, 4)),
+                Integer.parseInt(date.substring(5, 7)), Integer.parseInt(date.substring(8, 10)));
+    }
 
     public static boolean isNumeric(String str) {
         //Pattern pattern = Pattern.compile("^-?[0-9]+"); //这个也行

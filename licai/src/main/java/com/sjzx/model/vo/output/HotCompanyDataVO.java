@@ -48,6 +48,11 @@ public class HotCompanyDataVO {
     private BigDecimal circulationMarketValue;
 
     /**
+     * 上一个交易日封单金额
+     */
+    private BigDecimal yesterdayNoDeal;
+
+    /**
      * 封单金额
      */
     private BigDecimal noDeal;
@@ -58,6 +63,21 @@ public class HotCompanyDataVO {
     private BigDecimal safeChange;
 
     /**
+     * 近期对手盘换手，百分比存2位数
+     */
+    private BigDecimal nearChange;
+
+    /**
+     * 第一分钟爆量
+     */
+    private BigDecimal oneMinuteValue;
+
+    /**
+     * 第一分钟爆量占近期对手盘比例
+     */
+    private BigDecimal oneMinuteValuePercent;
+
+    /**
      * 安全换值(亿)
      */
     private BigDecimal safeChangeMarketValue;
@@ -65,7 +85,7 @@ public class HotCompanyDataVO {
     /**
      * 封单率
      */
-    private BigDecimal noDealPercent;
+    private BigDecimal yesterdayNoDealPercent;
 
     /**
      * 涨停时间

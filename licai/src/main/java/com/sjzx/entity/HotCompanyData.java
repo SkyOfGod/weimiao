@@ -45,6 +45,16 @@ public class HotCompanyData extends Model<HotCompanyData> {
     private BigDecimal maxChange;
 
     /**
+     * 近期对手盘换手，百分比存2位数
+     */
+    private BigDecimal nearChange;
+
+    /**
+     * 第一分钟爆量
+     */
+    private BigDecimal oneMinuteValue;
+
+    /**
      * 当前流通市值（亿元）
      */
     private BigDecimal circulationMarketValue;
