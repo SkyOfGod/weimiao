@@ -10,6 +10,7 @@ import com.sjzx.entity.HotType;
 import com.sjzx.exception.ServiceException;
 import com.sjzx.mapper.HotCompanyMapper;
 import com.sjzx.model.EasyUIResult;
+import com.sjzx.model.enums.CompanyLocationEnum;
 import com.sjzx.model.vo.input.HotCompanyInputVO;
 import com.sjzx.model.vo.output.HotCompanyCombogridVO;
 import com.sjzx.model.vo.output.HotCompanyVO;
@@ -46,8 +47,29 @@ public class HotCompanyServiceImpl extends ServiceImpl<HotCompanyMapper, HotComp
     @Override
     public EasyUIResult<HotCompanyVO> listPage(HotCompanyInputVO vo) {
         LambdaQueryWrapper<HotCompany> wrapper = new LambdaQueryWrapper<>();
-        wrapper.like(HotCompany::getCode, vo.getHotCompany()).or().like(HotCompany::getName, vo.getHotCompany())
-                .orderByAsc(HotCompany::getCode);
+        if (vo.getCategory() != null && vo.getCategory() == -1) {
+            wrapper.and(wrapper0 -> wrapper0.likeRight(HotCompany::getCode, "60")
+                    .or().likeRight(HotCompany::getCode,  "00"));
+        }
+        if (vo.getCategory() != null && vo.getCategory() == 1) {
+            wrapper.and(wrapper0 -> wrapper0.likeRight(HotCompany::getCode,  "00"));
+        }
+        if (vo.getCategory() != null && vo.getCategory() == 2) {
+            wrapper.and(wrapper0 -> wrapper0.likeRight(HotCompany::getCode, "60"));
+        }
+        if (vo.getCategory() != null && vo.getCategory() == 3) {
+            wrapper.and(wrapper0 -> wrapper0.likeRight(HotCompany::getCode, "30"));
+        }
+        if (vo.getCategory() != null && vo.getCategory() == 4) {
+            wrapper.and(wrapper0 -> wrapper0.likeRight(HotCompany::getCode, "688"));
+        }
+        if (vo.getCategory() != null && vo.getCategory() == 5) {
+            wrapper.and(wrapper0 -> wrapper0.likeRight(HotCompany::getCode, "83"));
+        }
+        if (!StringUtils.isEmpty(vo.getHotCompany())) {
+            wrapper.and(wrapper0 -> wrapper0.like(HotCompany::getCode, vo.getHotCompany()).or().like(HotCompany::getName, vo.getHotCompany()));
+        }
+        wrapper.orderByAsc(HotCompany::getCode);
 
         List<HotCompany> allList = list(wrapper);
         Map<String, HotType> map = hotTypeService.selectMap();

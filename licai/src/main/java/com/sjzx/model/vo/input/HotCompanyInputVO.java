@@ -18,6 +18,10 @@ public class HotCompanyInputVO extends BasePage {
      */
     private String hotCompany;
 
+    /**
+     * 类别 0-全部  1-沪深
+     */
+    private Integer category;
 
 
 }

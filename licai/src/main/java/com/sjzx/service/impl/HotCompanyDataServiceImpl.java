@@ -66,11 +66,11 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
             BigDecimal safeChange = maxChange.multiply(PERCENT).setScale(2, BigDecimal.ROUND_HALF_UP);
             hotCompanyDataVO.setSafeChange(safeChange);
             hotCompanyDataVO.setSafeChangeMarketValue(safeChange.multiply(hotCompanyDataVO.getCirculationMarketValue()).divide(new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP));
-            if (hotCompanyDataVO.getYesterdayNoDeal() != null) {
-                hotCompanyDataVO.setYesterdayNoDealPercent(hotCompanyDataVO.getYesterdayNoDeal().multiply(new BigDecimal("100")).divide(hotCompanyDataVO.getCirculationMarketValue(), 2, BigDecimal.ROUND_HALF_UP));
+            if (hotCompanyDataVO.getTodayNoDeal() != null) {
+                hotCompanyDataVO.setTodayNoDealPercent(hotCompanyDataVO.getTodayNoDeal().multiply(new BigDecimal("100")).divide(hotCompanyDataVO.getCirculationMarketValue(), 2, BigDecimal.ROUND_HALF_UP));
             }
             if (hotCompanyDataVO.getNearChange().compareTo(BigDecimal.ZERO) > 0) {
-                hotCompanyDataVO.setYesterdayNoDealPercent(hotCompanyDataVO.getOneMinuteValue().multiply(new BigDecimal("10000"))
+                hotCompanyDataVO.setOneMinuteValuePercent(hotCompanyDataVO.getOneMinuteValue().multiply(new BigDecimal("10000"))
                         .divide(hotCompanyDataVO.getCirculationMarketValue().multiply(hotCompanyDataVO.getNearChange()), 2, BigDecimal.ROUND_HALF_UP));
             }
 

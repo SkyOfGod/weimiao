@@ -48,12 +48,12 @@ public class HotCompanyDataVO {
     private BigDecimal circulationMarketValue;
 
     /**
-     * 上一个交易日封单金额
+     * 今日封单金额
      */
-    private BigDecimal yesterdayNoDeal;
+    private BigDecimal todayNoDeal;
 
     /**
-     * 封单金额
+     * 下一个交易日封单金额
      */
     private BigDecimal noDeal;
 
@@ -85,7 +85,7 @@ public class HotCompanyDataVO {
     /**
      * 封单率
      */
-    private BigDecimal yesterdayNoDealPercent;
+    private BigDecimal todayNoDealPercent;
 
     /**
      * 涨停时间

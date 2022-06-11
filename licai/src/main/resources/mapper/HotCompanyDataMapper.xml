@@ -14,7 +14,7 @@
 (select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 6 and data_date &lt; a.data_date) sixthTime,
 (select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 7 and data_date &lt; a.data_date) seventhTime,
                 <if test="vo.yesterdayDataDate != null and vo.yesterdayDataDate.trim() !=''">
-                    (select no_deal from hot_company_data aa where hot_company_id = a.hot_company_id and data_date = #{vo.yesterdayDataDate}) yesterdayNoDeal,
+                    (select no_deal from hot_company_data aa where hot_company_id = a.hot_company_id and data_date = #{vo.yesterdayDataDate}) todayNoDeal,
                 </if>
                 b.name,b.code,b.hot_type_ids,b.percent,c.name hotType
         from hot_company_data a

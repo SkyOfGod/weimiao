@@ -2,6 +2,8 @@
 <div style="width: 100%;height: 40px">
     热点名称:&nbsp;&nbsp;<input class="easyui-textbox" id="listj_searchHotTypeId">
     公司:  <input class="easyui-textbox" id="listj_searchCompany">
+    分类:  <input class="easyui-textbox" id="listj_searchCategory">
+    <input type="hidden" id="listj_searchCategoryKey"/>
     <button class="easyui-linkbutton" iconCls="icon-search" onclick="hotCompanyListSearch()">搜索</button>
 </div>
 <table id="hot-company-list" style="width:100%;height:1120px"></table>
@@ -74,6 +76,33 @@
 </div>
 
 <script type="text/javascript" charset="utf-8">
+
+    $("#listj_searchCategory").combobox({
+        valueField: 'key',
+        textField: 'value',
+        data: [{
+            key: '-1',
+            value: '深沪主板'
+        }, {
+            key: '1',
+            value: '深主板'
+        }, {
+            key: '2',
+            value: '沪主板'
+        }, {
+            key: '3',
+            value: '深创业板'
+        }, {
+            key: '4',
+            value: '沪科创板'
+        }, {
+            key: '5',
+            value: '北交所'
+        }],
+        onSelect: function (record) {
+            $("#listj_searchCategoryKey").val(record.key);
+        }
+    });
 
     $("#listj_searchHotTypeId").combogrid({
         panelWidth: 200,
@@ -238,6 +267,7 @@
             param.pageSize = param.rows;
             param.hotTypeId = $('#listj_searchHotTypeId').val();
             param.hotCompany = $('#listj_searchCompany').val();
+            param.category = $('#listj_searchCategoryKey').val();
             return true;
         }
     });

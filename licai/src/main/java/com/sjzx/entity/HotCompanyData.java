@@ -70,7 +70,7 @@ public class HotCompanyData extends Model<HotCompanyData> {
     private Integer continuityTime;
 
     /**
-     * 封单金额
+     * 下一个交易日封单金额
      */
     private BigDecimal noDeal;
 

@@ -61,6 +61,9 @@
                         <option value="12">12</option>
                         <option value="13">13</option>
                         <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
                     </select>
                 </td>
             </tr>
@@ -119,7 +122,7 @@
                 </td>
             </tr>
             <tr>
-                <td>封单(亿):</td>
+                <td>明日封单(亿):</td>
                 <td>
                     <input class="easyui-textbox" name="noDeal" value="0" style="width: 300px;"
                            data-options="editable:true,required:false"/>
@@ -332,7 +335,6 @@
                     return value;
                 }
             },
-            {field: 'circulationMarketValue', title: '流通市值(亿)', width: 80, align: 'center'},
             {field: 'oneMinuteValuePercent', title: '%爆量占比', width: 60, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
@@ -341,6 +343,7 @@
                     return value;
                 }
             },
+            {field: 'circulationMarketValue', title: '流通市值(亿)', width: 80, align: 'center'},
             {field: 'nearChange', title: '%对手换手', width: 60, align: 'center'},
             {field: 'percent', title: '%流通股占比', width: 60, align: 'center',
                 formatter: function (value, row, index) {
@@ -369,8 +372,8 @@
                 }
             },
             {field: 'maxChange', title: '%最大换手', width: 60, align: 'center'},
-            {field: 'yesterdayNoDeal', title: '(亿)昨日封单', width: 60, align: 'center'},
-            {field: 'yesterdayNoDealPercent', title: '%昨日封单率', width: 60, align: 'center',
+            {field: 'todayNoDeal', title: '(亿)封单', width: 60, align: 'center'},
+            {field: 'todayNoDealPercent', title: '%封单率', width: 60, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
                         return value + '%'
@@ -378,7 +381,7 @@
                     return value;
                 }
             },
-            {field: 'noDeal', title: '(亿)今日封单', width: 60, align: 'center'},
+            {field: 'noDeal', title: '(亿)明日封单', width: 60, align: 'center'},
             {field: 'hotType1', title: '概念1', width: 80, align: 'center'},
             {field: 'hotType2', title: '概念2', width: 80, align: 'center'},
             {field: 'hotType3', title: '概念3', width: 80, align: 'center'},
