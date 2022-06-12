@@ -5,7 +5,7 @@
     <select id="listPage" resultType="com.sjzx.model.vo.output.HotCompanyDataVO">
         select a.id,a.hot_type_id,a.max_change,a.circulation_market_value,a.full_time,a.continuity_time,
                a.sort,a.data_date,a.remark,b.remark totalRemark,a.create_time,a.update_time,a.no_deal,
-               a.near_change,a.one_minute_value,
+               a.near_change,a.one_minute_value,a.today_no_deal,
 (select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 1 and data_date &lt; a.data_date) firstTime,
 (select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 2 and data_date &lt; a.data_date) secondTime,
 (select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 3 and data_date &lt; a.data_date) thirdTime,
@@ -14,9 +14,9 @@
 (select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 6 and data_date &lt; a.data_date) sixthTime,
 (select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 7 and data_date &lt; a.data_date) seventhTime,
                 <if test="vo.yesterdayDataDate != null and vo.yesterdayDataDate.trim() !=''">
-                    (select no_deal from hot_company_data aa where hot_company_id = a.hot_company_id and data_date = #{vo.yesterdayDataDate}) todayNoDeal,
+                    (select no_deal from hot_company_data aa where hot_company_id = a.hot_company_id and data_date = #{vo.yesterdayDataDate}) yesterdayNoDeal,
                 </if>
-                b.name,b.code,b.hot_type_ids,b.percent,c.name hotType
+                b.name,b.code,b.hot_type_ids,100 - b.percent percent,c.name hotType
         from hot_company_data a
         join hot_company b on b.id = a.hot_company_id
         join hot_type c on c.id = a.hot_type_id
@@ -30,26 +30,8 @@
             <if test="vo.hotCompanyId != null">
                 and a.hot_company_id = #{vo.hotCompanyId}
             </if>
-            <if test="vo.continuityTime != null and vo.continuityTime == -1">
-                and a.continuity_time > 1
-            </if>
-            <if test="vo.continuityTime != null and vo.continuityTime == -2">
-                and a.continuity_time > 2
-            </if>
-            <if test="vo.continuityTime != null and vo.continuityTime == -3">
-                and a.continuity_time > 3
-            </if>
-            <if test="vo.continuityTime != null and vo.continuityTime == -4">
-                and a.continuity_time > 4
-            </if>
-            <if test="vo.continuityTime != null and vo.continuityTime == -5">
-                and a.continuity_time > 5
-            </if>
-            <if test="vo.continuityTime != null and vo.continuityTime == -6">
-                and a.continuity_time > 6
-            </if>
-            <if test="vo.continuityTime != null and vo.continuityTime == -7">
-                and a.continuity_time > 7
+            <if test="vo.continuityTime != null and 0 > vo.continuityTime and vo.continuityTime > -20">
+                and a.continuity_time > -#{vo.continuityTime}
             </if>
             <if test="vo.continuityTime != null and vo.continuityTime == -20">
                 and a.full_time = '09:30:00'
@@ -58,7 +40,7 @@
                 and a.continuity_time = #{vo.continuityTime}
             </if>
         </where>
-        order by data_date desc,sort desc,full_time,continuity_time desc,a.create_time
+        order by data_date desc,sort desc,full_time,continuity_time desc,a.id
     </select>
 
     <select id="selectAllDataDate" resultType="java.lang.String">

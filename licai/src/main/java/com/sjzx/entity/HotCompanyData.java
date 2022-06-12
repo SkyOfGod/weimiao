@@ -50,7 +50,7 @@ public class HotCompanyData extends Model<HotCompanyData> {
     private BigDecimal nearChange;
 
     /**
-     * 第一分钟爆量
+     * 第一次爆量
      */
     private BigDecimal oneMinuteValue;
 
@@ -70,7 +70,12 @@ public class HotCompanyData extends Model<HotCompanyData> {
     private Integer continuityTime;
 
     /**
-     * 下一个交易日封单金额
+     * 今日封单
+     */
+    private BigDecimal todayNoDeal;
+
+    /**
+     * 明日封单金额
      */
     private BigDecimal noDeal;
 

@@ -43,4 +43,6 @@ public interface HotCompanyDataService extends IService<HotCompanyData> {
     List<HotCompanyData> selectByHotCompanyId(Integer hotCompanyId);
 
     HotCompanyData selectMaxIdData();
+
+    List<HotCompanyData> selectByDataDateAndContinuityTime(String dataDate, Integer continuityTime);
 }

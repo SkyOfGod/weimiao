@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div style="width: 100%;height: 40px">
-    热点名称:&nbsp;&nbsp;<input class="easyui-textbox" id="listj_searchHotTypeId">
     公司:  <input class="easyui-textbox" id="listj_searchCompany">
+    复盘日期:&nbsp;&nbsp;<input class="easyui-textbox" id="listj_searchDataDate">
+    连扳数:&nbsp;&nbsp;<input class="easyui-textbox" id="listj_searchContinuityTime">
+    <input type="hidden" id="listj_searchContinuityTimeKey"/>
+    热点名称:&nbsp;&nbsp;<input class="easyui-textbox" id="listj_searchHotTypeId">
     分类:  <input class="easyui-textbox" id="listj_searchCategory">
     <input type="hidden" id="listj_searchCategoryKey"/>
     <button class="easyui-linkbutton" iconCls="icon-search" onclick="hotCompanyListSearch()">搜索</button>
@@ -53,7 +56,7 @@
                 </td>
             </tr>
             <tr>
-                <td>流通股占比(%):</td>
+                <td>十大流通股占比(%):</td>
                 <td>
                     <input class="easyui-textbox" name="percent" value="0" style="width: 300px;"
                            data-options="editable:true,required:false"/>
@@ -76,6 +79,85 @@
 </div>
 
 <script type="text/javascript" charset="utf-8">
+
+    $("#listj_searchContinuityTime").combobox({
+        valueField: 'key',
+        textField: 'value',
+        data: [{
+            key: '',
+            value: '全部'
+        }, {
+            key: '-20',
+            value: '秒板'
+        }, {
+            key: '-1',
+            value: '大于1次'
+        }, {
+            key: '-2',
+            value: '大于2次'
+        }, {
+            key: '-3',
+            value: '大于3次'
+        }, {
+            key: '-4',
+            value: '大于4次'
+        }, {
+            key: '-5',
+            value: '大于5次'
+        }, {
+            key: '-6',
+            value: '大于6次'
+        }, {
+            key: '-7',
+            value: '大于7次'
+        }, {
+            key: '1',
+            value: '1次'
+        }, {
+            key: '2',
+            value: '2次'
+        }, {
+            key: '3',
+            value: '3次'
+        }, {
+            key: '4',
+            value: '4次'
+        }, {
+            key: '5',
+            value: '5次'
+        }, {
+            key: '6',
+            value: '6次'
+        }, {
+            key: '7',
+            value: '7次'
+        }, {
+            key: '8',
+            value: '8次'
+        }, {
+            key: '9',
+            value: '9次'
+        }, {
+            key: '10',
+            value: '10次'
+        }],
+        onSelect: function (record) {
+            $("#listj_searchContinuityTimeKey").val(record.key);
+        }
+    });
+
+    $("#listj_searchDataDate").combogrid({
+        panelWidth: 180,
+        idField: 'key',
+        textField: 'key',
+        url: '/hotCompanyData/dataDateCombogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'key', title: '日期', width: 110, align: 'center'},
+            {field: 'value', title: '星期', width: 50, align: 'center'}
+        ]],
+    });
 
     $("#listj_searchCategory").combobox({
         valueField: 'key',
@@ -230,7 +312,7 @@
                     return value;
                 }
             },
-            {field: 'percent', title: '流通股占比(%)', width: 100, align: 'center'},
+            {field: 'percent', title: '十大流通股占比(%)', width: 100, align: 'center'},
             {field: 'hotType1', title: '概念1', width: 80, align: 'center'},
             {field: 'hotType2', title: '概念2', width: 80, align: 'center'},
             {field: 'hotType3', title: '概念3', width: 80, align: 'center'},
@@ -268,6 +350,8 @@
             param.hotTypeId = $('#listj_searchHotTypeId').val();
             param.hotCompany = $('#listj_searchCompany').val();
             param.category = $('#listj_searchCategoryKey').val();
+            param.dataDate = $('#listj_searchDataDate').val();
+            param.continuityTime = $('#listj_searchContinuityTimeKey').val();
             return true;
         }
     });

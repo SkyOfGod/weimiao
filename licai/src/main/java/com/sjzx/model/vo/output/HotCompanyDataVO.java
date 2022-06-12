@@ -53,6 +53,11 @@ public class HotCompanyDataVO {
     private BigDecimal todayNoDeal;
 
     /**
+     * 昨日封单金额
+     */
+    private BigDecimal yesterdayNoDeal;
+
+    /**
      * 下一个交易日封单金额
      */
     private BigDecimal noDeal;
@@ -68,9 +73,14 @@ public class HotCompanyDataVO {
     private BigDecimal nearChange;
 
     /**
-     * 第一分钟爆量
+     * 第一次钟爆量
      */
     private BigDecimal oneMinuteValue;
+
+    /**
+     * 下一个交易日第一分钟爆量开盘预计爆量
+     */
+    private BigDecimal tomorrowOneMinuteValue;
 
     /**
      * 第一分钟爆量占近期对手盘比例

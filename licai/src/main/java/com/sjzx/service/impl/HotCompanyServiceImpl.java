@@ -1,8 +1,6 @@
 package com.sjzx.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sjzx.entity.HotCompany;
 import com.sjzx.entity.HotCompanyData;
@@ -10,7 +8,6 @@ import com.sjzx.entity.HotType;
 import com.sjzx.exception.ServiceException;
 import com.sjzx.mapper.HotCompanyMapper;
 import com.sjzx.model.EasyUIResult;
-import com.sjzx.model.enums.CompanyLocationEnum;
 import com.sjzx.model.vo.input.HotCompanyInputVO;
 import com.sjzx.model.vo.output.HotCompanyCombogridVO;
 import com.sjzx.model.vo.output.HotCompanyVO;
@@ -19,12 +16,14 @@ import com.sjzx.service.HotCompanyService;
 import com.sjzx.service.HotTypeService;
 import com.sjzx.utils.BeanUtils;
 import com.sjzx.utils.NumberUtils;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -69,30 +68,59 @@ public class HotCompanyServiceImpl extends ServiceImpl<HotCompanyMapper, HotComp
         if (!StringUtils.isEmpty(vo.getHotCompany())) {
             wrapper.and(wrapper0 -> wrapper0.like(HotCompany::getCode, vo.getHotCompany()).or().like(HotCompany::getName, vo.getHotCompany()));
         }
+        List<HotCompanyData> hotCompanyDataList = null;
+        if (!StringUtils.isEmpty(vo.getDataDate()) || vo.getContinuityTime() != null) {
+            hotCompanyDataList = hotCompanyDataService.selectByDataDateAndContinuityTime(vo.getDataDate(), vo.getContinuityTime());
+            if (!hotCompanyDataList.isEmpty()) {
+                wrapper.in(HotCompany::getId, hotCompanyDataList.stream().map(HotCompanyData::getHotCompanyId).collect(Collectors.toSet()));
+            } else {
+                wrapper.eq(HotCompany::getId, 0);
+            }
+        }
         wrapper.orderByAsc(HotCompany::getCode);
 
         List<HotCompany> allList = list(wrapper);
         Map<String, HotType> map = hotTypeService.selectMap();
         if (vo.getHotTypeId() == null) {
-            long total = allList.size();
-            allList = allList.stream().skip((vo.getPageNo() - 1) * vo.getPageSize()).limit(vo.getPageSize())
-                    .collect(Collectors.toList());
-            return new EasyUIResult<>(total, BeanUtils.copyProperties(allList, HotCompanyVO::new, (s, t) -> copy(s, t, map)));
+            if (hotCompanyDataList != null && !hotCompanyDataList.isEmpty() && !StringUtils.isEmpty(vo.getDataDate())) {
+                Map<Integer, HotCompany> collect = allList.stream().collect(Collectors.toMap(HotCompany::getId, Function.identity()));
+                List<HotCompanyVO> recordList = new ArrayList<>();
+                for (HotCompanyData hotCompanyData : hotCompanyDataList) {
+                    if (!collect.containsKey(hotCompanyData.getHotCompanyId())) {
+                        continue;
+                    }
+                    recordList.add(getHotCompanyVO(collect.get(hotCompanyData.getHotCompanyId()), map));
+                }
+                return getEasyUIResult(recordList, vo);
+            } else {
+                long total = allList.size();
+                allList = allList.stream().skip((vo.getPageNo() - 1) * vo.getPageSize()).limit(vo.getPageSize())
+                        .collect(Collectors.toList());
+                return new EasyUIResult<>(total, BeanUtils.copyProperties(allList, HotCompanyVO::new, (s, t) -> copy(s, t, map)));
+            }
         } else {
             List<HotCompanyVO> recordList = new ArrayList<>();
             for (HotCompany hotCompany : allList) {
                 if (Arrays.asList(hotCompany.getHotTypeIds().split(",")).contains(vo.getHotTypeId().toString())) {
-                    HotCompanyVO target = BeanUtils.copyProperties(hotCompany, HotCompanyVO::new);
-                    copy(hotCompany, target, map);
-                    recordList.add(target);
+                    recordList.add(getHotCompanyVO(hotCompany, map));
                 }
             }
             recordList.sort(Comparator.comparing(HotCompanyVO::getCirculationMarketValue));
-            long total = recordList.size();
-            recordList = recordList.stream().skip((vo.getPageNo() - 1) * vo.getPageSize()).limit(vo.getPageSize())
-                    .collect(Collectors.toList());
-            return new EasyUIResult<>(total, recordList);
+            return getEasyUIResult(recordList, vo);
         }
+    }
+
+    private EasyUIResult<HotCompanyVO> getEasyUIResult(List<HotCompanyVO> list, HotCompanyInputVO vo) {
+        long total = list.size();
+        list = list.stream().skip((vo.getPageNo() - 1) * vo.getPageSize()).limit(vo.getPageSize())
+                .collect(Collectors.toList());
+        return new EasyUIResult<>(total, list);
+    }
+
+    private HotCompanyVO getHotCompanyVO(HotCompany hotCompany, Map<String, HotType> map) {
+        HotCompanyVO target = BeanUtils.copyProperties(hotCompany, HotCompanyVO::new);
+        copy(hotCompany, target, map);
+        return target;
     }
 
     private int count(List<HotCompanyData> list, int count) {

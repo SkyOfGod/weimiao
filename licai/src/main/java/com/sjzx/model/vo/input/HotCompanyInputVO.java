@@ -23,5 +23,17 @@ public class HotCompanyInputVO extends BasePage {
      */
     private Integer category;
 
+    /**
+     * 复盘日期
+     */
+    private String dataDate;
+
+    /**
+     * 当前连扳数
+     */
+    private Integer continuityTime;
+
+
+
 
 }

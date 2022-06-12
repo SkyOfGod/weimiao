@@ -108,7 +108,7 @@
                 </td>
             </tr>
             <tr>
-                <td>一分钟爆量(亿):</td>
+                <td>第一次爆量(亿):</td>
                 <td>
                     <input class="easyui-textbox" name="oneMinuteValue" value="0" style="width: 300px;"
                            data-options="editable:true,required:false"/>
@@ -118,6 +118,13 @@
                 <td>最大换手%:</td>
                 <td>
                     <input id="editHotCompanyDataMaxChange" class="easyui-textbox" name="maxChange" value="0" style="width: 300px;"
+                           data-options="editable:true,required:false"/>
+                </td>
+            </tr>
+            <tr>
+                <td>今日封单(亿):</td>
+                <td>
+                    <input class="easyui-textbox" name="todayNoDeal" value="0" style="width: 300px;"
                            data-options="editable:true,required:false"/>
                 </td>
             </tr>
@@ -292,7 +299,7 @@
         rownumbers: true,
         collapsible: true,
         pagination: true,
-        pageSize: 30,
+        pageSize: 100,
         pageList: [30, 100],
         toolbar: [{
             text: '新增',
@@ -319,7 +326,7 @@
             {field: 'code', title: '股票代码', width: 64, align: 'center'},
             {field: 'name', title: '公司名称', width: 64, align: 'center'},
             {field: 'hotType', title: '热点', width: 90, align: 'center'},
-            {field: 'continuityTime', title: '当前连扳数', width: 60, align: 'center',
+            {field: 'continuityTime', title: '连扳数', width: 30, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 1) {
                         return '<span style="color:red;">' + value + '</span>';
@@ -327,7 +334,7 @@
                     return value;
                 }
             },
-            {field: 'oneMinuteValue', title: '爆量(亿)', width: 60, align: 'center',
+            {field: 'tomorrowOneMinuteValue', title: '10%爆量', width: 60, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
                         return value + '亿'
@@ -335,7 +342,15 @@
                     return value;
                 }
             },
-            {field: 'oneMinuteValuePercent', title: '%爆量占比', width: 60, align: 'center',
+            {field: 'oneMinuteValue', title: '爆量', width: 60, align: 'center',
+                formatter: function (value, row, index) {
+                    if (value > 0) {
+                        return value + '亿'
+                    }
+                    return value;
+                }
+            },
+            {field: 'oneMinuteValuePercent', title: '爆量占比', width: 60, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
                         return value + '%'
@@ -343,9 +358,9 @@
                     return value;
                 }
             },
-            {field: 'circulationMarketValue', title: '流通市值(亿)', width: 80, align: 'center'},
+            {field: 'circulationMarketValue', title: '流通市值(亿)', width: 60, align: 'center'},
             {field: 'nearChange', title: '%对手换手', width: 60, align: 'center'},
-            {field: 'percent', title: '%流通股占比', width: 60, align: 'center',
+            {field: 'percent', title: '流通股占比', width: 60, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
                         return value + '%'
@@ -353,30 +368,37 @@
                     return value;
                 }
             },
-            {field: 'fullTime', title: '涨停时间', width: 70, align: 'center'},
+            {field: 'fullTime', title: '涨停时间', width: 70, align: 'center',
+                formatter: function (value, row, index) {
+                    if (value === '09:30:00') {
+                        return '<span style="color:red;">' + value + '</span>';
+                    }
+                    return value;
+                }
+            },
             {field: 'dataDate', title: '复盘日期', width: 90, align: 'center'},
             {field: 'safeChangeMarketValue', title: '安全换值(亿)', width: 80, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
-                        return value + '亿'
+                        return value + '亿';
                     }
                     return value;
                 }
             },
-            {field: 'safeChange', title: '安全换手%', width: 80, align: 'center',
+            {field: 'safeChange', title: '安全换手', width: 80, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
-                        return value + '%'
+                        return value + '%';
                     }
                     return value;
                 }
             },
             {field: 'maxChange', title: '%最大换手', width: 60, align: 'center'},
             {field: 'todayNoDeal', title: '(亿)封单', width: 60, align: 'center'},
-            {field: 'todayNoDealPercent', title: '%封单率', width: 60, align: 'center',
+            {field: 'todayNoDealPercent', title: '封单率', width: 60, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
-                        return value + '%'
+                        return value + '%';
                     }
                     return value;
                 }
@@ -429,7 +451,7 @@
         $("#editHotCompanyData").dialog({
             title: '新增复盘数据',
             width: 500,
-            height: 600,
+            height: 630,
             top: 70,
             left: 150,
             closed: false,
@@ -437,7 +459,7 @@
             modal: true,
             buttons: [{
                 text: '保存',
-                width: 450,
+                width: 300,
                 height: 50,
                 handler: function () {
                     if (!$("#editHotCompanyDataForm").form('validate')) {
@@ -457,12 +479,14 @@
                         }
                     });
                 }
-            }/*, {
+            }, {
                 text: '关闭',
+                width: 150,
+                height: 50,
                 handler: function () {
                     $("#editHotCompanyData").dialog("close");
                 }
-            }*/],
+            }],
             onBeforeClose: function () {
                 $("#editHotCompanyDataForm").form("clear");
             }
@@ -482,7 +506,7 @@
         $("#editHotCompanyData").dialog({
             title: '编辑复盘数据',
             width: 500,
-            height: 600,
+            height: 630,
             top: 70,
             left: 150,
             closed: false,
@@ -490,7 +514,7 @@
             modal: true,
             buttons: [{
                 text: '保存',
-                width: 450,
+                width: 300,
                 height: 50,
                 handler: function () {
                     if (!$("#editHotCompanyDataForm").form('validate')) {
@@ -509,12 +533,15 @@
                         }
                     });
                 }
-            }/*, {
+            }, {
                 text: '关闭',
+                width: 150,
+                height: 50,
                 handler: function () {
                     $("#editHotCompanyData").dialog("close");
+                    $("#hot-company-data-list").datagrid("reload");
                 }
-            }*/],
+            }],
             onBeforeClose: function () {
                 $("#editHotCompanyDataForm").form("clear");
             }

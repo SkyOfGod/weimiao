@@ -39,7 +39,8 @@ import java.util.*;
 public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper, HotCompanyData> implements HotCompanyDataService {
 
     private final static BigDecimal PERCENT = new BigDecimal("0.7");
-//    private final static BigDecimal PERCENT = new BigDecimal("1");
+    // 下一个交易日开局第一分钟爆量最少比例
+    private final static BigDecimal ONE_MINUTE_VALUE_PERCENT = new BigDecimal("0.1");
 
     @Autowired
     private HotTypeService hotTypeService;
@@ -66,14 +67,22 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
             BigDecimal safeChange = maxChange.multiply(PERCENT).setScale(2, BigDecimal.ROUND_HALF_UP);
             hotCompanyDataVO.setSafeChange(safeChange);
             hotCompanyDataVO.setSafeChangeMarketValue(safeChange.multiply(hotCompanyDataVO.getCirculationMarketValue()).divide(new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP));
-            if (hotCompanyDataVO.getTodayNoDeal() != null) {
-                hotCompanyDataVO.setTodayNoDealPercent(hotCompanyDataVO.getTodayNoDeal().multiply(new BigDecimal("100")).divide(hotCompanyDataVO.getCirculationMarketValue(), 2, BigDecimal.ROUND_HALF_UP));
-            }
-            if (hotCompanyDataVO.getNearChange().compareTo(BigDecimal.ZERO) > 0) {
-                hotCompanyDataVO.setOneMinuteValuePercent(hotCompanyDataVO.getOneMinuteValue().multiply(new BigDecimal("10000"))
-                        .divide(hotCompanyDataVO.getCirculationMarketValue().multiply(hotCompanyDataVO.getNearChange()), 2, BigDecimal.ROUND_HALF_UP));
-            }
 
+            if (hotCompanyDataVO.getNearChange().compareTo(BigDecimal.ZERO) > 0) {
+                BigDecimal nearValue = hotCompanyDataVO.getCirculationMarketValue().multiply(hotCompanyDataVO.getNearChange())
+                        .divide(new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP);
+
+                hotCompanyDataVO.setOneMinuteValuePercent(hotCompanyDataVO.getOneMinuteValue().multiply(new BigDecimal("100"))
+                        .divide(nearValue, 2, BigDecimal.ROUND_HALF_UP));
+                hotCompanyDataVO.setTomorrowOneMinuteValue(nearValue.multiply(ONE_MINUTE_VALUE_PERCENT));
+            }
+            if (hotCompanyDataVO.getTodayNoDeal().compareTo(BigDecimal.ZERO) == 0) {
+                hotCompanyDataVO.setTodayNoDeal(hotCompanyDataVO.getYesterdayNoDeal());
+            }
+            if (hotCompanyDataVO.getTodayNoDeal() != null) {
+                hotCompanyDataVO.setTodayNoDealPercent(hotCompanyDataVO.getTodayNoDeal().multiply(new BigDecimal("100"))
+                        .divide(hotCompanyDataVO.getCirculationMarketValue(), 2, BigDecimal.ROUND_HALF_UP));
+            }
 
             if (StringUtils.isEmpty(hotCompanyDataVO.getHotTypeIds())) {
                 continue;
@@ -147,12 +156,9 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
 
     @Override
     public void updateHotCompanyData(HotCompanyDataAddVO vo) {
-        new HotCompanyData().setId(vo.getId())
-                .setMaxChange(vo.getMaxChange()).setCirculationMarketValue(vo.getCirculationMarketValue())
-                .setContinuityTime(vo.getContinuityTime()).setSort(vo.getSort())
-                .setDataDate(vo.getFullTime().substring(0, 10)).setFullTime(vo.getFullTime().substring(11, 19))
-                .setRemark(vo.getRemark()).setUpdateTime(new Date())
-                .setNoDeal(vo.getNoDeal()).updateById();
+        HotCompanyData hotCompanyData = BeanUtils.copyProperties(vo, HotCompanyData::new);
+        hotCompanyData.setDataDate(vo.getFullTime().substring(0, 10)).setFullTime(vo.getFullTime().substring(11, 19))
+                .setUpdateTime(new Date()).updateById();
     }
 
     @Override
@@ -222,6 +228,27 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
             return iPage.getRecords().get(0);
         }
         return null;
+    }
+
+    @Override
+    public List<HotCompanyData> selectByDataDateAndContinuityTime(String dataDate, Integer continuityTime) {
+        LambdaQueryWrapper<HotCompanyData> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(!StringUtils.isEmpty(dataDate), HotCompanyData::getDataDate, dataDate);
+        if (continuityTime != null && continuityTime > 0) {
+            wrapper.eq(HotCompanyData::getContinuityTime, continuityTime);
+        }
+        if (continuityTime != null && continuityTime < 0 && continuityTime > -20) {
+            wrapper.gt(HotCompanyData::getContinuityTime, -continuityTime);
+        }
+        if (continuityTime != null && continuityTime == -20) {
+            wrapper.eq(HotCompanyData::getFullTime, "09:30:00");
+        }
+        wrapper.orderByDesc(HotCompanyData::getDataDate)
+                .orderByDesc(HotCompanyData::getSort)
+                .orderByAsc(HotCompanyData::getFullTime)
+                .orderByDesc(HotCompanyData::getContinuityTime)
+                .orderByAsc(HotCompanyData::getId);
+        return list(wrapper);
     }
 
 }

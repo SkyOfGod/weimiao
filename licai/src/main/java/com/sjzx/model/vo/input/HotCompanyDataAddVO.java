@@ -57,6 +57,11 @@ public class HotCompanyDataAddVO {
     private Integer continuityTime;
 
     /**
+     * 今日封单
+     */
+    private BigDecimal todayNoDeal;
+
+    /**
      * 封单
      */
     private BigDecimal noDeal;
