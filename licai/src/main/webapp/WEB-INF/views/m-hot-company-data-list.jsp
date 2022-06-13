@@ -358,12 +358,23 @@
                     return value;
                 }
             },
-            {field: 'circulationMarketValue', title: '流通市值(亿)', width: 60, align: 'center'},
+            {field: 'circulationMarketValue', title: '流通市值(亿)', width: 60, align: 'center',
+                formatter: function (value, row, index) {
+                    if (value < 100) {
+                        return '<span style="color:red;">' + value + '</span>';
+                    }
+                    return value;
+                }
+            },
             {field: 'nearChange', title: '%对手换手', width: 60, align: 'center'},
             {field: 'percent', title: '流通股占比', width: 60, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
-                        return value + '%'
+                        if (value >= 30 && value <= 50) {
+                            return '<span style="color:red;">' + value + '%' + '</span>';
+                        } else {
+                            return value + '%'
+                        }
                     }
                     return value;
                 }

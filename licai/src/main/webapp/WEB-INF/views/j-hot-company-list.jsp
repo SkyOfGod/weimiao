@@ -312,7 +312,14 @@
                     return value;
                 }
             },
-            {field: 'percent', title: '十大流通股占比(%)', width: 100, align: 'center'},
+            {field: 'percent', title: '十大流通股占比(%)', width: 100, align: 'center',
+                formatter: function (value, row, index) {
+                    if (value >= 50 && value <= 70) {
+                        return '<span style="color:red;">' + value + '</span>';
+                    }
+                    return value;
+                }
+            },
             {field: 'hotType1', title: '概念1', width: 80, align: 'center'},
             {field: 'hotType2', title: '概念2', width: 80, align: 'center'},
             {field: 'hotType3', title: '概念3', width: 80, align: 'center'},
