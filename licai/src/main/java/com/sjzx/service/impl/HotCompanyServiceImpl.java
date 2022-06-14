@@ -184,20 +184,25 @@ public class HotCompanyServiceImpl extends ServiceImpl<HotCompanyMapper, HotComp
     @Override
     public void addHotCompany(HotCompanyVO vo) {
         String hotTypeIds = vo.getHotType1();
-        if (StringUtils.hasText(vo.getHotType2()) && !Arrays.asList(hotTypeIds.split(",")).contains(vo.getHotType2())) {
-            hotTypeIds += "," + vo.getHotType2();
-        }
-        if (StringUtils.hasText(vo.getHotType3()) && !Arrays.asList(hotTypeIds.split(",")).contains(vo.getHotType3())) {
-            hotTypeIds += "," + vo.getHotType3();
-        }
-        if (StringUtils.hasText(vo.getHotType4()) && !Arrays.asList(hotTypeIds.split(",")).contains(vo.getHotType4())) {
-            hotTypeIds += "," + vo.getHotType4();
-        }
-        if (StringUtils.hasText(vo.getHotType5()) && !Arrays.asList(hotTypeIds.split(",")).contains(vo.getHotType5())) {
-            hotTypeIds += "," + vo.getHotType5();
-        }
+        hotTypeIds = sumHotType(hotTypeIds, vo.getHotType2());
+        hotTypeIds = sumHotType(hotTypeIds, vo.getHotType3());
+        hotTypeIds = sumHotType(hotTypeIds, vo.getHotType4());
+        hotTypeIds = sumHotType(hotTypeIds, vo.getHotType5());
+        hotTypeIds = sumHotType(hotTypeIds, vo.getHotType6());
+        hotTypeIds = sumHotType(hotTypeIds, vo.getHotType7());
+        hotTypeIds = sumHotType(hotTypeIds, vo.getHotType8());
+        hotTypeIds = sumHotType(hotTypeIds, vo.getHotType9());
+        hotTypeIds = sumHotType(hotTypeIds, vo.getHotType10());
+
         HotCompany hotCompany = BeanUtils.copyProperties(vo, HotCompany::new);
         hotCompany.setHotTypeIds(hotTypeIds).setCreateTime(new Date()).insert();
+    }
+
+    private String sumHotType(String hotTypeIds, String hotType) {
+        if (StringUtils.hasText(hotType) && !Arrays.asList(hotTypeIds.split(",")).contains(hotType)) {
+            return hotTypeIds + "," + hotType;
+        }
+        return hotTypeIds;
     }
 
     private String getHotTypeIds(String hotTypeIds, String hotType, Map<String, Integer> map) {

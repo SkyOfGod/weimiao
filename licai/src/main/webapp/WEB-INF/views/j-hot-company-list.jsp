@@ -26,6 +26,20 @@
                 <td><input class="easyui-textbox" name="name" style="width: 300px;" data-options="editable:true,required:true"/></td>
             </tr>
             <tr>
+                <td>十大流通股占比(%):</td>
+                <td>
+                    <input class="easyui-textbox" name="percent" value="0" style="width: 300px;"
+                           data-options="editable:true,required:false"/>
+                </td>
+            </tr>
+            <tr>
+                <td>最大换手:</td>
+                <td>
+                    <input class="easyui-textbox" name="maxChange" value="0" style="width: 300px;"
+                           data-options="editable:true,required:false"/>
+                </td>
+            </tr>
+            <tr>
                 <td>概念1:</td>
                 <td>
                     <input class="easyui-textbox" name="hotType1" style="width: 180px;" data-options="editable:true,required:true"/>
@@ -56,17 +70,33 @@
                 </td>
             </tr>
             <tr>
-                <td>十大流通股占比(%):</td>
+                <td>概念6:</td>
                 <td>
-                    <input class="easyui-textbox" name="percent" value="0" style="width: 300px;"
-                           data-options="editable:true,required:false"/>
+                    <input class="easyui-textbox" name="hotType6" style="width: 180px;" data-options="editable:true"/>
                 </td>
             </tr>
             <tr>
-                <td>最大换手:</td>
+                <td>概念7:</td>
                 <td>
-                    <input class="easyui-textbox" name="maxChange" value="0" style="width: 300px;"
-                           data-options="editable:true,required:false"/>
+                    <input class="easyui-textbox" name="hotType7" style="width: 180px;" data-options="editable:true"/>
+                </td>
+            </tr>
+            <tr>
+                <td>概念8:</td>
+                <td>
+                    <input class="easyui-textbox" name="hotType8" style="width: 180px;" data-options="editable:true"/>
+                </td>
+            </tr>
+            <tr>
+                <td>概念9:</td>
+                <td>
+                    <input class="easyui-textbox" name="hotType9" style="width: 180px;" data-options="editable:true"/>
+                </td>
+            </tr>
+            <tr>
+                <td>概念10:</td>
+                <td>
+                    <input class="easyui-textbox" name="hotType10" style="width: 180px;" data-options="editable:true"/>
                 </td>
             </tr>
             <tr>
