@@ -26,6 +26,7 @@ import org.springframework.util.StringUtils;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -93,7 +94,7 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
                     list.add(map.get(id));
                 }
             }
-            list.sort((a, b) -> b.getUpdateTime().compareTo(a.getUpdateTime()));
+            list.sort(hotTypeService.getComparator());
             if (list.size() > 0) {
                 hotCompanyDataVO.setHotType1(list.get(0).getName());
                 if (list.size() > 1) {
@@ -116,7 +117,7 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
 
     @Override
     @Transactional
-    public void addHotCompanyData(HotCompanyDataAddVO vo) {
+    public String addHotCompanyData(HotCompanyDataAddVO vo) {
         String dataDate = vo.getFullTime().substring(0, 10);
         vo.setFullTime(vo.getFullTime().substring(11, 19));
         HotCompany hotCompany = hotCompanyService.selectByCode(vo.getCode());
@@ -152,13 +153,39 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
                 .setCreateTime(new Date()).insert();
 
         new HotType().setId(vo.getHotTypeId()).setUpdateTime(new Date()).updateById();
+        return dataDate;
+    }
+
+    @Override
+    public void updateHotCompareDataSort(String dataDate, Integer hotTypeId) {
+        // 查询
+        LambdaQueryWrapper<HotCompanyData> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(HotCompanyData::getHotTypeId, hotTypeId)
+                .eq(HotCompanyData::getDataDate, dataDate);
+        List<HotCompanyData> list = list(wrapper);
+        if (list.isEmpty()) {
+            return;
+        }
+        LambdaQueryWrapper<HotCompanyData> updateWrapper = new LambdaQueryWrapper<>();
+        updateWrapper.in(HotCompanyData::getId, list.stream().map(HotCompanyData::getId).collect(Collectors.toSet()));
+
+        update(new HotCompanyData().setSort(list.size()), wrapper);
     }
 
     @Override
     public void updateHotCompanyData(HotCompanyDataAddVO vo) {
+        HotCompanyData old = getById(vo.getId());
+
         HotCompanyData hotCompanyData = BeanUtils.copyProperties(vo, HotCompanyData::new);
         hotCompanyData.setDataDate(vo.getFullTime().substring(0, 10)).setFullTime(vo.getFullTime().substring(11, 19))
                 .setUpdateTime(new Date()).updateById();
+
+        if (!old.getHotTypeId().equals(vo.getHotTypeId())) {
+            String dataDate = vo.getFullTime().substring(0, 10);
+            updateHotCompareDataSort(dataDate, old.getHotTypeId());
+            updateHotCompareDataSort(dataDate, vo.getHotTypeId());
+        }
+
     }
 
     @Override
@@ -245,10 +272,13 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
         }
         wrapper.orderByDesc(HotCompanyData::getDataDate)
                 .orderByDesc(HotCompanyData::getSort)
+                .orderByDesc(HotCompanyData::getHotTypeId)
                 .orderByAsc(HotCompanyData::getFullTime)
                 .orderByDesc(HotCompanyData::getContinuityTime)
                 .orderByAsc(HotCompanyData::getId);
         return list(wrapper);
     }
+
+
 
 }

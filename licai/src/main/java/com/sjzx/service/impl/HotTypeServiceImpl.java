@@ -161,4 +161,9 @@ public class HotTypeServiceImpl extends ServiceImpl<HotTypeMapper, HotType> impl
                 Collectors.toMap(e -> e.getId().toString(), Function.identity()));
     }
 
+    @Override
+    public Comparator<HotType> getComparator() {
+        return (a, b) -> b.getUpdateTime().compareTo(a.getUpdateTime());
+    }
+
 }

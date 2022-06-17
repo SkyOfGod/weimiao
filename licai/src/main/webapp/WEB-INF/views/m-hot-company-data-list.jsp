@@ -24,6 +24,13 @@
                 <td><input id="editHotCompanyDataName" class="easyui-textbox" name="name" style="width: 300px;" data-options="editable:true,required:false"/></td>
             </tr>
             <tr>
+                <td>涨停时间:</td>
+                <td>
+                    <input id="editHotCompanyDataFullTime" class="easyui-datetimebox" name="fullTime" value="0" style="width: 300px;"
+                           data-options="editable:false,required:true"/>
+                </td>
+            </tr>
+            <tr>
                 <td>板块:</td>
                 <td>
                     <input id="editHotCompanyDataHotTypeId" class="easyui-textbox" name="hotTypeId" style="width: 150px;" data-options="editable:true,required:true"/>
@@ -32,15 +39,8 @@
             <tr>
                 <td>流通市值(亿):</td>
                 <td>
-                    <input id="editHotCompanyDataCirculationMarketValue" class="easyui-textbox" name="circulationMarketValue" value="0" style="width: 300px;"
+                    <input id="editHotCompanyDataCirculationMarketValue" class="easyui-textbox" name="circulationMarketValue" value="1" style="width: 300px;"
                            data-options="editable:true,required:true"/>
-                </td>
-            </tr>
-            <tr>
-                <td>涨停时间:</td>
-                <td>
-                    <input id="editHotCompanyDataFullTime" class="easyui-datetimebox" name="fullTime" value="0" style="width: 300px;"
-                           data-options="editable:false,required:true"/>
                 </td>
             </tr>
             <tr>
@@ -64,39 +64,6 @@
                         <option value="15">15</option>
                         <option value="16">16</option>
                         <option value="17">17</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>排序:</td>
-                <td>
-                    <select id="editHotCompanyDataSort" class="easyui-combobox" name="sort" style="width: 100px;" data-options="editable:false,required:true">
-                        <option value="10">10</option>
-                        <option value="9">9</option>
-                        <option value="8">8</option>
-                        <option value="7">7</option>
-                        <option value="6">6</option>
-                        <option value="5">5</option>
-                        <option value="4">4</option>
-                        <option value="3">3</option>
-                        <option value="2">2</option>
-                        <option value="1">1</option>
-                        <option value="0">0</option>
-                        <option value="-1">-1</option>
-                        <option value="-2">-2</option>
-                        <option value="-3">-3</option>
-                        <option value="-4">-4</option>
-                        <option value="-5">-5</option>
-                        <option value="-6">-6</option>
-                        <option value="-7">-7</option>
-                        <option value="-8">-8</option>
-                        <option value="-9">-9</option>
-                        <option value="-10">-10</option>
-                        <option value="-11">-11</option>
-                        <option value="-12">-12</option>
-                        <option value="-13">-13</option>
-                        <option value="-14">-14</option>
-                        <option value="-15">-15</option>
                     </select>
                 </td>
             </tr>
@@ -133,6 +100,39 @@
                 <td>
                     <input class="easyui-textbox" name="noDeal" value="0" style="width: 300px;"
                            data-options="editable:true,required:false"/>
+                </td>
+            </tr>
+            <tr>
+                <td>排序:</td>
+                <td>
+                    <select id="editHotCompanyDataSort" class="easyui-combobox" name="sort" style="width: 100px;" data-options="editable:false,required:true">
+                        <option value="10">10</option>
+                        <option value="9">9</option>
+                        <option value="8">8</option>
+                        <option value="7">7</option>
+                        <option value="6">6</option>
+                        <option value="5">5</option>
+                        <option value="4">4</option>
+                        <option value="3">3</option>
+                        <option value="2">2</option>
+                        <option value="1">1</option>
+                        <option value="0">0</option>
+                        <option value="-1">-1</option>
+                        <option value="-2">-2</option>
+                        <option value="-3">-3</option>
+                        <option value="-4">-4</option>
+                        <option value="-5">-5</option>
+                        <option value="-6">-6</option>
+                        <option value="-7">-7</option>
+                        <option value="-8">-8</option>
+                        <option value="-9">-9</option>
+                        <option value="-10">-10</option>
+                        <option value="-11">-11</option>
+                        <option value="-12">-12</option>
+                        <option value="-13">-13</option>
+                        <option value="-14">-14</option>
+                        <option value="-15">-15</option>
+                    </select>
                 </td>
             </tr>
             <tr>
@@ -272,6 +272,7 @@
             $("#editHotCompanyDataFullTime").textbox('setValue', value.fullTime);
             $("#editHotCompanyDataSort").textbox('setValue', value.sort);
             // $("#editHotCompanyDataContinuityTime").textbox('setValue', value.continuityTime + 1);
+            $("#editHotCompanyDataCirculationMarketValue").textbox('setValue', 1);
             $("#editHotCompanyDataContinuityTime").textbox('setValue', 1);
             $("#editHotCompanyDataMaxChange").textbox('setValue', value.maxChange);
         }
@@ -443,7 +444,7 @@
             {field: 'fifthTime', title: '五扳数', width: 48, align: 'center'},
             {field: 'sixthTime', title: '六扳数', width: 48, align: 'center'},
             {field: 'seventhTime', title: '七扳数', width: 48, align: 'center'},
-            {field: 'sort', title: '排序', width: 40, align: 'center'},
+            {field: 'sort', title: '排序', width: 100, align: 'center'},
             {field: 'createTime', title: '创建时间', width: 150, align: 'center'},
             {field: 'updateTime', title: '修改时间', width: 150, align: 'center'},
         ]],

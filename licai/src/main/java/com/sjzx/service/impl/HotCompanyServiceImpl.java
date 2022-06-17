@@ -148,7 +148,7 @@ public class HotCompanyServiceImpl extends ServiceImpl<HotCompanyMapper, HotComp
                 list.add(map.get(id));
             }
         }
-        list.sort((a, b) -> b.getUpdateTime().compareTo(a.getUpdateTime()));
+        list.sort(hotTypeService.getComparator());
         if (list.size() > 0) {
             t.setHotType1(list.get(0).getName());
             if (list.size() > 1) {

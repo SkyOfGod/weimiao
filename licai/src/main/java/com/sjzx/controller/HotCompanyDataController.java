@@ -40,7 +40,8 @@ public class HotCompanyDataController {
     @PostMapping("/add")
     @ApiOperation(value = "添加")
     public Response addHotCompanyData(HotCompanyDataAddVO vo) {
-        hotCompanyDataService.addHotCompanyData(vo);
+        String dataDate = hotCompanyDataService.addHotCompanyData(vo);
+        hotCompanyDataService.updateHotCompareDataSort(dataDate, vo.getHotTypeId());
         return Response.success();
     }
 

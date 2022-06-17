@@ -40,7 +40,7 @@
                 and a.continuity_time = #{vo.continuityTime}
             </if>
         </where>
-        order by data_date desc,sort desc,full_time,continuity_time desc,a.id
+        order by data_date desc,sort desc,hot_type_id desc,full_time,continuity_time desc,a.id
     </select>
 
     <select id="selectAllDataDate" resultType="java.lang.String">

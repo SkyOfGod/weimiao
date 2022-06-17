@@ -300,6 +300,76 @@
         ]],
     });
 
+    $("#editHotCompanyForm [name='hotType6']").combogrid({
+        panelWidth: 200,
+        idField: 'id',
+        textField: 'name',
+        url: '/hotType/combogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'id', title: '主键', width: 40, align: 'center'},
+            {field: 'name', title: '名称', width: 100, align: 'center'},
+            {field: 'sort', title: '排序', width: 40, align: 'center'},
+        ]],
+    });
+
+    $("#editHotCompanyForm [name='hotType7']").combogrid({
+        panelWidth: 200,
+        idField: 'id',
+        textField: 'name',
+        url: '/hotType/combogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'id', title: '主键', width: 40, align: 'center'},
+            {field: 'name', title: '名称', width: 100, align: 'center'},
+            {field: 'sort', title: '排序', width: 40, align: 'center'},
+        ]],
+    });
+
+    $("#editHotCompanyForm [name='hotType8']").combogrid({
+        panelWidth: 200,
+        idField: 'id',
+        textField: 'name',
+        url: '/hotType/combogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'id', title: '主键', width: 40, align: 'center'},
+            {field: 'name', title: '名称', width: 100, align: 'center'},
+            {field: 'sort', title: '排序', width: 40, align: 'center'},
+        ]],
+    });
+
+    $("#editHotCompanyForm [name='hotType9']").combogrid({
+        panelWidth: 200,
+        idField: 'id',
+        textField: 'name',
+        url: '/hotType/combogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'id', title: '主键', width: 40, align: 'center'},
+            {field: 'name', title: '名称', width: 100, align: 'center'},
+            {field: 'sort', title: '排序', width: 40, align: 'center'},
+        ]],
+    });
+
+    $("#editHotCompanyForm [name='hotType10']").combogrid({
+        panelWidth: 200,
+        idField: 'id',
+        textField: 'name',
+        url: '/hotType/combogrid',
+        mode: 'remote',
+        delay: 500,
+        columns: [[
+            {field: 'id', title: '主键', width: 40, align: 'center'},
+            {field: 'name', title: '名称', width: 100, align: 'center'},
+            {field: 'sort', title: '排序', width: 40, align: 'center'},
+        ]],
+    });
+
     $('#hot-company-list').datagrid({
         url: '/hotCompany/listPage',
         title: '热点类型列表',

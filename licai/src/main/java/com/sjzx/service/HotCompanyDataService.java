@@ -24,7 +24,7 @@ public interface HotCompanyDataService extends IService<HotCompanyData> {
 
     EasyUIResult<HotCompanyDataVO> listPage(HotCompanyDataInputVO vo);
 
-    void addHotCompanyData(HotCompanyDataAddVO vo);
+    String addHotCompanyData(HotCompanyDataAddVO vo);
 
     void updateHotCompanyData(HotCompanyDataAddVO vo);
 
@@ -45,4 +45,6 @@ public interface HotCompanyDataService extends IService<HotCompanyData> {
     HotCompanyData selectMaxIdData();
 
     List<HotCompanyData> selectByDataDateAndContinuityTime(String dataDate, Integer continuityTime);
+
+    void updateHotCompareDataSort(String dataDate, Integer hotTypeId);
 }
