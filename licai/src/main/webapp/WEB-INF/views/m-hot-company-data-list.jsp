@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div style="width: 100%;height: 40px">
     复盘日期:&nbsp;&nbsp;<input class="easyui-textbox" id="listm_searchDataDate">
-    连扳数:&nbsp;&nbsp;<input class="easyui-textbox" id="listm_searchContinuityTime">
+    选中:&nbsp;&nbsp;<input class="easyui-textbox" id="listm_searchOnSelected" style="width: 80px;">
+    <input type="hidden" id="listm_searchOnSelectedKey"/>
+    连扳数:&nbsp;&nbsp;<input class="easyui-textbox" id="listm_searchContinuityTime" style="width: 100px;">
     <input type="hidden" id="listm_searchContinuityTimeKey"/>
     热点:&nbsp;&nbsp;<input class="easyui-textbox" id="listm_searchHotTypeId">
     公司:&nbsp;&nbsp;<input class="easyui-textbox" id="listm_searchHotCompanyId">
@@ -26,8 +28,10 @@
             <tr>
                 <td>涨停时间:</td>
                 <td>
-                    <input id="editHotCompanyDataFullTime" class="easyui-datetimebox" name="fullTime" value="0" style="width: 300px;"
-                           data-options="editable:false,required:true"/>
+                    <%--<input id="editHotCompanyDataFullTime" class="easyui-datetimebox" name="fullTime" value="0" style="width: 300px;"
+                           data-options="editable:false,required:true"/>--%>
+                    <input id="editHotCompanyDataFullTime" class="easyui-textbox" name="fullTime" value="0" style="width: 300px;"
+                           data-options="editable:true,required:true"/>
                 </td>
             </tr>
             <tr>
@@ -37,16 +41,9 @@
                 </td>
             </tr>
             <tr>
-                <td>流通市值(亿):</td>
-                <td>
-                    <input id="editHotCompanyDataCirculationMarketValue" class="easyui-textbox" name="circulationMarketValue" value="1" style="width: 300px;"
-                           data-options="editable:true,required:true"/>
-                </td>
-            </tr>
-            <tr>
                 <td>当前连扳次数:</td>
                 <td>
-                    <select id="editHotCompanyDataContinuityTime" class="easyui-combobox" name="continuityTime" style="width: 100px;" data-options="editable:false,required:true">
+                    <select id="editHotCompanyDataContinuityTime" class="easyui-combobox" name="continuityTime" style="width: 100px;" data-options="editable:true,required:true">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -63,8 +60,21 @@
                         <option value="14">14</option>
                         <option value="15">15</option>
                         <option value="16">16</option>
-                        <option value="17">17</option>
                     </select>
+                </td>
+            </tr>
+            <tr>
+                <td>复盘日期:</td>
+                <td>
+                    <input id="editHotCompanyDataDataDate" class="easyui-textbox" name="dataDate" value="0" style="width: 300px;"
+                           data-options="editable:true,required:true"/>
+                </td>
+            </tr>
+            <tr>
+                <td>流通市值(亿):</td>
+                <td>
+                    <input id="editHotCompanyDataCirculationMarketValue" class="easyui-textbox" name="circulationMarketValue" value="1" style="width: 300px;"
+                           data-options="editable:true,required:true"/>
                 </td>
             </tr>
             <tr>
@@ -96,13 +106,22 @@
                 </td>
             </tr>
             <tr>
+                <td>是否选中:</td>
+                <td>
+                    <select id="editHotCompanyDataOnSelected" class="easyui-combobox" name="onSelected" style="width: 100px;" data-options="editable:false,required:true">
+                        <option value="0">未选中</option>
+                        <option value="1">选中</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
                 <td>明日封单(亿):</td>
                 <td>
                     <input class="easyui-textbox" name="noDeal" value="0" style="width: 300px;"
                            data-options="editable:true,required:false"/>
                 </td>
             </tr>
-            <tr>
+            <%--<tr>
                 <td>排序:</td>
                 <td>
                     <select id="editHotCompanyDataSort" class="easyui-combobox" name="sort" style="width: 100px;" data-options="editable:false,required:true">
@@ -117,24 +136,9 @@
                         <option value="2">2</option>
                         <option value="1">1</option>
                         <option value="0">0</option>
-                        <option value="-1">-1</option>
-                        <option value="-2">-2</option>
-                        <option value="-3">-3</option>
-                        <option value="-4">-4</option>
-                        <option value="-5">-5</option>
-                        <option value="-6">-6</option>
-                        <option value="-7">-7</option>
-                        <option value="-8">-8</option>
-                        <option value="-9">-9</option>
-                        <option value="-10">-10</option>
-                        <option value="-11">-11</option>
-                        <option value="-12">-12</option>
-                        <option value="-13">-13</option>
-                        <option value="-14">-14</option>
-                        <option value="-15">-15</option>
                     </select>
                 </td>
-            </tr>
+            </tr>--%>
             <tr>
                 <td>备注:</td>
                 <td><input class="easyui-textbox" name="remark" data-options="multiline:true,validType:'length[0,150]'"
@@ -145,6 +149,24 @@
 </div>
 
 <script type="text/javascript" charset="utf-8">
+
+    $("#listm_searchOnSelected").combobox({
+        valueField: 'key',
+        textField: 'value',
+        data: [{
+            key: '',
+            value: '全部'
+        }, {
+            key: '1',
+            value: '选中'
+        }, {
+            key: '0',
+            value: '未选中'
+        }],
+        onSelect: function (record) {
+            $("#listm_searchOnSelectedKey").val(record.key);
+        }
+    });
 
     $("#listm_searchContinuityTime").combobox({
         valueField: 'key',
@@ -269,9 +291,11 @@
         onSelect: function (index, value) {
             $("#editHotCompanyDataName").textbox('setValue', value.name);
             $("#editHotCompanyDataHotTypeId").textbox('setValue', value.hotTypeId);
+            $("#editHotCompanyDataDataDate").textbox('setValue', value.dataDate);
             $("#editHotCompanyDataFullTime").textbox('setValue', value.fullTime);
-            $("#editHotCompanyDataSort").textbox('setValue', value.sort);
+            //$("#editHotCompanyDataSort").textbox('setValue', value.sort);
             // $("#editHotCompanyDataContinuityTime").textbox('setValue', value.continuityTime + 1);
+            $("#editHotCompanyDataOnSelected").textbox('setValue', 0);
             $("#editHotCompanyDataCirculationMarketValue").textbox('setValue', 1);
             $("#editHotCompanyDataContinuityTime").textbox('setValue', 1);
             $("#editHotCompanyDataMaxChange").textbox('setValue', value.maxChange);
@@ -326,7 +350,17 @@
             {field: 'id', checkbox: true},
             {field: 'code', title: '股票代码', width: 64, align: 'center'},
             {field: 'name', title: '公司名称', width: 64, align: 'center'},
-            {field: 'hotType', title: '热点', width: 90, align: 'center'},
+            {field: 'fullTime', title: '涨停时间', width: 42, align: 'center',
+                formatter: function (value, row, index) {
+                    if (value === '09:25:00') {
+                        return '<span style="color:red;">' + value + '</span>';
+                    }
+                    if (value === '09:30:00') {
+                        return '<span style="color:blue;">' + value + '</span>';
+                    }
+                    return value;
+                }
+            },
             {field: 'continuityTime', title: '连扳数', width: 30, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 1) {
@@ -335,6 +369,7 @@
                     return value;
                 }
             },
+            {field: 'hotType', title: '热点', width: 90, align: 'center'},
             {field: 'tomorrowOneMinuteValue', title: '10%爆量', width: 60, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
@@ -380,14 +415,6 @@
                     return value;
                 }
             },
-            {field: 'fullTime', title: '涨停时间', width: 70, align: 'center',
-                formatter: function (value, row, index) {
-                    if (value === '09:30:00') {
-                        return '<span style="color:red;">' + value + '</span>';
-                    }
-                    return value;
-                }
-            },
             {field: 'dataDate', title: '复盘日期', width: 90, align: 'center'},
             {field: 'safeChangeMarketValue', title: '安全换值(亿)', width: 80, align: 'center',
                 formatter: function (value, row, index) {
@@ -429,6 +456,14 @@
                     return '<span title="' + value + '">' + value + '</span>';
                 }
             },
+            {field: 'onSelected', title: '是否选中', width: 40, align: 'center',
+                formatter: function (value, row, index) {
+                    if (value == 1) {
+                        return '<span style="color:red;">' +'选中' + '</span>';
+                    }
+                    return '未选中';
+                }
+            },
             {field: 'totalRemark', title: '总备注', width: 150, align: 'left',
                 formatter: function (value, row, index) {
                     if (value == null) {
@@ -437,6 +472,7 @@
                     return '<span title="' + value + '">' + value + '</span>';
                 }
             },
+
             {field: 'firstTime', title: '首扳数', width: 48, align: 'center'},
             {field: 'secondTime', title: '二扳数', width: 48, align: 'center'},
             {field: 'thirdTime', title: '三扳数', width: 48, align: 'center'},
@@ -444,7 +480,7 @@
             {field: 'fifthTime', title: '五扳数', width: 48, align: 'center'},
             {field: 'sixthTime', title: '六扳数', width: 48, align: 'center'},
             {field: 'seventhTime', title: '七扳数', width: 48, align: 'center'},
-            {field: 'sort', title: '排序', width: 100, align: 'center'},
+            {field: 'sort', title: '排序', width: 40, align: 'center'},
             {field: 'createTime', title: '创建时间', width: 150, align: 'center'},
             {field: 'updateTime', title: '修改时间', width: 150, align: 'center'},
         ]],
@@ -455,6 +491,7 @@
             param.hotTypeId = $('#listm_searchHotTypeId').val();
             param.hotCompanyId = $('#listm_searchHotCompanyId').val();
             param.continuityTime = $('#listm_searchContinuityTimeKey').val();
+            param.onSelected = $('#listm_searchOnSelectedKey').val();
             return true;
         }
     });
@@ -463,7 +500,7 @@
         $("#editHotCompanyData").dialog({
             title: '新增复盘数据',
             width: 500,
-            height: 630,
+            height: 720,
             top: 70,
             left: 150,
             closed: false,
@@ -518,7 +555,7 @@
         $("#editHotCompanyData").dialog({
             title: '编辑复盘数据',
             width: 500,
-            height: 630,
+            height: 720,
             top: 70,
             left: 150,
             closed: false,
@@ -551,7 +588,6 @@
                 height: 50,
                 handler: function () {
                     $("#editHotCompanyData").dialog("close");
-                    $("#hot-company-data-list").datagrid("reload");
                 }
             }],
             onBeforeClose: function () {
@@ -559,7 +595,6 @@
             }
         });
         var data = $("#hot-company-data-list").datagrid("getSelected");
-        data.fullTime = data.dataDate + ' ' + data.fullTime;
         $("#editHotCompanyDataForm").form("load", data);
     }
 

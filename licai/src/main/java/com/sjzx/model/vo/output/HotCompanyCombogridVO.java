@@ -47,6 +47,7 @@ public class HotCompanyCombogridVO {
      */
     private Integer continuityTime;
 
+    private String dataDate;
 
     private String fullTime;
 

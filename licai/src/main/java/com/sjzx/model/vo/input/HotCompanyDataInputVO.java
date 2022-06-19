@@ -33,4 +33,9 @@ public class HotCompanyDataInputVO extends BasePage {
      */
     private String yesterdayDataDate;
 
+    /**
+     * 0-未选中  1-选中
+     */
+    private Integer onSelected;
+
 }

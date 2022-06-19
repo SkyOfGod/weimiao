@@ -90,6 +90,11 @@ public class HotCompanyData extends Model<HotCompanyData> {
     private Integer sort;
 
     /**
+     * 0-未选中  1-选中
+     */
+    private Integer onSelected;
+
+    /**
      * 备注
      */
     private String remark;

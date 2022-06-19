@@ -118,8 +118,8 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
     @Override
     @Transactional
     public String addHotCompanyData(HotCompanyDataAddVO vo) {
-        String dataDate = vo.getFullTime().substring(0, 10);
-        vo.setFullTime(vo.getFullTime().substring(11, 19));
+        handleFullTime(vo);
+        String dataDate = vo.getDataDate();
         HotCompany hotCompany = hotCompanyService.selectByCode(vo.getCode());
         if (hotCompany == null) {
             if (StringUtils.isEmpty(vo.getName())) {
@@ -149,7 +149,7 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
             hotCompany.setUpdateTime(new Date()).updateById();
         }
         HotCompanyData hotCompanyData = BeanUtils.copyProperties(vo, HotCompanyData::new);
-        hotCompanyData.setHotCompanyId(hotCompany.getId()).setDataDate(dataDate)
+        hotCompanyData.setHotCompanyId(hotCompany.getId())
                 .setCreateTime(new Date()).insert();
 
         new HotType().setId(vo.getHotTypeId()).setUpdateTime(new Date()).updateById();
@@ -172,16 +172,35 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
         update(new HotCompanyData().setSort(list.size()), wrapper);
     }
 
+    private void handleFullTime(HotCompanyDataAddVO vo) {
+        if (vo.getFullTime() == null) {
+            return;
+        }
+        String[] split = vo.getFullTime().split(":");
+        StringBuilder sb = new StringBuilder();
+        if (split[0].length() == 1) {
+            sb.append("0");
+        }
+        sb.append(split[0]).append(":")
+                .append(split[1]).append(":");
+        if (split.length > 2) {
+            sb.append(split[2]);
+        } else {
+            sb.append("00");
+        }
+        vo.setFullTime(sb.toString());
+    }
+
     @Override
     public void updateHotCompanyData(HotCompanyDataAddVO vo) {
+        handleFullTime(vo);
         HotCompanyData old = getById(vo.getId());
 
         HotCompanyData hotCompanyData = BeanUtils.copyProperties(vo, HotCompanyData::new);
-        hotCompanyData.setDataDate(vo.getFullTime().substring(0, 10)).setFullTime(vo.getFullTime().substring(11, 19))
-                .setUpdateTime(new Date()).updateById();
+        hotCompanyData.setUpdateTime(new Date()).updateById();
 
         if (!old.getHotTypeId().equals(vo.getHotTypeId())) {
-            String dataDate = vo.getFullTime().substring(0, 10);
+            String dataDate = vo.getDataDate();
             updateHotCompareDataSort(dataDate, old.getHotTypeId());
             updateHotCompareDataSort(dataDate, vo.getHotTypeId());
         }

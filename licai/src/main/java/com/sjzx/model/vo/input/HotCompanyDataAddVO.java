@@ -47,6 +47,11 @@ public class HotCompanyDataAddVO {
     private BigDecimal circulationMarketValue;
 
     /**
+     * 复盘日期
+     */
+    private String DataDate;
+
+    /**
      * 涨停时间
      */
     private String fullTime;
@@ -70,6 +75,11 @@ public class HotCompanyDataAddVO {
      * 排序
      */
     private Integer sort;
+
+    /**
+     * 0-未选中  1-选中
+     */
+    private Integer onSelected;
 
     /**
      * 备注

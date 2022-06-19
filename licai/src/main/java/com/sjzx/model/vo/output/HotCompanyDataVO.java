@@ -173,6 +173,11 @@ public class HotCompanyDataVO {
     private Integer sort;
 
     /**
+     * 0-未选中  1-选中
+     */
+    private Integer onSelected;
+
+    /**
      * 复盘日期
      */
     private String dataDate;

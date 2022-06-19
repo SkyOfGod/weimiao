@@ -5,7 +5,7 @@
     <select id="listPage" resultType="com.sjzx.model.vo.output.HotCompanyDataVO">
         select a.id,a.hot_type_id,a.max_change,a.circulation_market_value,a.full_time,a.continuity_time,
                a.sort,a.data_date,a.remark,b.remark totalRemark,a.create_time,a.update_time,a.no_deal,
-               a.near_change,a.one_minute_value,a.today_no_deal,
+               a.near_change,a.one_minute_value,a.today_no_deal,a.on_selected,
 (select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 1 and data_date &lt; a.data_date) firstTime,
 (select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 2 and data_date &lt; a.data_date) secondTime,
 (select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 3 and data_date &lt; a.data_date) thirdTime,
@@ -34,10 +34,13 @@
                 and a.continuity_time > -#{vo.continuityTime}
             </if>
             <if test="vo.continuityTime != null and vo.continuityTime == -20">
-                and a.full_time = '09:30:00'
+                and a.full_time in ('09:25:00','09:30:00')
             </if>
             <if test="vo.continuityTime != null and vo.continuityTime > 0">
                 and a.continuity_time = #{vo.continuityTime}
+            </if>
+            <if test="vo.onSelected != null">
+                and a.on_selected = #{vo.onSelected}
             </if>
         </where>
         order by data_date desc,sort desc,hot_type_id desc,full_time,continuity_time desc,a.id
