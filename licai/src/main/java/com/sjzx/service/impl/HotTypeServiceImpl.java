@@ -156,7 +156,7 @@ public class HotTypeServiceImpl extends ServiceImpl<HotTypeMapper, HotType> impl
     @Override
     public Map<String, HotType> selectMap() {
         LambdaQueryWrapper<HotType> wrapper = new LambdaQueryWrapper<>();
-        wrapper.orderByDesc(HotType::getSort).orderByDesc(HotType::getId);
+        wrapper.orderByDesc(HotType::getUpdateTime).orderByDesc(HotType::getId);
         return list(wrapper).stream().collect(
                 Collectors.toMap(e -> e.getId().toString(), Function.identity()));
     }

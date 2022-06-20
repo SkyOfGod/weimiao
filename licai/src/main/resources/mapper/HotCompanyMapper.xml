@@ -3,9 +3,10 @@
 <mapper namespace="com.sjzx.mapper.HotCompanyMapper">
 
     <select id="combogridMax" resultType="com.sjzx.model.vo.output.HotCompanyCombogridVO">
-        select a.id, a.code, a.name, a.hot_type_id, a.hot_type_ids, a.max_change, a.continuity_time,
+        select a.id, a.code, a.name, a.hot_type_id, a.hot_type_ids, a.max_change,
         (select data_date from hot_company_data order by id desc limit 1) dataDate,
         (select full_time from hot_company_data order by id desc limit 1) fullTime,
+        (select continuity_time from hot_company_data order by id desc limit 1) continuityTime,
         (select sort from hot_company_data order by id desc limit 1) sort
         from hot_company a
         <where>

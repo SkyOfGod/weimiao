@@ -237,6 +237,11 @@ public class HotCompanyServiceImpl extends ServiceImpl<HotCompanyMapper, HotComp
         hotTypeIds = getHotTypeIds(hotTypeIds, vo.getHotType3(), map);
         hotTypeIds = getHotTypeIds(hotTypeIds, vo.getHotType4(), map);
         hotTypeIds = getHotTypeIds(hotTypeIds, vo.getHotType5(), map);
+        hotTypeIds = getHotTypeIds(hotTypeIds, vo.getHotType6(), map);
+        hotTypeIds = getHotTypeIds(hotTypeIds, vo.getHotType7(), map);
+        hotTypeIds = getHotTypeIds(hotTypeIds, vo.getHotType8(), map);
+        hotTypeIds = getHotTypeIds(hotTypeIds, vo.getHotType9(), map);
+        hotTypeIds = getHotTypeIds(hotTypeIds, vo.getHotType10(), map);
 
         HotCompany hotCompany = BeanUtils.copyProperties(vo, HotCompany::new);
         hotCompany.setHotTypeIds(hotTypeIds).setUpdateTime(new Date()).updateById();

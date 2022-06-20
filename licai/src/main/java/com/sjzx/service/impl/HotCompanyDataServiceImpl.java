@@ -95,21 +95,7 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
                 }
             }
             list.sort(hotTypeService.getComparator());
-            if (list.size() > 0) {
-                hotCompanyDataVO.setHotType1(list.get(0).getName());
-                if (list.size() > 1) {
-                    hotCompanyDataVO.setHotType2(list.get(1).getName());
-                    if (list.size() > 2) {
-                        hotCompanyDataVO.setHotType3(list.get(2).getName());
-                        if (list.size() > 3) {
-                            hotCompanyDataVO.setHotType4(list.get(3).getName());
-                            if (list.size() > 4) {
-                                hotCompanyDataVO.setHotType5(list.get(4).getName());
-                            }
-                        }
-                    }
-                }
-            }
+            hotCompanyDataVO.setHotTypeName(String.join(",", list.stream().map(HotType::getName).collect(Collectors.toSet())));
         }
 
         return new EasyUIResult<>(iPage.getTotal(), iPage.getRecords());

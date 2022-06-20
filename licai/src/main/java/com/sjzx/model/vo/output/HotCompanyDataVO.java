@@ -143,29 +143,9 @@ public class HotCompanyDataVO {
     private Integer seventhTime;
 
     /**
-     * 热点1
+     * 热点
      */
-    private String hotType1;
-
-    /**
-     * 热点2
-     */
-    private String hotType2;
-
-    /**
-     * 热点3
-     */
-    private String hotType3;
-
-    /**
-     * 热点4
-     */
-    private String hotType4;
-
-    /**
-     * 热点5
-     */
-    private String hotType5;
+    private String hotTypeName;
 
     /**
      * 排序

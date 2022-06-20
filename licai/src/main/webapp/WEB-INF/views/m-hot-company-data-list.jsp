@@ -292,12 +292,12 @@
             $("#editHotCompanyDataName").textbox('setValue', value.name);
             $("#editHotCompanyDataHotTypeId").textbox('setValue', value.hotTypeId);
             $("#editHotCompanyDataDataDate").textbox('setValue', value.dataDate);
-            $("#editHotCompanyDataFullTime").textbox('setValue', value.fullTime);
+            //$("#editHotCompanyDataFullTime").textbox('setValue', value.fullTime);
             //$("#editHotCompanyDataSort").textbox('setValue', value.sort);
-            // $("#editHotCompanyDataContinuityTime").textbox('setValue', value.continuityTime + 1);
+            //$("#editHotCompanyDataContinuityTime").textbox('setValue', 1);
+            $("#editHotCompanyDataContinuityTime").textbox('setValue', value.continuityTime);
             $("#editHotCompanyDataOnSelected").textbox('setValue', 0);
             $("#editHotCompanyDataCirculationMarketValue").textbox('setValue', 1);
-            $("#editHotCompanyDataContinuityTime").textbox('setValue', 1);
             $("#editHotCompanyDataMaxChange").textbox('setValue', value.maxChange);
         }
     });
@@ -350,6 +350,14 @@
             {field: 'id', checkbox: true},
             {field: 'code', title: '股票代码', width: 64, align: 'center'},
             {field: 'name', title: '公司名称', width: 64, align: 'center'},
+            {field: 'continuityTime', title: '连扳数', width: 30, align: 'center',
+                formatter: function (value, row, index) {
+                    if (value > 1) {
+                        return '<span style="color:red;">' + value + '</span>';
+                    }
+                    return value;
+                }
+            },
             {field: 'fullTime', title: '涨停时间', width: 42, align: 'center',
                 formatter: function (value, row, index) {
                     if (value === '09:25:00') {
@@ -361,15 +369,7 @@
                     return value;
                 }
             },
-            {field: 'continuityTime', title: '连扳数', width: 30, align: 'center',
-                formatter: function (value, row, index) {
-                    if (value > 1) {
-                        return '<span style="color:red;">' + value + '</span>';
-                    }
-                    return value;
-                }
-            },
-            {field: 'hotType', title: '热点', width: 90, align: 'center'},
+            {field: 'hotType', title: '当下概念', width: 90, align: 'center'},
             {field: 'tomorrowOneMinuteValue', title: '10%爆量', width: 60, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
@@ -415,7 +415,15 @@
                     return value;
                 }
             },
-            {field: 'dataDate', title: '复盘日期', width: 90, align: 'center'},
+            {field: 'todayNoDeal', title: '(亿)封单', width: 60, align: 'center'},
+            {field: 'todayNoDealPercent', title: '封单率', width: 60, align: 'center',
+                formatter: function (value, row, index) {
+                    if (value > 0) {
+                        return value + '%';
+                    }
+                    return value;
+                }
+            },
             {field: 'safeChangeMarketValue', title: '安全换值(亿)', width: 80, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
@@ -433,21 +441,14 @@
                 }
             },
             {field: 'maxChange', title: '%最大换手', width: 60, align: 'center'},
-            {field: 'todayNoDeal', title: '(亿)封单', width: 60, align: 'center'},
-            {field: 'todayNoDealPercent', title: '封单率', width: 60, align: 'center',
+            {field: 'hotTypeName', title: '概念', width: 500, align: 'left',
                 formatter: function (value, row, index) {
-                    if (value > 0) {
-                        return value + '%';
+                    if (value == null) {
+                        return value;
                     }
-                    return value;
+                    return '<span title="' + value + '">' + value + '</span>';
                 }
             },
-            {field: 'noDeal', title: '(亿)明日封单', width: 60, align: 'center'},
-            {field: 'hotType1', title: '概念1', width: 80, align: 'center'},
-            {field: 'hotType2', title: '概念2', width: 80, align: 'center'},
-            {field: 'hotType3', title: '概念3', width: 80, align: 'center'},
-            {field: 'hotType4', title: '概念4', width: 80, align: 'center'},
-            {field: 'hotType5', title: '概念5', width: 80, align: 'center'},
             {field: 'remark', title: '备注', width: 150, align: 'left',
                 formatter: function (value, row, index) {
                     if (value == null) {
@@ -464,6 +465,7 @@
                     return '未选中';
                 }
             },
+            {field: 'dataDate', title: '复盘日期', width: 90, align: 'center'},
             {field: 'totalRemark', title: '总备注', width: 150, align: 'left',
                 formatter: function (value, row, index) {
                     if (value == null) {
@@ -472,7 +474,7 @@
                     return '<span title="' + value + '">' + value + '</span>';
                 }
             },
-
+            {field: 'noDeal', title: '(亿)明日封单', width: 60, align: 'center'},
             {field: 'firstTime', title: '首扳数', width: 48, align: 'center'},
             {field: 'secondTime', title: '二扳数', width: 48, align: 'center'},
             {field: 'thirdTime', title: '三扳数', width: 48, align: 'center'},
