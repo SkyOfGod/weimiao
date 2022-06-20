@@ -369,6 +369,7 @@
                     return value;
                 }
             },
+            {field: 'sort', title: '排序', width: 30, align: 'center'},
             {field: 'hotType', title: '当下概念', width: 90, align: 'center'},
             {field: 'tomorrowOneMinuteValue', title: '10%爆量', width: 60, align: 'center',
                 formatter: function (value, row, index) {
@@ -482,7 +483,6 @@
             {field: 'fifthTime', title: '五扳数', width: 48, align: 'center'},
             {field: 'sixthTime', title: '六扳数', width: 48, align: 'center'},
             {field: 'seventhTime', title: '七扳数', width: 48, align: 'center'},
-            {field: 'sort', title: '排序', width: 40, align: 'center'},
             {field: 'createTime', title: '创建时间', width: 150, align: 'center'},
             {field: 'updateTime', title: '修改时间', width: 150, align: 'center'},
         ]],
