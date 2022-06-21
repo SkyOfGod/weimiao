@@ -12,6 +12,7 @@ import com.sjzx.mapper.HotCompanyDataMapper;
 import com.sjzx.model.EasyUIResult;
 import com.sjzx.model.vo.input.HotCompanyDataAddVO;
 import com.sjzx.model.vo.input.HotCompanyDataInputVO;
+import com.sjzx.model.vo.input.HotCompanyInputVO;
 import com.sjzx.model.vo.output.HotCompanyDataVO;
 import com.sjzx.service.HotCompanyDataService;
 import com.sjzx.service.HotCompanyService;
@@ -263,9 +264,11 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
     }
 
     @Override
-    public List<HotCompanyData> selectByDataDateAndContinuityTime(String dataDate, Integer continuityTime) {
+    public List<HotCompanyData> select(HotCompanyInputVO vo) {
         LambdaQueryWrapper<HotCompanyData> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(!StringUtils.isEmpty(dataDate), HotCompanyData::getDataDate, dataDate);
+        wrapper.eq(!StringUtils.isEmpty(vo.getDataDate()), HotCompanyData::getDataDate, vo.getDataDate())
+            .eq(vo.getOnSelected() != null, HotCompanyData::getOnSelected, vo.getOnSelected());
+        Integer continuityTime = vo.getContinuityTime();
         if (continuityTime != null && continuityTime > 0) {
             wrapper.eq(HotCompanyData::getContinuityTime, continuityTime);
         }

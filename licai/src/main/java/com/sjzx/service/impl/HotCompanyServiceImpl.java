@@ -16,7 +16,6 @@ import com.sjzx.service.HotCompanyService;
 import com.sjzx.service.HotTypeService;
 import com.sjzx.utils.BeanUtils;
 import com.sjzx.utils.NumberUtils;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -70,7 +69,7 @@ public class HotCompanyServiceImpl extends ServiceImpl<HotCompanyMapper, HotComp
         }
         List<HotCompanyData> hotCompanyDataList = null;
         if (!StringUtils.isEmpty(vo.getDataDate()) || vo.getContinuityTime() != null) {
-            hotCompanyDataList = hotCompanyDataService.selectByDataDateAndContinuityTime(vo.getDataDate(), vo.getContinuityTime());
+            hotCompanyDataList = hotCompanyDataService.select(vo);
             if (!hotCompanyDataList.isEmpty()) {
                 wrapper.in(HotCompany::getId, hotCompanyDataList.stream().map(HotCompanyData::getHotCompanyId).collect(Collectors.toSet()));
             } else {

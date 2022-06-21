@@ -5,6 +5,7 @@ import com.sjzx.entity.HotCompanyData;
 import com.sjzx.model.EasyUIResult;
 import com.sjzx.model.vo.input.HotCompanyDataAddVO;
 import com.sjzx.model.vo.input.HotCompanyDataInputVO;
+import com.sjzx.model.vo.input.HotCompanyInputVO;
 import com.sjzx.model.vo.output.HotCompanyDataVO;
 
 import java.math.BigDecimal;
@@ -44,7 +45,7 @@ public interface HotCompanyDataService extends IService<HotCompanyData> {
 
     HotCompanyData selectMaxIdData();
 
-    List<HotCompanyData> selectByDataDateAndContinuityTime(String dataDate, Integer continuityTime);
+    List<HotCompanyData> select(HotCompanyInputVO vo);
 
     void updateHotCompareDataSort(String dataDate, Integer hotTypeId);
 }

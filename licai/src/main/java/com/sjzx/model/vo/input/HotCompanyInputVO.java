@@ -33,7 +33,10 @@ public class HotCompanyInputVO extends BasePage {
      */
     private Integer continuityTime;
 
-
+    /**
+     * 0-未选中  1-选中
+     */
+    private Integer onSelected;
 
 
 }

@@ -2,6 +2,8 @@
 <div style="width: 100%;height: 40px">
     公司:  <input class="easyui-textbox" id="listj_searchCompany">
     复盘日期:&nbsp;&nbsp;<input class="easyui-textbox" id="listj_searchDataDate">
+    选中:&nbsp;&nbsp;<input class="easyui-textbox" id="listj_searchOnSelected" style="width: 80px;">
+    <input type="hidden" id="listj_searchOnSelectedKey"/>
     连扳数:&nbsp;&nbsp;<input class="easyui-textbox" id="listj_searchContinuityTime">
     <input type="hidden" id="listj_searchContinuityTimeKey"/>
     热点名称:&nbsp;&nbsp;<input class="easyui-textbox" id="listj_searchHotTypeId">
@@ -109,6 +111,24 @@
 </div>
 
 <script type="text/javascript" charset="utf-8">
+
+    $("#listj_searchOnSelected").combobox({
+        valueField: 'key',
+        textField: 'value',
+        data: [{
+            key: '',
+            value: '全部'
+        }, {
+            key: '1',
+            value: '选中'
+        }, {
+            key: '0',
+            value: '未选中'
+        }],
+        onSelect: function (record) {
+            $("#listj_searchOnSelectedKey").val(record.key);
+        }
+    });
 
     $("#listj_searchContinuityTime").combobox({
         valueField: 'key',
@@ -459,6 +479,7 @@
             param.category = $('#listj_searchCategoryKey').val();
             param.dataDate = $('#listj_searchDataDate').val();
             param.continuityTime = $('#listj_searchContinuityTimeKey').val();
+            param.onSelected = $('#listj_searchOnSelectedKey').val();
             return true;
         }
     });

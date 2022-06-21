@@ -175,8 +175,11 @@
             key: '',
             value: '全部'
         }, {
-            key: '-20',
-            value: '秒板'
+            key: '1',
+            value: '1次'
+        }, {
+            key: '2',
+            value: '2次'
         }, {
             key: '-1',
             value: '大于1次'
@@ -184,50 +187,8 @@
             key: '-2',
             value: '大于2次'
         }, {
-            key: '-3',
-            value: '大于3次'
-        }, {
-            key: '-4',
-            value: '大于4次'
-        }, {
-            key: '-5',
-            value: '大于5次'
-        }, {
-            key: '-6',
-            value: '大于6次'
-        }, {
-            key: '-7',
-            value: '大于7次'
-        }, {
-            key: '1',
-            value: '1次'
-        }, {
-            key: '2',
-            value: '2次'
-        }, {
-            key: '3',
-            value: '3次'
-        }, {
-            key: '4',
-            value: '4次'
-        }, {
-            key: '5',
-            value: '5次'
-        }, {
-            key: '6',
-            value: '6次'
-        }, {
-            key: '7',
-            value: '7次'
-        }, {
-            key: '8',
-            value: '8次'
-        }, {
-            key: '9',
-            value: '9次'
-        }, {
-            key: '10',
-            value: '10次'
+            key: '-20',
+            value: '秒板'
         }],
         onSelect: function (record) {
             $("#listm_searchContinuityTimeKey").val(record.key);
@@ -369,8 +330,8 @@
                     return value;
                 }
             },
-            {field: 'sort', title: '排序', width: 30, align: 'center'},
             {field: 'hotType', title: '当下概念', width: 90, align: 'center'},
+            {field: 'sort', title: '排序', width: 30, align: 'center'},
             {field: 'tomorrowOneMinuteValue', title: '10%爆量', width: 60, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
