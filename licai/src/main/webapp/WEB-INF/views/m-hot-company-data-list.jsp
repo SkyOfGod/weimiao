@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div style="width: 100%;height: 40px">
     复盘日期:&nbsp;&nbsp;<input class="easyui-textbox" id="listm_searchDataDate">
-    选中:&nbsp;&nbsp;<input class="easyui-textbox" id="listm_searchOnSelected" style="width: 80px;">
+    选中:&nbsp;&nbsp;<input class="easyui-textbox" id="listm_searchOnSelected" style="width: 80px;" data-options="editable:false">
     <input type="hidden" id="listm_searchOnSelectedKey"/>
-    连扳数:&nbsp;&nbsp;<input class="easyui-textbox" id="listm_searchContinuityTime" style="width: 100px;">
+    连扳数:&nbsp;&nbsp;<input class="easyui-textbox" id="listm_searchContinuityTime" style="width: 100px;" data-options="editable:false">
     <input type="hidden" id="listm_searchContinuityTimeKey"/>
     热点:&nbsp;&nbsp;<input class="easyui-textbox" id="listm_searchHotTypeId">
     公司:&nbsp;&nbsp;<input class="easyui-textbox" id="listm_searchHotCompanyId">
@@ -43,7 +43,8 @@
             <tr>
                 <td>当前连扳次数:</td>
                 <td>
-                    <select id="editHotCompanyDataContinuityTime" class="easyui-combobox" name="continuityTime" style="width: 100px;" data-options="editable:true,required:true">
+                    <select id="editHotCompanyDataContinuityTime" class="easyui-combobox" name="continuityTime" style="width: 100px;"
+                            data-options="editable:true,required:true">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -358,7 +359,7 @@
             },
             {field: 'circulationMarketValue', title: '流通市值(亿)', width: 60, align: 'center',
                 formatter: function (value, row, index) {
-                    if (value < 100) {
+                    if (value < 60) {
                         return '<span style="color:red;">' + value + '</span>';
                     }
                     return value;
@@ -368,7 +369,7 @@
             {field: 'percent', title: '流通股占比', width: 60, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
-                        if (value >= 30 && value <= 50) {
+                        if (value >= 23 && value <= 55) {
                             return '<span style="color:red;">' + value + '%' + '</span>';
                         } else {
                             return value + '%'

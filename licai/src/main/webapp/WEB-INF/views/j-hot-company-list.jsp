@@ -2,9 +2,9 @@
 <div style="width: 100%;height: 40px">
     公司:  <input class="easyui-textbox" id="listj_searchCompany">
     复盘日期:&nbsp;&nbsp;<input class="easyui-textbox" id="listj_searchDataDate">
-    选中:&nbsp;&nbsp;<input class="easyui-textbox" id="listj_searchOnSelected" style="width: 80px;">
+    选中:&nbsp;&nbsp;<input class="easyui-textbox" id="listj_searchOnSelected" style="width: 80px;" data-options="editable:false">
     <input type="hidden" id="listj_searchOnSelectedKey"/>
-    连扳数:&nbsp;&nbsp;<input class="easyui-textbox" id="listj_searchContinuityTime">
+    连扳数:&nbsp;&nbsp;<input class="easyui-textbox" id="listj_searchContinuityTime" style="width: 100px;" data-options="editable:false">
     <input type="hidden" id="listj_searchContinuityTimeKey"/>
     热点名称:&nbsp;&nbsp;<input class="easyui-textbox" id="listj_searchHotTypeId">
     分类:  <input class="easyui-textbox" id="listj_searchCategory">
@@ -387,7 +387,7 @@
             {field: 'name', title: '公司名称', width: 64, align: 'center'},
             {field: 'circulationMarketValue', title: '流通市值(亿)', width: 80, align: 'center',
                 formatter: function (value, row, index) {
-                    if (value < 100) {
+                    if (value < 60) {
                         return '<span style="color:red;">' + value + '</span>';
                     }
                     return value;
@@ -395,7 +395,7 @@
             },
             {field: 'percent', title: '十大流通股占比(%)', width: 100, align: 'center',
                 formatter: function (value, row, index) {
-                    if (value >= 50 && value <= 70) {
+                    if (value >= 45 && value <= 77) {
                         return '<span style="color:red;">' + value + '</span>';
                     }
                     return value;
