@@ -228,9 +228,9 @@
                     $("#editHotType").dialog("close");
                 }
             }*/],
-            onBeforeClose: function () {
+            /*onBeforeClose: function () {
                 $("#editHotTypeForm").form("clear");
-            }
+            }*/
         });
         var data = $("#hot-type-list").datagrid("getSelected");
         $("#editHotTypeForm").form("load", data);

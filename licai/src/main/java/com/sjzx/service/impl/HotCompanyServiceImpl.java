@@ -265,13 +265,16 @@ public class HotCompanyServiceImpl extends ServiceImpl<HotCompanyMapper, HotComp
         if (!list.isEmpty()) {
             Map<String, HotType> map = hotTypeService.selectMap();
             for (HotCompanyCombogridVO combogridVO : list) {
-                Set<String> names = new HashSet<>();
+                /*Set<String> names = new HashSet<>();
                 for (String hotTypeId : combogridVO.getHotTypeIds().split(",")) {
                     if (map.containsKey(hotTypeId)) {
                         names.add(map.get(hotTypeId).getName());
                     }
                 }
-                combogridVO.setHotTypeName(String.join(",", names));
+                combogridVO.setHotTypeName(String.join(",", names));*/
+                if (combogridVO.getHotTypeId() != null && map.containsKey(combogridVO.getHotTypeId().toString())) {
+                    combogridVO.setHotTypeName(map.get(combogridVO.getHotTypeId().toString()).getName());
+                }
             }
         }
         return list;
