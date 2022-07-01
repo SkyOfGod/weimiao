@@ -2,10 +2,10 @@
 <div style="width: 100%;height: 40px">
     公司:  <input class="easyui-textbox" id="listj_searchCompany">
     复盘日期:&nbsp;&nbsp;<input class="easyui-textbox" id="listj_searchDataDate">
-    选中:&nbsp;&nbsp;<input class="easyui-textbox" id="listj_searchOnSelected" style="width: 80px;" data-options="editable:false">
-    <input type="hidden" id="listj_searchOnSelectedKey"/>
     连扳数:&nbsp;&nbsp;<input class="easyui-textbox" id="listj_searchContinuityTime" style="width: 100px;" data-options="editable:false">
     <input type="hidden" id="listj_searchContinuityTimeKey"/>
+    选中:&nbsp;&nbsp;<input class="easyui-textbox" id="listj_searchOnSelected" style="width: 80px;" data-options="editable:false">
+    <input type="hidden" id="listj_searchOnSelectedKey"/>
     热点名称:&nbsp;&nbsp;<input class="easyui-textbox" id="listj_searchHotTypeId">
     分类:  <input class="easyui-textbox" id="listj_searchCategory">
     <input type="hidden" id="listj_searchCategoryKey"/>
@@ -31,13 +31,6 @@
                 <td>十大流通股占比(%):</td>
                 <td>
                     <input class="easyui-textbox" name="percent" value="0" style="width: 300px;"
-                           data-options="editable:true,required:false"/>
-                </td>
-            </tr>
-            <tr>
-                <td>最大换手:</td>
-                <td>
-                    <input class="easyui-textbox" name="maxChange" value="0" style="width: 300px;"
                            data-options="editable:true,required:false"/>
                 </td>
             </tr>
@@ -99,6 +92,13 @@
                 <td>概念10:</td>
                 <td>
                     <input class="easyui-textbox" name="hotType10" style="width: 180px;" data-options="editable:true"/>
+                </td>
+            </tr>
+            <tr>
+                <td>最大换手:</td>
+                <td>
+                    <input class="easyui-textbox" name="maxChange" value="0" style="width: 300px;"
+                           data-options="editable:true,required:false"/>
                 </td>
             </tr>
             <tr>
