@@ -465,12 +465,12 @@
             title: '新增复盘数据',
             width: 500,
             height: 720,
-            top: 250,
-            left: 500,
+            top: 100,
+            left: 260,
             closed: false,
             cache: false,
             modal: true,
-            buttons: [{
+            toolbar: [{
                 text: '保存',
                 width: 300,
                 height: 50,
