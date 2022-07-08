@@ -86,7 +86,7 @@
                 </td>
             </tr>
             <tr>
-                <td>第一次爆量(亿):</td>
+                <td>对手盘(亿):</td>
                 <td>
                     <input class="easyui-textbox" name="oneMinuteValue" value="0" style="width: 300px;"
                            data-options="editable:true,required:false"/>
@@ -341,7 +341,7 @@
                     return value;
                 }
             },
-            {field: 'oneMinuteValue', title: '爆量', width: 60, align: 'center',
+            {field: 'oneMinuteValue', title: '对手盘', width: 60, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
                         return value + '亿'
@@ -349,7 +349,7 @@
                     return value;
                 }
             },
-            {field: 'oneMinuteValuePercent', title: '爆量占比', width: 60, align: 'center',
+            {field: 'oneMinuteValuePercent', title: '对手盘占比', width: 60, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
                         return value + '%'
@@ -404,6 +404,13 @@
                 }
             },
             {field: 'maxChange', title: '%最大换手', width: 60, align: 'center'},
+            {field: 'firstTime', title: '首扳数', width: 48, align: 'center'},
+            {field: 'secondTime', title: '二扳数', width: 48, align: 'center'},
+            {field: 'thirdTime', title: '三扳数', width: 48, align: 'center'},
+            {field: 'forthTime', title: '四扳数', width: 48, align: 'center'},
+            {field: 'fifthTime', title: '五扳数', width: 48, align: 'center'},
+            {field: 'sixthTime', title: '六扳数', width: 48, align: 'center'},
+            {field: 'seventhTime', title: '七扳数', width: 48, align: 'center'},
             {field: 'hotTypeName', title: '概念', width: 500, align: 'left',
                 formatter: function (value, row, index) {
                     if (value == null) {
@@ -438,13 +445,6 @@
                 }
             },
             {field: 'noDeal', title: '(亿)明日封单', width: 60, align: 'center'},
-            {field: 'firstTime', title: '首扳数', width: 48, align: 'center'},
-            {field: 'secondTime', title: '二扳数', width: 48, align: 'center'},
-            {field: 'thirdTime', title: '三扳数', width: 48, align: 'center'},
-            {field: 'forthTime', title: '四扳数', width: 48, align: 'center'},
-            {field: 'fifthTime', title: '五扳数', width: 48, align: 'center'},
-            {field: 'sixthTime', title: '六扳数', width: 48, align: 'center'},
-            {field: 'seventhTime', title: '七扳数', width: 48, align: 'center'},
             {field: 'createTime', title: '创建时间', width: 150, align: 'center'},
             {field: 'updateTime', title: '修改时间', width: 150, align: 'center'},
         ]],
@@ -525,7 +525,7 @@
             closed: false,
             cache: false,
             modal: true,
-            buttons: [{
+            toolbar: [{
                 text: '保存',
                 width: 300,
                 height: 50,

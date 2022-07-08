@@ -201,7 +201,7 @@
             closed: false,
             cache: false,
             modal: true,
-            buttons: [{
+            toolbar: [{
                 text: '保存',
                 width: 450,
                 height: 50,
