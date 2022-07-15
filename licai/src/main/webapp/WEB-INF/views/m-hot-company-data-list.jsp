@@ -282,7 +282,7 @@
         url: '/hotCompanyData/listPage',
         title: '复盘列表',
         pagePosition: 'top',
-        singleSelect: true,
+        singleSelect: false,
         rownumbers: true,
         collapsible: true,
         pagination: true,
