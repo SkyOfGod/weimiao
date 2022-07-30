@@ -341,18 +341,11 @@
                     return value;
                 }
             },
+            {field: 'safeValue', title: '安全换量', width: 60, align: 'center'},
             {field: 'oneMinuteValue', title: '对手盘', width: 60, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
                         return value + '亿'
-                    }
-                    return value;
-                }
-            },
-            {field: 'oneMinuteValuePercent', title: '对手盘占比', width: 60, align: 'center',
-                formatter: function (value, row, index) {
-                    if (value > 0) {
-                        return value + '%'
                     }
                     return value;
                 }
@@ -365,7 +358,6 @@
                     return value;
                 }
             },
-            {field: 'nearChange', title: '%对手换手', width: 60, align: 'center'},
             {field: 'percent', title: '流通股占比', width: 60, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
@@ -378,6 +370,15 @@
                     return value;
                 }
             },
+            {field: 'oneMinuteValuePercent', title: '对手盘占比', width: 60, align: 'center',
+                formatter: function (value, row, index) {
+                    if (value > 0) {
+                        return value + '%'
+                    }
+                    return value;
+                }
+            },
+            {field: 'nearChange', title: '%对手换手', width: 60, align: 'center'},
             {field: 'todayNoDeal', title: '(亿)封单', width: 60, align: 'center'},
             {field: 'todayNoDealPercent', title: '封单率', width: 60, align: 'center',
                 formatter: function (value, row, index) {

@@ -85,6 +85,18 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
                 hotCompanyDataVO.setTodayNoDealPercent(hotCompanyDataVO.getTodayNoDeal().multiply(new BigDecimal("100"))
                         .divide(hotCompanyDataVO.getCirculationMarketValue(), 2, BigDecimal.ROUND_HALF_UP));
             }
+            // 3个亿压力换完30%，5个亿压力换完50%，10亿压力换70%，有进攻盘
+            if (hotCompanyDataVO.getOneMinuteValue().compareTo(BigDecimal.ZERO) > 0 && hotCompanyDataVO.getOneMinuteValue().compareTo(BigDecimal.valueOf(3)) < 0) {
+                hotCompanyDataVO.setSafeValue(hotCompanyDataVO.getOneMinuteValue().multiply(new BigDecimal("0.3")));
+            } else if (hotCompanyDataVO.getOneMinuteValue().compareTo(BigDecimal.valueOf(3)) >= 0 && hotCompanyDataVO.getOneMinuteValue().compareTo(BigDecimal.valueOf(4)) < 0) {
+                hotCompanyDataVO.setSafeValue(hotCompanyDataVO.getOneMinuteValue().multiply(new BigDecimal("0.4")));
+            } else if (hotCompanyDataVO.getOneMinuteValue().compareTo(BigDecimal.valueOf(4)) >= 0 && hotCompanyDataVO.getOneMinuteValue().compareTo(BigDecimal.valueOf(5)) < 0) {
+                hotCompanyDataVO.setSafeValue(hotCompanyDataVO.getOneMinuteValue().multiply(new BigDecimal("0.5")));
+            } else if (hotCompanyDataVO.getOneMinuteValue().compareTo(BigDecimal.valueOf(5)) >= 0 && hotCompanyDataVO.getOneMinuteValue().compareTo(BigDecimal.valueOf(7.5)) < 0) {
+                hotCompanyDataVO.setSafeValue(hotCompanyDataVO.getOneMinuteValue().multiply(new BigDecimal("0.6")));
+            } else if (hotCompanyDataVO.getOneMinuteValue().compareTo(BigDecimal.valueOf(7.5)) >= 0) {
+                hotCompanyDataVO.setSafeValue(hotCompanyDataVO.getOneMinuteValue().multiply(new BigDecimal("0.7")));
+            }
 
             if (StringUtils.isEmpty(hotCompanyDataVO.getHotTypeIds())) {
                 continue;

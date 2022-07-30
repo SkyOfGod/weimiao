@@ -78,6 +78,11 @@ public class HotCompanyDataVO {
     private BigDecimal oneMinuteValue;
 
     /**
+     * 安全换量
+     */
+    private BigDecimal safeValue;
+
+    /**
      * 下一个交易日第一分钟爆量开盘预计爆量
      */
     private BigDecimal tomorrowOneMinuteValue;
