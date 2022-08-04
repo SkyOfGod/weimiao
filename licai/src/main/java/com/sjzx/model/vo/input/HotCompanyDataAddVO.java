@@ -52,6 +52,11 @@ public class HotCompanyDataAddVO {
     private String DataDate;
 
     /**
+     * 异动 异动次数/第一次异动到复盘日期交易日数
+     */
+    private String changeTotal;
+
+    /**
      * 涨停时间
      */
     private String fullTime;

@@ -93,6 +93,13 @@
                 </td>
             </tr>
             <tr>
+                <td>异动*/*:</td>
+                <td>
+                    <input class="easyui-textbox" name="changeTotal" value="0" style="width: 300px;"
+                           data-options="editable:true,required:false"/>
+                </td>
+            </tr>
+            <tr>
                 <td>最大换手%:</td>
                 <td>
                     <input id="editHotCompanyDataMaxChange" class="easyui-textbox" name="maxChange" value="0" style="width: 300px;"
@@ -370,6 +377,7 @@
                     return value;
                 }
             },
+            {field: 'changeTotal', title: '异动', width: 40, align: 'center'},
             {field: 'oneMinuteValuePercent', title: '对手盘占比', width: 60, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {

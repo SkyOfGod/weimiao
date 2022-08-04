@@ -85,6 +85,11 @@ public class HotCompanyData extends Model<HotCompanyData> {
     private String dataDate;
 
     /**
+     * 异动 异动次数/第一次异动到复盘日期交易日数
+     */
+    private String changeTotal;
+
+    /**
      * 排序
      */
     private Integer sort;

@@ -5,7 +5,7 @@
     <select id="listPage" resultType="com.sjzx.model.vo.output.HotCompanyDataVO">
         select a.id,a.hot_type_id,a.max_change,a.circulation_market_value,a.full_time,a.continuity_time,
                a.sort,a.data_date,a.remark,b.remark totalRemark,a.create_time,a.update_time,a.no_deal,
-               a.near_change,a.one_minute_value,a.today_no_deal,a.on_selected,
+               a.near_change,a.one_minute_value,a.today_no_deal,a.on_selected,a.change_total,
 (select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 1 and data_date &lt; a.data_date) firstTime,
 (select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 2 and data_date &lt; a.data_date) secondTime,
 (select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 3 and data_date &lt; a.data_date) thirdTime,
@@ -31,7 +31,7 @@
                 and a.hot_company_id = #{vo.hotCompanyId}
             </if>
             <if test="vo.continuityTime != null and 0 > vo.continuityTime and vo.continuityTime > -20">
-                and a.continuity_time > -#{vo.continuityTime}
+                and a.continuity_time > -#{vo.continuityTime} and a.hot_type_id != 320
             </if>
             <if test="vo.continuityTime != null and vo.continuityTime == -20">
                 and a.full_time in ('09:25:00','09:30:00')

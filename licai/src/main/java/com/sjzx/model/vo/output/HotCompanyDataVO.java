@@ -168,6 +168,11 @@ public class HotCompanyDataVO {
     private String dataDate;
 
     /**
+     * 异动 异动次数/第一次异动到复盘日期交易日数
+     */
+    private String changeTotal;
+
+    /**
      * 备注
      */
     private String remark;
