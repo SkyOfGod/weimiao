@@ -118,6 +118,7 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
     @Transactional
     public String addHotCompanyData(HotCompanyDataAddVO vo) {
         handleFullTime(vo);
+        Integer hotTypeId = handleHotTypeId(vo);
         String dataDate = vo.getDataDate();
         HotCompany hotCompany = hotCompanyService.selectByCode(vo.getCode());
         if (hotCompany == null) {
@@ -125,8 +126,8 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
                 throw new ServiceException("缺少公司名称");
             }
             hotCompany = new HotCompany().setCode(vo.getCode()).setName(vo.getName())
-                    .setHotTypeIds(vo.getHotTypeId() + "").setContinuityTime(vo.getContinuityTime())
-                    .setHotTypeId(vo.getHotTypeId()).setMaxChange(vo.getMaxChange())
+                    .setHotTypeIds(vo.getHotTypeId()).setContinuityTime(vo.getContinuityTime())
+                    .setHotTypeId(hotTypeId).setMaxChange(vo.getMaxChange())
                     .setCirculationMarketValue(vo.getCirculationMarketValue());
             if (vo.getContinuityTime() == 1) {
                 hotCompany.setFirstDate(dataDate);
@@ -134,7 +135,7 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
             hotCompany.setCreateTime(new Date()).insert();
         } else {
             hotCompany.setContinuityTime(vo.getContinuityTime())
-                    .setHotTypeId(vo.getHotTypeId());
+                    .setHotTypeId(hotTypeId);
             if (hotCompany.getMaxChange() == null || (vo.getMaxChange() != null && vo.getMaxChange().compareTo(hotCompany.getMaxChange()) > 0)) {
                 hotCompany.setMaxChange(vo.getMaxChange());
             }
@@ -142,21 +143,37 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
             if (vo.getContinuityTime() == 1) {
                 hotCompany.setFirstDate(dataDate);
             }
-            if (!Arrays.asList(hotCompany.getHotTypeIds().split(",")).contains(vo.getHotTypeId() + "")) {
+            if (!Arrays.asList(hotCompany.getHotTypeIds().split(",")).contains(vo.getHotTypeId())) {
                 hotCompany.setHotTypeIds(hotCompany.getHotTypeIds() + "," + vo.getHotTypeId());
             }
             hotCompany.setUpdateTime(new Date()).updateById();
         }
         HotCompanyData hotCompanyData = BeanUtils.copyProperties(vo, HotCompanyData::new);
-        hotCompanyData.setHotCompanyId(hotCompany.getId())
+        hotCompanyData.setHotTypeId(hotTypeId).setHotCompanyId(hotCompany.getId())
                 .setCreateTime(new Date()).insert();
 
-        new HotType().setId(vo.getHotTypeId()).setUpdateTime(new Date()).updateById();
+        new HotType().setId(hotTypeId).setUpdateTime(new Date()).updateById();
         return dataDate;
     }
 
+    private Integer handleHotTypeId(HotCompanyDataAddVO vo) {
+        HotType hotType = hotTypeService.getById(vo.getHotTypeId());
+        if (hotType == null) {
+            hotType = hotTypeService.getByName(vo.getHotTypeId());
+            if (hotType == null) {
+                hotType = new HotType();
+                hotType.setName(vo.getHotTypeId()).setCreateTime(new Date()).setUpdateTime(new Date()).insert();
+                if (hotType.getSort() == null || hotType.getSort() == 0) {
+                    hotType.setSort(vo.getId()).updateById();
+                }
+            }
+            vo.setHotTypeId(hotType.getId() + "");
+        }
+        return hotType.getId();
+    }
+
     @Override
-    public void updateHotCompareDataSort(String dataDate, Integer hotTypeId) {
+    public void updateHotCompareDataSort(String dataDate, Object hotTypeId) {
         // 查询
         LambdaQueryWrapper<HotCompanyData> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(HotCompanyData::getHotTypeId, hotTypeId)
@@ -194,14 +211,15 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
     public void updateHotCompanyData(HotCompanyDataAddVO vo) {
         handleFullTime(vo);
         HotCompanyData old = getById(vo.getId());
+        int hotTypeId = handleHotTypeId(vo);
 
         HotCompanyData hotCompanyData = BeanUtils.copyProperties(vo, HotCompanyData::new);
-        hotCompanyData.setUpdateTime(new Date()).updateById();
+        hotCompanyData.setHotTypeId(hotTypeId).setUpdateTime(new Date()).updateById();
 
-        if (!old.getHotTypeId().equals(vo.getHotTypeId())) {
+        if (!old.getHotTypeId().equals(hotTypeId)) {
             String dataDate = vo.getDataDate();
             updateHotCompareDataSort(dataDate, old.getHotTypeId());
-            updateHotCompareDataSort(dataDate, vo.getHotTypeId());
+            updateHotCompareDataSort(dataDate, hotTypeId);
         }
 
     }

@@ -47,5 +47,5 @@ public interface HotCompanyDataService extends IService<HotCompanyData> {
 
     List<HotCompanyData> select(HotCompanyInputVO vo);
 
-    void updateHotCompareDataSort(String dataDate, Integer hotTypeId);
+    void updateHotCompareDataSort(String dataDate, Object hotTypeId);
 }

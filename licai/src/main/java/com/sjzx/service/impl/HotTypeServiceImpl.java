@@ -166,4 +166,11 @@ public class HotTypeServiceImpl extends ServiceImpl<HotTypeMapper, HotType> impl
         return (a, b) -> b.getUpdateTime().compareTo(a.getUpdateTime());
     }
 
+    @Override
+    public HotType getByName(Object name) {
+        LambdaQueryWrapper<HotType> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(HotType::getName, name);
+        return getOne(wrapper);
+    }
+
 }

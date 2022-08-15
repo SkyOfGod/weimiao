@@ -15,22 +15,24 @@ import java.util.Map;
  * 热点类型 服务类
  * </p>
  *
- * @author 
+ * @author
  * @since 2021-02-04
  */
 public interface HotTypeService extends IService<HotType> {
 
-  EasyUIResult<HotTypeVO> listPage(HotTypeInputVO vo);
+    EasyUIResult<HotTypeVO> listPage(HotTypeInputVO vo);
 
-  void addHotType(HotType vo);
+    void addHotType(HotType vo);
 
-  void updateHotType(HotType vo);
+    void updateHotType(HotType vo);
 
-  void deleteHotType(HotType vo);
+    void deleteHotType(HotType vo);
 
-  List<HotType> combogrid(String q);
+    List<HotType> combogrid(String q);
 
-  Map<String, HotType> selectMap();
+    Map<String, HotType> selectMap();
 
-  Comparator<HotType> getComparator();
+    Comparator<HotType> getComparator();
+
+    HotType getByName(Object name);
 }

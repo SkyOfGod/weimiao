@@ -24,7 +24,7 @@ public class HotCompanyDataAddVO {
     /**
      * 热点ID
      */
-    private Integer hotTypeId;
+    private String hotTypeId;
 
     /**
      * 最大换手
