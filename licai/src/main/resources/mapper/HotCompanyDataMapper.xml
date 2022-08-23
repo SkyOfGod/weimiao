@@ -33,6 +33,9 @@
             <if test="vo.continuityTime != null and 0 > vo.continuityTime and vo.continuityTime > -20">
                 and a.continuity_time > -#{vo.continuityTime} and a.hot_type_id != 320
             </if>
+            <if test="vo.continuityTime != null and vo.continuityTime == -30">
+                and (a.continuity_time > 1 or a.on_selected = 1) and a.hot_type_id != 320
+            </if>
             <if test="vo.continuityTime != null and vo.continuityTime == -20">
                 and a.full_time in ('09:25:00','09:30:00')
             </if>

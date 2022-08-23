@@ -3,7 +3,7 @@
     复盘日期:&nbsp;&nbsp;<input class="easyui-textbox" id="listm_searchDataDate">
     选中:&nbsp;&nbsp;<input class="easyui-textbox" id="listm_searchOnSelected" style="width: 80px;" data-options="editable:false">
     <input type="hidden" id="listm_searchOnSelectedKey"/>
-    连扳数:&nbsp;&nbsp;<input class="easyui-textbox" id="listm_searchContinuityTime" style="width: 100px;" data-options="editable:false">
+    连扳数:&nbsp;&nbsp;<input class="easyui-textbox" id="listm_searchContinuityTime" style="width: 150px;" data-options="editable:false">
     <input type="hidden" id="listm_searchContinuityTimeKey"/>
     热点:&nbsp;&nbsp;<input class="easyui-textbox" id="listm_searchHotTypeId">
     公司:&nbsp;&nbsp;<input class="easyui-textbox" id="listm_searchHotCompanyId">
@@ -182,6 +182,9 @@
         data: [{
             key: '',
             value: '全部'
+        }, {
+            key: '-30',
+            value: '大于1次且选中'
         }, {
             key: '1',
             value: '1次'
