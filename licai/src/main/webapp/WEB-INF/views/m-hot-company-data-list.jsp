@@ -292,7 +292,7 @@
         url: '/hotCompanyData/listPage',
         title: '复盘列表',
         pagePosition: 'top',
-        singleSelect: false,
+        singleSelect: true,
         rownumbers: true,
         collapsible: true,
         pagination: true,
@@ -320,7 +320,13 @@
         ],
         columns: [[
             {field: 'id', checkbox: true},
-            {field: 'code', title: '股票代码', width: 64, align: 'center'},
+            {field: 'code', title: '股票代码', width: 64, align: 'center',
+                formatter: function (value, row, index) {
+                    if (value.slice(0,2) === '00') {
+                        return '<span style="color:red;">' + value + '</span>';
+                    }
+                    return value;
+                }},
             {field: 'name', title: '公司名称', width: 64, align: 'center'},
             {field: 'continuityTime', title: '连扳数', width: 30, align: 'center',
                 formatter: function (value, row, index) {
@@ -343,6 +349,14 @@
             },
             {field: 'hotType', title: '当下概念', width: 90, align: 'center'},
             {field: 'sort', title: '排序', width: 30, align: 'center'},
+            {field: 'hotTypeName', title: '概念', width: 500, align: 'left',
+                formatter: function (value, row, index) {
+                    if (value == null) {
+                        return value;
+                    }
+                    return '<span title="' + value + '">' + value + '</span>';
+                }
+            },
             {field: 'tomorrowOneMinuteValue', title: '10%爆量', width: 60, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
@@ -368,6 +382,16 @@
                     return value;
                 }
             },
+            {field: 'changeTotal', title: '异动', width: 40, align: 'center'},
+            {field: 'oneMinuteValuePercent', title: '对手盘占比', width: 60, align: 'center',
+                formatter: function (value, row, index) {
+                    if (value > 0) {
+                        return value + '%'
+                    }
+                    return value;
+                }
+            },
+            {field: 'nearChange', title: '%对手换手', width: 60, align: 'center'},
             {field: 'percent', title: '流通股占比', width: 60, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
@@ -380,16 +404,6 @@
                     return value;
                 }
             },
-            {field: 'changeTotal', title: '异动', width: 40, align: 'center'},
-            {field: 'oneMinuteValuePercent', title: '对手盘占比', width: 60, align: 'center',
-                formatter: function (value, row, index) {
-                    if (value > 0) {
-                        return value + '%'
-                    }
-                    return value;
-                }
-            },
-            {field: 'nearChange', title: '%对手换手', width: 60, align: 'center'},
             {field: 'todayNoDeal', title: '(亿)封单', width: 60, align: 'center'},
             {field: 'todayNoDealPercent', title: '封单率', width: 60, align: 'center',
                 formatter: function (value, row, index) {
@@ -423,14 +437,6 @@
             {field: 'fifthTime', title: '五扳数', width: 48, align: 'center'},
             {field: 'sixthTime', title: '六扳数', width: 48, align: 'center'},
             {field: 'seventhTime', title: '七扳数', width: 48, align: 'center'},
-            {field: 'hotTypeName', title: '概念', width: 500, align: 'left',
-                formatter: function (value, row, index) {
-                    if (value == null) {
-                        return value;
-                    }
-                    return '<span title="' + value + '">' + value + '</span>';
-                }
-            },
             {field: 'remark', title: '备注', width: 150, align: 'left',
                 formatter: function (value, row, index) {
                     if (value == null) {
