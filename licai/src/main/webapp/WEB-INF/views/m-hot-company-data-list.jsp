@@ -26,15 +26,6 @@
                 <td><input id="editHotCompanyDataName" class="easyui-textbox" name="name" style="width: 300px;" data-options="editable:true,required:false"/></td>
             </tr>
             <tr>
-                <td>涨停时间:</td>
-                <td>
-                    <%--<input id="editHotCompanyDataFullTime" class="easyui-datetimebox" name="fullTime" value="0" style="width: 300px;"
-                           data-options="editable:false,required:true"/>--%>
-                    <input id="editHotCompanyDataFullTime" class="easyui-textbox" name="fullTime" value="0" style="width: 300px;"
-                           data-options="editable:true,required:true"/>
-                </td>
-            </tr>
-            <tr>
                 <td>板块:</td>
                 <td>
                     <input id="editHotCompanyDataHotTypeId" class="easyui-textbox" name="hotTypeId" style="width: 150px;" data-options="editable:true,required:true"/>
@@ -69,6 +60,15 @@
                 <td>
                     <input id="editHotCompanyDataDataDate" class="easyui-textbox" name="dataDate" value="0" style="width: 300px;"
                            data-options="editable:true,required:true"/>
+                </td>
+            </tr>
+            <tr>
+                <td>涨停时间:</td>
+                <td>
+                    <%--<input id="editHotCompanyDataFullTime" class="easyui-datetimebox" name="fullTime" value="0" style="width: 300px;"
+                           data-options="editable:false,required:true"/>--%>
+                    <input id="editHotCompanyDataFullTime" class="easyui-textbox" name="fullTime" style="width: 300px;"
+                           data-options="editable:true,required:false"/>
                 </td>
             </tr>
             <tr>
@@ -327,13 +327,29 @@
                     }
                     return value;
                 }},
-            {field: 'name', title: '公司名称', width: 64, align: 'center'},
+            {field: 'name', title: '公司名称', width: 64, align: 'center',
+                formatter: function (value, row, index) {
+                    if (value == null) {
+                        return value;
+                    }
+                    return '<span title="' + value + '">' + value + '</span>';
+                }},
             {field: 'continuityTime', title: '连扳数', width: 30, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 1) {
                         return '<span style="color:red;">' + value + '</span>';
                     }
                     return value;
+                }
+            },
+            {field: 'sort', title: '排序', width: 30, align: 'center'},
+            {field: 'hotType', title: '当下概念', width: 90, align: 'center'},
+            {field: 'hotTypeName', title: '概念', width: 500, align: 'left',
+                formatter: function (value, row, index) {
+                    if (value == null) {
+                        return value;
+                    }
+                    return '<span title="' + value + '">' + value + '</span>';
                 }
             },
             {field: 'fullTime', title: '涨停时间', width: 42, align: 'center',
@@ -345,16 +361,6 @@
                         return '<span style="color:blue;">' + value + '</span>';
                     }
                     return value;
-                }
-            },
-            {field: 'hotType', title: '当下概念', width: 90, align: 'center'},
-            {field: 'sort', title: '排序', width: 30, align: 'center'},
-            {field: 'hotTypeName', title: '概念', width: 500, align: 'left',
-                formatter: function (value, row, index) {
-                    if (value == null) {
-                        return value;
-                    }
-                    return '<span title="' + value + '">' + value + '</span>';
                 }
             },
             {field: 'tomorrowOneMinuteValue', title: '10%爆量', width: 60, align: 'center',

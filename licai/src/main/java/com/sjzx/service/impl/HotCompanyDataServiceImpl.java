@@ -189,7 +189,7 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
     }
 
     private void handleFullTime(HotCompanyDataAddVO vo) {
-        if (vo.getFullTime() == null) {
+        if (StringUtils.isEmpty(vo.getFullTime())) {
             return;
         }
         String[] split = vo.getFullTime().split(":");
