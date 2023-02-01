@@ -76,6 +76,12 @@ public class HotCompanyDataController {
         return hotCompanyDataService.dataDateNewCombogrid(q);
     }
 
+    @PostMapping("/deleteByDataDate")
+    @ApiOperation(value = "删除")
+    public Response<Integer> deleteByDataDate(HotCompanyDataAddVO vo) {
+        return Response.successData(hotCompanyDataService.delete(vo.getDataDate()));
+    }
+
     @PostMapping("/upload")
     @ApiOperation(value = "文件上传")
     public Response uploadExcel(@RequestParam("file") MultipartFile file, HttpServletRequest request) {

@@ -354,16 +354,18 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
         return list;
     }
 
-    private void delete(String dataDate) {
+    @Override
+    public int delete(String dataDate) {
         LambdaQueryWrapper<HotCompanyData> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(HotCompanyData::getDataDate, dataDate);
+        int total = count(wrapper);
         remove(wrapper);
+        return total;
     }
 
     @Override
     public void uploadExcel(MultipartFile file, HttpServletRequest request, ExcelTypeEnum typeEnum) throws Exception {
         String dataDate = request.getParameter("dataDate");
-        delete(dataDate);
         List<HotCompanyDataExcelVO> list = EasyExcelUtils.readExcelWithModel(file.getInputStream(), HotCompanyDataExcelVO.class, typeEnum);
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         for (HotCompanyDataExcelVO excelVO : list) {
