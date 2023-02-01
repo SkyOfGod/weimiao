@@ -663,7 +663,7 @@
                             var params = {"dataDate": dataDate};
                             $.post("/hotCompanyData/deleteByDataDate", params, function (data) {
                                 if (data.code == 200) {
-                                    $.messager.alert('提示', '删除成功' + data.data + '条数据，按确定开始导入!', 'info',
+                                    $.messager.alert('提示', '成功删除' + data.data + '条数据，按确定开始导入!', 'info',
                                         function () {
                                             //进行基本校验
                                             var fileName = $('#file').filebox('getValue');
@@ -691,7 +691,7 @@
                                                     success: function (data) {
                                                         $.messager.progress('close');
                                                         if (data.code == 200) {
-                                                            $.messager.alert('提示', '导入成功' + data.data + '条数据!', 'info',
+                                                            $.messager.alert('提示', '成功导入' + data.data + '条数据!', 'info',
                                                                 function () {
                                                                     $("#importHotCompanyDataExcel").dialog('close');
                                                                     $("#hot-company-data-list").datagrid("reload");
