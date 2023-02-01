@@ -36,7 +36,7 @@ import java.util.List;
  * 合并现金流量表 服务实现类
  * </p>
  *
- * @author 
+ * @author
  * @since 2020-11-04
  */
 @Service
@@ -62,7 +62,7 @@ public class CombineCashFlowServiceImpl extends ServiceImpl<CombineCashFlowMappe
     @Override
     @Transactional
     public void addCashFlow(CombineCashFlowAddVO vo) {
-        if(getByIndex(vo.getCompanyId(), vo.getYear(), vo.getReportType()) != null) {
+        if (getByIndex(vo.getCompanyId(), vo.getYear(), vo.getReportType()) != null) {
             throw new ServiceException(vo.getYear() + "年数据已存在");
         }
         CombineCashFlow entity = BeanUtils.copyProperties(vo, CombineCashFlow::new);
@@ -81,11 +81,11 @@ public class CombineCashFlowServiceImpl extends ServiceImpl<CombineCashFlowMappe
     @Transactional
     public void updateCashFlow(CombineCashFlow vo) {
         CombineCashFlow old = getById(vo.getId());
-        if(old == null) {
+        if (old == null) {
             throw new ServiceException("数据不存在");
         }
         CombineCashFlow sameIndexEntity = getByIndex(old.getCompanyId(), vo.getYear(), vo.getReportType());
-        if(sameIndexEntity != null && !sameIndexEntity.getId().equals(vo.getId())) {
+        if (sameIndexEntity != null && !sameIndexEntity.getId().equals(vo.getId())) {
             throw new ServiceException(vo.getYear() + "年数据已存在");
         }
         CombineCashFlow entity = BeanUtils.copyProperties(vo, CombineCashFlow::new);
@@ -101,7 +101,7 @@ public class CombineCashFlowServiceImpl extends ServiceImpl<CombineCashFlowMappe
 
     @Override
     public CombineCashFlow getByIndex(Integer companyId, Integer year, Integer reportType) {
-        if(companyId == null || year == null || reportType == null) {
+        if (companyId == null || year == null || reportType == null) {
             return null;
         }
         LambdaQueryWrapper<CombineCashFlow> wrapper = new LambdaQueryWrapper<>();
@@ -116,18 +116,17 @@ public class CombineCashFlowServiceImpl extends ServiceImpl<CombineCashFlowMappe
         try {
             String compId = request.getParameter("id");
             List<CombineCashFlowExcelVO> vos = EasyExcelUtils.readExcelWithModel(file.getInputStream(), CombineCashFlowExcelVO.class, typeEnum);
-            log.info("======>>>vos:{}",vos);
-            if(vos != null && vos.size() > 0){
-                vos.stream().forEach(x->{
+            if (vos != null && vos.size() > 0) {
+                vos.forEach(x -> {
                     CombineCashFlow entity = new CombineCashFlow();
-                    BeanUtil.copyProperties(x,entity);
+                    BeanUtil.copyProperties(x, entity);
                     entity.setCompanyId(Integer.parseInt(compId.trim()));
                     entity.setCreateTime(new Date());
                     entity.insert();
                 });
             }
         } catch (Exception e) {
-            log.info("解析Excel系统异常:{}",e);
+            log.info("解析Excel系统异常:", e);
             throw new ServiceException("文件上传失败:" + e.getMessage());
         }
         return Response.success();

@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class BaseController {
 
     protected static ExcelTypeEnum checkParam(MultipartFile file, HttpServletRequest request){
-        if(StringUtils.isEmpty(request.getParameter("id"))){
+        /*if(StringUtils.isEmpty(request.getParameter("id"))){
             throw new ServiceException("公司id不能为空");
-        }
+        }*/
 
         if(null == file){
             throw new ServiceException("上传文件为空!");

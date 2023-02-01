@@ -1,10 +1,12 @@
 package com.sjzx.model.vo.input;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 
+@Builder
 @Data
 @Accessors(chain = true)
 public class HotCompanyDataAddVO {
@@ -49,7 +51,7 @@ public class HotCompanyDataAddVO {
     /**
      * 复盘日期
      */
-    private String DataDate;
+    private String dataDate;
 
     /**
      * 异动 异动次数/第一次异动到复盘日期交易日数
@@ -84,7 +86,7 @@ public class HotCompanyDataAddVO {
     /**
      * 0-未选中  1-选中
      */
-    private Integer onSelected;
+    private Integer onSelected = 0;
 
     /**
      * 备注

@@ -1,6 +1,8 @@
 package com.sjzx.controller;
 
 
+import com.alibaba.excel.support.ExcelTypeEnum;
+import com.sjzx.exception.ServiceException;
 import com.sjzx.model.EasyUIResult;
 import com.sjzx.model.Response;
 import com.sjzx.model.vo.input.HotCompanyDataAddVO;
@@ -11,17 +13,21 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 
 /**
  * <p>
  * 热点公司复盘表 前端控制器
  * </p>
  *
- * @author 
+ * @author
  * @since 2022-05-21
  */
 @RestController
@@ -40,8 +46,7 @@ public class HotCompanyDataController {
     @PostMapping("/add")
     @ApiOperation(value = "添加")
     public Response addHotCompanyData(HotCompanyDataAddVO vo) {
-        String dataDate = hotCompanyDataService.addHotCompanyData(vo);
-        hotCompanyDataService.updateHotCompareDataSort(dataDate, vo.getHotTypeId());
+        hotCompanyDataService.addHotCompanyData(vo);
         return Response.success();
     }
 
@@ -63,6 +68,26 @@ public class HotCompanyDataController {
     @ApiOperation(value = "下拉框")
     public List<Map<String, String>> getDataDateCombobox(String q) {
         return hotCompanyDataService.getDataDateCombobox(q);
+    }
+
+    @PostMapping("/dataDateNewCombogrid")
+    @ApiOperation(value = "实时复盘日期下拉框")
+    public List<Map<String, String>> dataDateNewCombogrid(String q) {
+        return hotCompanyDataService.dataDateNewCombogrid(q);
+    }
+
+    @PostMapping("/upload")
+    @ApiOperation(value = "文件上传")
+    public Response uploadExcel(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+        try {
+            // 校验入参
+            BiFunction<MultipartFile, HttpServletRequest, ExcelTypeEnum> checkParam = BaseController::checkParam;
+            ExcelTypeEnum typeEnum = checkParam.apply(file, request);
+            hotCompanyDataService.uploadExcel(file, request, typeEnum);
+        } catch (Exception e) {
+            throw new ServiceException("文件上传失败:" + e.getMessage());
+        }
+        return Response.success();
     }
 
 }

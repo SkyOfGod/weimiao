@@ -1,6 +1,8 @@
 package com.sjzx.service.impl;
 
+import com.alibaba.excel.support.ExcelTypeEnum;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.injector.methods.SelectOne;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -10,6 +12,8 @@ import com.sjzx.entity.HotType;
 import com.sjzx.exception.ServiceException;
 import com.sjzx.mapper.HotCompanyDataMapper;
 import com.sjzx.model.EasyUIResult;
+import com.sjzx.model.vo.excel.CombineCashFlowExcelVO;
+import com.sjzx.model.vo.excel.HotCompanyDataExcelVO;
 import com.sjzx.model.vo.input.HotCompanyDataAddVO;
 import com.sjzx.model.vo.input.HotCompanyDataInputVO;
 import com.sjzx.model.vo.input.HotCompanyInputVO;
@@ -18,13 +22,17 @@ import com.sjzx.service.HotCompanyDataService;
 import com.sjzx.service.HotCompanyService;
 import com.sjzx.service.HotTypeService;
 import com.sjzx.utils.BeanUtils;
+import com.sjzx.utils.EasyExcelUtils;
 import com.sjzx.utils.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -122,9 +130,6 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
         String dataDate = vo.getDataDate();
         HotCompany hotCompany = hotCompanyService.selectByCode(vo.getCode());
         if (hotCompany == null) {
-            if (StringUtils.isEmpty(vo.getName())) {
-                throw new ServiceException("缺少公司名称");
-            }
             hotCompany = new HotCompany().setCode(vo.getCode()).setName(vo.getName())
                     .setHotTypeIds(vo.getHotTypeId()).setContinuityTime(vo.getContinuityTime())
                     .setHotTypeId(hotTypeId).setMaxChange(vo.getMaxChange())
@@ -134,7 +139,7 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
             }
             hotCompany.setCreateTime(new Date()).insert();
         } else {
-            hotCompany.setContinuityTime(vo.getContinuityTime())
+            hotCompany.setContinuityTime(vo.getContinuityTime()).setName(vo.getName())
                     .setHotTypeId(hotTypeId);
             if (hotCompany.getMaxChange() == null || (vo.getMaxChange() != null && vo.getMaxChange().compareTo(hotCompany.getMaxChange()) > 0)) {
                 hotCompany.setMaxChange(vo.getMaxChange());
@@ -150,10 +155,32 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
         }
         HotCompanyData hotCompanyData = BeanUtils.copyProperties(vo, HotCompanyData::new);
         hotCompanyData.setHotTypeId(hotTypeId).setHotCompanyId(hotCompany.getId())
-                .setCreateTime(new Date()).insert();
+                .setCreateTime(new Date());
+        HotCompanyData old = select(hotCompanyData.getHotCompanyId(), hotCompanyData.getDataDate());
+//        if (old == null) {
+            hotCompanyData.insert();
+//        } else {
+//            hotCompanyData.setId(old.getId()).updateById();
+//        }
 
         new HotType().setId(hotTypeId).setUpdateTime(new Date()).updateById();
+
+        updateHotCompareDataSort(dataDate, vo.getHotTypeId());
         return dataDate;
+    }
+
+    private HotCompanyData select(Integer hotCompanyId, String dataDate) {
+        LambdaQueryWrapper<HotCompanyData> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(HotCompanyData::getHotCompanyId, hotCompanyId)
+                .eq(HotCompanyData::getDataDate, dataDate);
+        return getOne(wrapper);
+    }
+
+    public List<HotCompanyData> select(Integer hotTypeId, List<LocalDate> dataDateList) {
+        LambdaQueryWrapper<HotCompanyData> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(HotCompanyData::getHotTypeId, hotTypeId)
+                .in(HotCompanyData::getDataDate, dataDateList);
+        return list(wrapper);
     }
 
     private Integer handleHotTypeId(HotCompanyDataAddVO vo) {
@@ -227,14 +254,6 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
     @Override
     public void deleteHotCompanyData(HotCompanyDataAddVO vo) {
         removeById(vo.getId());
-    }
-
-    @Override
-    public List<HotCompanyData> select(Integer hotTypeId, List<LocalDate> dataDateList) {
-        LambdaQueryWrapper<HotCompanyData> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(HotCompanyData::getHotTypeId, hotTypeId)
-                .in(HotCompanyData::getDataDate, dataDateList);
-        return list(wrapper);
     }
 
     @Override
@@ -317,6 +336,55 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
         return list(wrapper);
     }
 
+    @Override
+    public List<Map<String, String>> dataDateNewCombogrid(String q) {
+        LocalDate now = LocalDate.now();
+        List<Map<String, String>> list = new ArrayList<>();
+        for (int i = 0; i < 40; i++) {
+            LocalDate localDate = now.minusDays(i);
+            int value = localDate.getDayOfWeek().getValue();
+            if (Arrays.asList(6, 7).contains(value)) {
+                continue;
+            }
+            Map<String, String> map = new HashMap<>();
+            map.put("key", localDate.toString());
+            map.put("value", "周" + value);
+            list.add(map);
+        }
+        return list;
+    }
 
+    private void delete(String dataDate) {
+        LambdaQueryWrapper<HotCompanyData> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(HotCompanyData::getDataDate, dataDate);
+        remove(wrapper);
+    }
+
+    @Override
+    public void uploadExcel(MultipartFile file, HttpServletRequest request, ExcelTypeEnum typeEnum) throws Exception {
+        String dataDate = request.getParameter("dataDate");
+        delete(dataDate);
+        List<HotCompanyDataExcelVO> list = EasyExcelUtils.readExcelWithModel(file.getInputStream(), HotCompanyDataExcelVO.class, typeEnum);
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        for (HotCompanyDataExcelVO excelVO : list) {
+            if (!StringUtils.hasText(excelVO.getCode())) {
+                continue;
+            }
+            try {
+                if (!StringUtils.hasText(excelVO.getName())) {
+                    excelVO.setName("");
+                }
+                HotCompanyDataAddVO dataAddVO = HotCompanyDataAddVO.builder()
+                        .code(excelVO.getCode()).name(excelVO.getName())
+                        .hotTypeId(excelVO.getCause())
+                        .fullTime(sdf.format(excelVO.getFullTime()))
+                        .continuityTime(Integer.parseInt(excelVO.getContinuityTime())).dataDate(dataDate)
+                        .build();
+                addHotCompanyData(dataAddVO);
+            } catch (Exception e) {
+                log.error("导入数据新增失败", e);
+            }
+        }
+    }
 
 }
