@@ -84,16 +84,15 @@ public class HotCompanyDataController {
 
     @PostMapping("/upload")
     @ApiOperation(value = "文件上传")
-    public Response uploadExcel(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+    public Response<Integer> uploadExcel(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
         try {
             // 校验入参
             BiFunction<MultipartFile, HttpServletRequest, ExcelTypeEnum> checkParam = BaseController::checkParam;
             ExcelTypeEnum typeEnum = checkParam.apply(file, request);
-            hotCompanyDataService.uploadExcel(file, request, typeEnum);
+            return Response.successData(hotCompanyDataService.uploadExcel(file, request, typeEnum));
         } catch (Exception e) {
             throw new ServiceException("文件上传失败:" + e.getMessage());
         }
-        return Response.success();
     }
 
 }

@@ -57,5 +57,5 @@ public interface HotCompanyDataService extends IService<HotCompanyData> {
 
     int delete(String dataDate);
 
-    void uploadExcel(MultipartFile file, HttpServletRequest request, ExcelTypeEnum typeEnum) throws Exception;
+    int uploadExcel(MultipartFile file, HttpServletRequest request, ExcelTypeEnum typeEnum) throws Exception;
 }

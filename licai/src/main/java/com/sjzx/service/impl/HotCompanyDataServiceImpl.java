@@ -364,10 +364,11 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
     }
 
     @Override
-    public void uploadExcel(MultipartFile file, HttpServletRequest request, ExcelTypeEnum typeEnum) throws Exception {
+    public int uploadExcel(MultipartFile file, HttpServletRequest request, ExcelTypeEnum typeEnum) throws Exception {
         String dataDate = request.getParameter("dataDate");
         List<HotCompanyDataExcelVO> list = EasyExcelUtils.readExcelWithModel(file.getInputStream(), HotCompanyDataExcelVO.class, typeEnum);
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        int total = 0;
         for (HotCompanyDataExcelVO excelVO : list) {
             if (!StringUtils.hasText(excelVO.getCode())) {
                 continue;
@@ -383,10 +384,12 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
                         .continuityTime(Integer.parseInt(excelVO.getContinuityTime())).dataDate(dataDate)
                         .build();
                 addHotCompanyData(dataAddVO);
+                total++;
             } catch (Exception e) {
                 log.error("导入数据新增失败", e);
             }
         }
+        return total;
     }
 
 }
