@@ -156,11 +156,11 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
         HotCompanyData hotCompanyData = BeanUtils.copyProperties(vo, HotCompanyData::new);
         hotCompanyData.setHotTypeId(hotTypeId).setHotCompanyId(hotCompany.getId())
                 .setCreateTime(new Date());
-        HotCompanyData old = select(hotCompanyData.getHotCompanyId(), hotCompanyData.getDataDate());
+//        HotCompanyData old = select(hotCompanyData.getHotCompanyId(), hotCompanyData.getDataDate());
 //        if (old == null) {
             hotCompanyData.insert();
 //        } else {
-//            hotCompanyData.setId(old.getId()).updateById();
+//            hotCompanyData.setId(old.getId()).setUpdateTime(new Date()).updateById();
 //        }
 
         new HotType().setId(hotTypeId).setUpdateTime(new Date()).updateById();
@@ -184,18 +184,21 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
     }
 
     private Integer handleHotTypeId(HotCompanyDataAddVO vo) {
-        HotType hotType = hotTypeService.getById(vo.getHotTypeId());
-        if (hotType == null) {
+        HotType hotType;
+        try {
+            Integer.parseInt(vo.getHotTypeId());
+            hotType = hotTypeService.getById(vo.getHotTypeId());
+        } catch (NumberFormatException e) {
             hotType = hotTypeService.getByName(vo.getHotTypeId());
-            if (hotType == null) {
-                hotType = new HotType();
-                hotType.setName(vo.getHotTypeId()).setCreateTime(new Date()).setUpdateTime(new Date()).insert();
-                if (hotType.getSort() == null || hotType.getSort() == 0) {
-                    hotType.setSort(vo.getId()).updateById();
-                }
-            }
-            vo.setHotTypeId(hotType.getId() + "");
         }
+        if (hotType == null) {
+            hotType = new HotType();
+            hotType.setName(vo.getHotTypeId()).setCreateTime(new Date()).setUpdateTime(new Date()).insert();
+            if (hotType.getSort() == null || hotType.getSort() == 0) {
+                hotType.setSort(vo.getId()).updateById();
+            }
+        }
+        vo.setHotTypeId(hotType.getId() + "");
         return hotType.getId();
     }
 
@@ -216,7 +219,7 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
     }
 
     private void handleFullTime(HotCompanyDataAddVO vo) {
-        if (StringUtils.isEmpty(vo.getFullTime())) {
+        if (StringUtils.isEmpty(vo.getFullTime()) || vo.getFullTime().length() == 8) {
             return;
         }
         String[] split = vo.getFullTime().split(":");
@@ -340,7 +343,7 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
     public List<Map<String, String>> dataDateNewCombogrid(String q) {
         LocalDate now = LocalDate.now();
         List<Map<String, String>> list = new ArrayList<>();
-        for (int i = 0; i < 40; i++) {
+        for (int i = 0; i < 50; i++) {
             LocalDate localDate = now.minusDays(i);
             int value = localDate.getDayOfWeek().getValue();
             if (Arrays.asList(6, 7).contains(value)) {
