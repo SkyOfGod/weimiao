@@ -113,6 +113,11 @@ public class HotCompanyDataVO {
     private Integer continuityTime;
 
     /**
+     * 炸扳数
+     */
+    private Integer zeroTime;
+
+    /**
      * 首扳数
      */
     private Integer firstTime;

@@ -6,6 +6,7 @@
         select a.id,a.hot_type_id,a.max_change,a.circulation_market_value,a.full_time,a.continuity_time,
                a.sort,a.data_date,a.remark,b.remark totalRemark,a.create_time,a.update_time,a.no_deal,
                a.near_change,a.one_minute_value,a.today_no_deal,a.on_selected,a.change_total,
+(select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 0 and data_date &lt; a.data_date) zeroTime,
 (select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 1 and data_date &lt; a.data_date) firstTime,
 (select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 2 and data_date &lt; a.data_date) secondTime,
 (select count(1) from hot_company_data aa where hot_company_id = a.hot_company_id and continuity_time = 3 and data_date &lt; a.data_date) thirdTime,

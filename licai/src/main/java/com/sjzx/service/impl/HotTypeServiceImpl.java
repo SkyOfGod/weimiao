@@ -173,4 +173,11 @@ public class HotTypeServiceImpl extends ServiceImpl<HotTypeMapper, HotType> impl
         return getOne(wrapper);
     }
 
+    @Override
+    public List<HotType> getByIds(Set<String> ids) {
+        LambdaQueryWrapper<HotType> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(HotType::getId, ids);
+        return list(wrapper);
+    }
+
 }

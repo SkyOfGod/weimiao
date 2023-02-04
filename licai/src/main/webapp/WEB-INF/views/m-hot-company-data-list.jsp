@@ -175,13 +175,14 @@
 <script type="text/javascript" charset="utf-8">
 
     $("#listm_searchNewDataDate").combogrid({
-        panelWidth: 180,
+        panelWidth: 230,
         idField: 'key',
         textField: 'key',
         url: '/hotCompanyData/dataDateNewCombogrid',
         mode: 'remote',
         delay: 500,
         columns: [[
+            {field: 'sort', title: '排序', width: 50, align: 'center'},
             {field: 'key', title: '日期', width: 110, align: 'center'},
             {field: 'value', title: '星期', width: 50, align: 'center'}
         ]],
@@ -398,6 +399,23 @@
                     return value;
                 }
             },
+            {field: 'zeroTime', title: '炸扳数', width: 48, align: 'center'},
+            {field: 'firstTime', title: '首扳数', width: 48, align: 'center'},
+            {field: 'secondTime', title: '二扳数', width: 48, align: 'center'},
+            {field: 'thirdTime', title: '三扳数', width: 48, align: 'center'},
+            {field: 'forthTime', title: '四扳数', width: 48, align: 'center'},
+            {field: 'fifthTime', title: '五扳数', width: 48, align: 'center'},
+            {field: 'sixthTime', title: '六扳数', width: 48, align: 'center'},
+            {field: 'seventhTime', title: '七扳数', width: 48, align: 'center'},
+            {field: 'remark', title: '备注', width: 150, align: 'left',
+                formatter: function (value, row, index) {
+                    if (value == null) {
+                        return value;
+                    }
+                    return '<span title="' + value + '">' + value + '</span>';
+                }
+            },
+            {field: 'dataDate', title: '复盘日期', width: 90, align: 'center'},
             {field: 'tomorrowOneMinuteValue', title: '10%爆量', width: 60, align: 'center',
                 formatter: function (value, row, index) {
                     if (value > 0) {
@@ -471,21 +489,6 @@
                 }
             },
             {field: 'maxChange', title: '%最大换手', width: 60, align: 'center'},
-            {field: 'firstTime', title: '首扳数', width: 48, align: 'center'},
-            {field: 'secondTime', title: '二扳数', width: 48, align: 'center'},
-            {field: 'thirdTime', title: '三扳数', width: 48, align: 'center'},
-            {field: 'forthTime', title: '四扳数', width: 48, align: 'center'},
-            {field: 'fifthTime', title: '五扳数', width: 48, align: 'center'},
-            {field: 'sixthTime', title: '六扳数', width: 48, align: 'center'},
-            {field: 'seventhTime', title: '七扳数', width: 48, align: 'center'},
-            {field: 'remark', title: '备注', width: 150, align: 'left',
-                formatter: function (value, row, index) {
-                    if (value == null) {
-                        return value;
-                    }
-                    return '<span title="' + value + '">' + value + '</span>';
-                }
-            },
             {field: 'onSelected', title: '是否选中', width: 40, align: 'center',
                 formatter: function (value, row, index) {
                     if (value == 1) {
@@ -494,7 +497,6 @@
                     return '未选中';
                 }
             },
-            {field: 'dataDate', title: '复盘日期', width: 90, align: 'center'},
             {field: 'totalRemark', title: '总备注', width: 150, align: 'left',
                 formatter: function (value, row, index) {
                     if (value == null) {
@@ -694,7 +696,7 @@
                                                             $.messager.alert('提示', '成功导入' + data.data + '条数据!', 'info',
                                                                 function () {
                                                                     $("#importHotCompanyDataExcel").dialog('close');
-                                                                    $("#hot-company-data-list").datagrid("reload");
+                                                                    $("#hot-company-data-list").datagrid("load");
                                                                 });
                                                         } else {
                                                             $.messager.alert('提示', data.msg, 'warning');

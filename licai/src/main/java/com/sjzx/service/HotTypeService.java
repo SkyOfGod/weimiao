@@ -9,6 +9,7 @@ import com.sjzx.model.vo.output.HotTypeVO;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>
@@ -35,4 +36,6 @@ public interface HotTypeService extends IService<HotType> {
     Comparator<HotType> getComparator();
 
     HotType getByName(Object name);
+
+    List<HotType> getByIds(Set<String> set);
 }

@@ -148,9 +148,7 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
             if (vo.getContinuityTime() == 1) {
                 hotCompany.setFirstDate(dataDate);
             }
-            if (!Arrays.asList(hotCompany.getHotTypeIds().split(",")).contains(vo.getHotTypeId())) {
-                hotCompany.setHotTypeIds(hotCompany.getHotTypeIds() + "," + vo.getHotTypeId());
-            }
+            hotCompany.setHotTypeIds(handleHotTypeIds(hotCompany.getHotTypeIds(), vo.getHotTypeId()));
             hotCompany.setUpdateTime(new Date()).updateById();
         }
         HotCompanyData hotCompanyData = BeanUtils.copyProperties(vo, HotCompanyData::new);
@@ -167,6 +165,16 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
 
         updateHotCompareDataSort(dataDate, vo.getHotTypeId());
         return dataDate;
+    }
+
+    private String handleHotTypeIds(String hotTypeIds, String hotTypeId) {
+        Set<String> set = new HashSet<>();
+        if (hotTypeId != null) {
+            set.add(hotTypeId);
+        }
+        Collections.addAll(set, hotTypeIds.split(","));
+        List<HotType> list = hotTypeService.getByIds(set);
+        return String.join(",", list.stream().map(e -> e.getId().toString()).collect(Collectors.toSet()));
     }
 
     private HotCompanyData select(Integer hotCompanyId, String dataDate) {
@@ -343,16 +351,19 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
     public List<Map<String, String>> dataDateNewCombogrid(String q) {
         LocalDate now = LocalDate.now();
         List<Map<String, String>> list = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
+        int total = 1;
+        for (int i = 0; i < 1000; i++) {
             LocalDate localDate = now.minusDays(i);
             int value = localDate.getDayOfWeek().getValue();
             if (Arrays.asList(6, 7).contains(value)) {
                 continue;
             }
             Map<String, String> map = new HashMap<>();
+            map.put("sort", total + "");
             map.put("key", localDate.toString());
             map.put("value", "周" + value);
             list.add(map);
+            total++;
         }
         return list;
     }
@@ -380,9 +391,14 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
                 if (!StringUtils.hasText(excelVO.getName())) {
                     excelVO.setName("");
                 }
+                String cause = excelVO.getCause();
+                if (cause == null) {
+                    cause = "";
+                }
+                String[] split = cause.split(",");// 兼容历史数据
                 HotCompanyDataAddVO dataAddVO = HotCompanyDataAddVO.builder()
                         .code(excelVO.getCode()).name(excelVO.getName())
-                        .hotTypeId(excelVO.getCause())
+                        .hotTypeId(split[split.length - 1])
                         .fullTime(sdf.format(excelVO.getFullTime()))
                         .continuityTime(Integer.parseInt(excelVO.getContinuityTime())).dataDate(dataDate)
                         .build();
