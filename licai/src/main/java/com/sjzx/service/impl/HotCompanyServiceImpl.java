@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.function.Function;
@@ -148,34 +149,20 @@ public class HotCompanyServiceImpl extends ServiceImpl<HotCompanyMapper, HotComp
             }
         }
         list.sort(hotTypeService.getComparator());
-        if (list.size() > 0) {
-            t.setHotType1(list.get(0).getName());
-            if (list.size() > 1) {
-                t.setHotType2(list.get(1).getName());
-                if (list.size() > 2) {
-                    t.setHotType3(list.get(2).getName());
-                    if (list.size() > 3) {
-                        t.setHotType4(list.get(3).getName());
-                        if (list.size() > 4) {
-                            t.setHotType5(list.get(4).getName());
-                            if (list.size() > 5) {
-                                t.setHotType6(list.get(5).getName());
-                                if (list.size() > 6) {
-                                    t.setHotType7(list.get(6).getName());
-                                    if (list.size() > 7) {
-                                        t.setHotType8(list.get(7).getName());
-                                        if (list.size() > 8) {
-                                            t.setHotType9(list.get(8).getName());
-                                            if (list.size() > 9) {
-                                                t.setHotType10(list.get(9).getName());
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+        setHotType(t, list);
+    }
+
+    private void setHotType(HotCompanyVO t, List<HotType> list) {
+        Class<HotCompanyVO> clazz = HotCompanyVO.class;
+        for (int i = 0; i < 10; i++) {
+            try {
+                Field field = clazz.getDeclaredField("hotType" + (i + 1));
+                if (list.size() > i) {
+                    field.setAccessible(true);
+                    field.set(t, list.get(i).getName());
                 }
+            } catch (Exception e) {
+                log.error("设置字段出错", e);
             }
         }
     }
