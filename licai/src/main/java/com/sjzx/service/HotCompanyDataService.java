@@ -55,6 +55,8 @@ public interface HotCompanyDataService extends IService<HotCompanyData> {
 
     List<Map<String, String>> dataDateNewCombogrid(String q);
 
+    int selectByDataDate(String dataDate);
+
     int delete(String dataDate);
 
     int uploadExcel(MultipartFile file, HttpServletRequest request, ExcelTypeEnum typeEnum) throws Exception;

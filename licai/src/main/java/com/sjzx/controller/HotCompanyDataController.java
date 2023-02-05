@@ -76,6 +76,12 @@ public class HotCompanyDataController {
         return hotCompanyDataService.dataDateNewCombogrid(q);
     }
 
+    @PostMapping("/selectByDataDate")
+    @ApiOperation(value = "根据复盘日期查询")
+    public Response<Integer> selectByDataDate(HotCompanyDataAddVO vo) {
+        return Response.successData(hotCompanyDataService.selectByDataDate(vo.getDataDate()));
+    }
+
     @PostMapping("/deleteByDataDate")
     @ApiOperation(value = "删除")
     public Response<Integer> deleteByDataDate(HotCompanyDataAddVO vo) {

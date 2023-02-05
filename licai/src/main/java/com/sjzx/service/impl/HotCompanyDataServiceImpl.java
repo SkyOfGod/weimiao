@@ -369,12 +369,18 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
     }
 
     @Override
+    public int selectByDataDate(String dataDate) {
+        LambdaQueryWrapper<HotCompanyData> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(HotCompanyData::getDataDate, dataDate);
+        return count(wrapper);
+    }
+
+    @Override
     public int delete(String dataDate) {
         LambdaQueryWrapper<HotCompanyData> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(HotCompanyData::getDataDate, dataDate);
-        int total = count(wrapper);
         remove(wrapper);
-        return total;
+        return 1;
     }
 
     @Override

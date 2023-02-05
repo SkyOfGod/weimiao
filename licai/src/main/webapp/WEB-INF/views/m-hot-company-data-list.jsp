@@ -660,57 +660,27 @@
                         $.messager.alert('提示', '请选择复盘日期!');
                         return;
                     }
-                    $.messager.confirm('确认', '确定删除【' + dataDate + '】日期的数据重新导入吗？', function (r) {
-                        if (r) {
-                            var params = {"dataDate": dataDate};
-                            $.post("/hotCompanyData/deleteByDataDate", params, function (data) {
-                                if (data.code == 200) {
-                                    $.messager.alert('提示', '成功删除' + data.data + '条数据，按确定开始导入!', 'info',
-                                        function () {
-                                            //进行基本校验
-                                            var fileName = $('#file').filebox('getValue');
-                                            if(fileName == ""){
-                                                $.messager.alert('提示','请选择上传文件！','info');
-                                                return;
-                                            }
-                                            //对文件格式进行校验
-                                            var d1 = /\.[^\.]+$/.exec(fileName);
-                                            if(d1 == ".xlsx" || d1 == ".xls"){
-                                                var formdata = new FormData($("#uploadHotCompanyDataExcel")[0]);
-                                                $.messager.progress({
-                                                    title: '提示',
-                                                    msg: '正在导入，请稍后...',
-                                                    text: ''
-                                                });
-                                                $.ajax({
-                                                    url: "/hotCompanyData/upload",
-                                                    type: "POST",
-                                                    data:formdata,
-                                                    contentType : "application/json;charset=UTF-8",
-                                                    dataType: "json",
-                                                    processData: false,  // 告诉jQuery不要去处理发送的数据
-                                                    contentType: false,   // 告诉jQuery不要去设置Content-Type请求头
-                                                    success: function (data) {
-                                                        $.messager.progress('close');
-                                                        if (data.code == 200) {
-                                                            $.messager.alert('提示', '成功导入' + data.data + '条数据!', 'info',
-                                                                function () {
-                                                                    $("#importHotCompanyDataExcel").dialog('close');
-                                                                    $("#hot-company-data-list").datagrid("load");
-                                                                });
-                                                        } else {
-                                                            $.messager.alert('提示', data.msg, 'warning');
-                                                        }
-                                                    }
-                                                })
-                                            }else{
-                                                $.messager.alert('提示','请选择xlsx或xls格式文件！','info');
-                                                $('#fileUpload').filebox('setValue','');
+                    var params = {"dataDate": dataDate};
+                    $.post("/hotCompanyData/selectByDataDate", params, function (data) {
+                        if (data.code == 200) {
+                            if (data.data === 0) {
+                                hotCompanyDataImportProcess();
+                            } else {
+                                $.messager.confirm('确认', '确定删除【' + dataDate + '】日期的【' + data.data + '】条数据重新导入吗？', function (r) {
+                                    if (r) {
+                                        $.post("/hotCompanyData/deleteByDataDate", params, function (data) {
+                                            if (data.code == 200) {
+                                                $.messager.alert('提示', '成功删除数据，按确定开始导入!', 'info',
+                                                    function () {
+                                                        hotCompanyDataImportProcess();
+                                                    });
+
                                             }
                                         });
+                                    }
+                                });
 
-                                }
-                            });
+                            }
                         }
                     });
 
@@ -725,6 +695,49 @@
                 $("#uploadHotCompanyDataExcel").form("clear");
             }
         });
+    }
+
+    hotCompanyDataImportProcess = function () {
+        //进行基本校验
+        var fileName = $('#file').filebox('getValue');
+        if(fileName == ""){
+            $.messager.alert('提示','请选择上传文件！','info');
+            return;
+        }
+        //对文件格式进行校验
+        var d1 = /\.[^\.]+$/.exec(fileName);
+        if(d1 == ".xlsx" || d1 == ".xls"){
+            var formdata = new FormData($("#uploadHotCompanyDataExcel")[0]);
+            $.messager.progress({
+                title: '提示',
+                msg: '正在导入，请稍后...',
+                text: ''
+            });
+            $.ajax({
+                url: "/hotCompanyData/upload",
+                type: "POST",
+                data:formdata,
+                contentType : "application/json;charset=UTF-8",
+                dataType: "json",
+                processData: false,  // 告诉jQuery不要去处理发送的数据
+                contentType: false,   // 告诉jQuery不要去设置Content-Type请求头
+                success: function (data) {
+                    $.messager.progress('close');
+                    if (data.code == 200) {
+                        $.messager.alert('提示', '成功导入' + data.data + '条数据!', 'info',
+                            function () {
+                                $("#importHotCompanyDataExcel").dialog('close');
+                                $("#hot-company-data-list").datagrid("load");
+                            });
+                    } else {
+                        $.messager.alert('提示', data.msg, 'warning');
+                    }
+                }
+            })
+        }else{
+            $.messager.alert('提示','请选择xlsx或xls格式文件！','info');
+            $('#fileUpload').filebox('setValue','');
+        }
     }
 
     hotCompanyDataListSearch = function () {
