@@ -60,10 +60,11 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
 
     @Override
     public EasyUIResult<HotCompanyDataVO> listPage(HotCompanyDataInputVO vo) {
+        /* 取昨日封单取消
         List<String> dataList = baseMapper.selectAllDataDate(vo.getDataDate());
         if (dataList.size() > 1) {
             vo.setYesterdayDataDate(dataList.get(1));
-        }
+        }*/
         IPage<HotCompanyDataVO> iPage = new Page<>(vo.getPageNo(), vo.getPageSize());
         baseMapper.listPage(iPage, vo);
 
@@ -86,7 +87,7 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
                         .divide(nearValue, 2, BigDecimal.ROUND_HALF_UP));
                 hotCompanyDataVO.setTomorrowOneMinuteValue(nearValue.multiply(ONE_MINUTE_VALUE_PERCENT));
             }
-            if (hotCompanyDataVO.getTodayNoDeal().compareTo(BigDecimal.ZERO) == 0) {
+            if (hotCompanyDataVO.getTodayNoDeal().compareTo(BigDecimal.ZERO) == 0 && hotCompanyDataVO.getYesterdayNoDeal() != null) {
                 hotCompanyDataVO.setTodayNoDeal(hotCompanyDataVO.getYesterdayNoDeal());
             }
             if (hotCompanyDataVO.getTodayNoDeal() != null) {
@@ -139,8 +140,11 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
             }
             hotCompany.setCreateTime(new Date()).insert();
         } else {
-            hotCompany.setContinuityTime(vo.getContinuityTime()).setName(vo.getName())
+            hotCompany.setContinuityTime(vo.getContinuityTime())
                     .setHotTypeId(hotTypeId);
+            if (StringUtils.hasText(vo.getName())) {
+                hotCompany.setName(vo.getName());
+            }
             if (hotCompany.getMaxChange() == null || (vo.getMaxChange() != null && vo.getMaxChange().compareTo(hotCompany.getMaxChange()) > 0)) {
                 hotCompany.setMaxChange(vo.getMaxChange());
             }
@@ -352,7 +356,7 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
         LocalDate now = LocalDate.now();
         List<Map<String, String>> list = new ArrayList<>();
         int total = 1;
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 200; i++) {
             LocalDate localDate = now.minusDays(i);
             int value = localDate.getDayOfWeek().getValue();
             if (Arrays.asList(6, 7).contains(value)) {
