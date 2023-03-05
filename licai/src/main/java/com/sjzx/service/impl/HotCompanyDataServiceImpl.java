@@ -353,10 +353,10 @@ public class HotCompanyDataServiceImpl extends ServiceImpl<HotCompanyDataMapper,
 
     @Override
     public List<Map<String, String>> dataDateNewCombogrid(String q) {
-        LocalDate now = LocalDate.now();
+        LocalDate now = LocalDate.now().plusMonths(3);
         List<Map<String, String>> list = new ArrayList<>();
         int total = 1;
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < 100; i++) {
             LocalDate localDate = now.minusDays(i);
             int value = localDate.getDayOfWeek().getValue();
             if (Arrays.asList(6, 7).contains(value)) {

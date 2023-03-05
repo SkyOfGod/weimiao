@@ -372,7 +372,7 @@
                 }},
             {field: 'continuityTime', title: '连扳数', width: 30, align: 'center',
                 formatter: function (value, row, index) {
-                    if (value > 1) {
+                    if (value > 1 && !row.name.includes('ST')) {
                         return '<span style="color:red;">' + value + '</span>';
                     }
                     return value;
