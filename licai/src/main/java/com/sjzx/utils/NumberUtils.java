@@ -15,6 +15,10 @@ import java.util.regex.Pattern;
  */
 public class NumberUtils {
 
+    public static int maintainAccuracy(double r, int t) {
+        return (int) (r * 10000/t);
+    }
+
     public static LocalDate toLocalDate(String date) {
         return LocalDate.of(Integer.parseInt(date.substring(0, 4)),
                 Integer.parseInt(date.substring(5, 7)), Integer.parseInt(date.substring(8, 10)));

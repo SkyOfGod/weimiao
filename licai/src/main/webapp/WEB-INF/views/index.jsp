@@ -53,6 +53,16 @@
 					<li data-options="attributes:{'url':'/page/l-fund-company-list'}">基金持股</li>
 				</ul>
 			</li>
+                    <li>
+                        <span>财报管理</span>
+                        <ul>
+                            <li data-options="attributes:{'url':'/page/n-balance-list'}">资产负债表</li>
+                            <li data-options="attributes:{'url':'/page/profitStatement-list'}">利润表</li>
+                            <li data-options="attributes:{'url':'/page/o-chareCashFlow-list'}">现金流量表</li>
+                            <li data-options="attributes:{'url':'/page/q-companytarget-list'}">公司指标</li>
+                            <li data-options="attributes:{'url':'/page/r-goodPrice-list'}">好价格</li>
+                        </ul>
+                    </li>
          </ul>
     </div>
     <div data-options="region:'center',title:''">

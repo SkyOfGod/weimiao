@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjzx.mapper.SProfitStatementMapper">
+    <select id="selectcount" resultType="long">
+        select count(1) from s_profit_statement a
+        join company b
+        ON a.company_id = b.id
+        <where>
+            <if test="companyId != null">
+                and a.company_id = #{companyId}
+            </if>
+            <if test="year != null">
+                and a.year = #{year}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectList" resultType="com.sjzx.model.vo.output.SProfitStatementVO">
+        SELECT a.*,b.name ,b.code from s_profit_statement a
+        join company b
+        ON a.company_id = b.id
+        <where>
+            <if test="companyId != null">
+                and a.company_id = #{companyId}
+            </if>
+            <if test="year != null">
+                and a.year = #{year}
+            </if>
+        </where>
+        order by a.company_id, a.year desc
+        limit #{pageIndex,jdbcType=INTEGER},#{pageSize}
+    </select>
+
+    <update id="updateProfitStatement">
+         update s_profit_statement
+         set operating_income = #{operatingIncome},
+         operating_cost = #{operatingCost},
+         expense_sales = #{expenseSales},
+         administrative_expenses = #{administrativeExpenses},
+         research_development_expenses = #{researchDevelopmentExpenses},
+         financial_expenses = #{financialExpenses},
+         business_taxes_surcharges = #{businessTaxesSurcharges},
+         net_profit = #{netProfit},
+         ttm = #{ttm},
+         remark = #{remark}
+         where id = #{id}
+
+    </update>
+
+    <delete id="deleteProfitStatement">
+        delete from s_profit_statement
+        where id=#{id}
+    </delete>
+
+    <insert id="insertProfitStatement">
+        insert into s_profit_statement (company_id,year,operating_income,operating_cost,expense_sales,administrative_expenses,
+        research_development_expenses,financial_expenses,business_taxes_surcharges,operating_profit,net_profit,ttm,create_time)
+        value (#{companyId},#{year},#{operatingIncome},#{operatingCost},#{expenseSales},#{administrativeExpenses},#{researchDevelopmentExpenses},
+        #{financialExpenses},#{businessTaxesSurcharges},#{operatingProfit},#{netProfit},#{ttm},#{createTime})
+        ON DUPLICATE KEY UPDATE
+                operating_income = values(operating_income),
+                operating_cost = values(operating_cost),
+                expense_sales = values(expense_sales),
+                administrative_expenses = values(administrative_expenses),
+                research_development_expenses = values(research_development_expenses),
+                financial_expenses = values(financial_expenses),
+                business_taxes_surcharges = values(business_taxes_surcharges),
+                operating_profit = values(operating_profit),
+                net_profit = values(net_profit),
+                ttm = values(ttm),
+                update_time = now()
+    </insert>
+</mapper>

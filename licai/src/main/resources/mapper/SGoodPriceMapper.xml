@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjzx.mapper.SGoodPriceMapper">
+
+    <select id="count" resultType="long">
+        SELECT COUNT(1) FROM s_good_price a
+        JOIN company b
+        ON a.company_id =b.id
+        <where>
+            <if test="companyId != null">
+                and a.company_id = #{companyId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectList" resultType="com.sjzx.model.vo.output.SGoodPriceVO">
+        SELECT a.*, b.name, b.code FROM s_good_price a
+        JOIN company b
+        ON a.company_id =b.id
+        <where>
+            <if test="companyId != null">
+                and a.company_id = #{companyId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertData">
+        insert into s_good_price (company_id,year,compound_growth_rate,create_time)
+        value (#{companyId},#{year},#{compoundGrowthRate},#{createTime})
+        ON DUPLICATE KEY UPDATE
+        compound_growth_rate = values (compound_growth_rate),
+        update_time = now()
+    </insert>
+
+    <delete id="deleteGoodPrice">
+        DELETE FROM s_good_price
+        WHERE id = #{id}
+    </delete>
+
+    <update id="updateGoodPrice">
+        update s_good_price
+        set institutional_growth_rate = #{institutionalGrowthRate},
+        earnings_ratio = #{earningsRatio},
+        general_capital = #{generalCapital},
+        remark = #{remark},
+        net_profit_next_three_years = #{netProfitNextThreeYears},
+        reasonable_valuation_next_three_years = #{reasonableValuationNextThreeYears},
+        net_profit_growth_rate = #{netProfitGrowthRate},
+        good_price = #{goodPrice}
+        where id = #{id}
+
+    </update>
+
+    <select id="selectById" resultType="com.sjzx.model.vo.output.SGoodPriceVO">
+        SELECT * FROM s_good_price
+        where id = #{id}
+    </select>
+</mapper>

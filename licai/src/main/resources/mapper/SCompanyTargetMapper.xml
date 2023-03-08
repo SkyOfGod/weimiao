@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjzx.mapper.SCompanyTargetMapper">
+    <select id="selectCount" resultType="long">
+        SELECT COUNT(1) FROM s_company_target a
+        JOIN company b
+        ON a.company_id = b.id
+        <where>
+            <if test="companyId != null">
+                and a.company_id = #{companyId}
+            </if>
+            <if test="year != null">
+                and a.year = #{year}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectList" resultType="com.sjzx.model.vo.output.SCompanyTargetVO">
+        select a.*,b.name,b.code from s_company_target a
+        join company b
+        ON a.company_id = b.id
+        <where>
+            <if test="companyId!= null">
+                and a.company_id = #{companyId}
+            </if>
+            <if test="year != null">
+                and a.year = #{year}
+            </if>
+        </where>
+        order by a.company_id,a.year desc
+        limit #{pageIndex,jdbcType=INTEGER},#{pageSize}
+    </select>
+
+    <insert id="insertData">
+
+                insert into s_company_target (company_id,year,growth_rate_total_assets,total_debt_growth_rate,difference,
+                quasi_monetary_funds,liability_interest,difference_payable_receivable,accounts_receivable_percentage,
+                proportion_fixed_assets,ratio_investment_assets,total_investment_assets,ratio_inventory,ratio_goodwill,
+                increase_rate_business_revenue,gross_profit_rate,gross_margin_fluctuation,
+                ratio_period_expense_gross,period_expense_rate,ratio_expenses_sales,operating_profit_rate,main_profit,
+                ratio_main_operating,net_profit_cash_ratio,roe,growth_rate_net_profit_attributable,operating_cash_flow,
+                growth_rate_net_cash_flow,ratio_cash_paid,share_out_bonus,compact_type,create_time)
+                value (#{companyId},#{year},#{growthRateTotalAssets},#{totalDebtGrowthRate},#{difference},
+                #{quasiMonetaryFunds},#{liabilityInterest},#{differencePayableReceivable},#{accountsReceivablePercentage},
+                #{proportionFixedAssets},#{ratioInvestmentAssets},#{totalInvestmentAssets},#{ratioInventory},#{ratioGoodwill},
+                #{increaseRateBusinessRevenue},#{grossProfitRate},#{grossMarginFluctuation},
+                #{ratioPeriodExpenseGross},#{periodExpenseRate},#{ratioExpensesSales},#{operatingProfitRate},#{mainProfit},
+                #{ratioMainOperating},#{netProfitCashRatio},#{roe},#{growthRateNetProfitAttributable},#{operatingCashFlow},
+                #{growthRateNetCashFlow},#{ratioCashPaid},#{shareOutBonus},#{compactType},#{createTime})
+                        ON DUPLICATE KEY UPDATE
+                        growth_rate_total_assets = values(growth_rate_total_assets),
+                        total_debt_growth_rate = values(total_debt_growth_rate),
+                        difference = values(difference),
+                        quasi_monetary_funds = values(quasi_monetary_funds),
+                        liability_interest = values(liability_interest),
+                        difference_payable_receivable = values(difference_payable_receivable),
+                        accounts_receivable_percentage = values(accounts_receivable_percentage),
+                        proportion_fixed_assets = values(proportion_fixed_assets),
+                        ratio_investment_assets = values(ratio_investment_assets),
+                        total_investment_assets = values(total_investment_assets),
+                        ratio_inventory = values(ratio_inventory),
+                        ratio_goodwill = values(ratio_goodwill),
+                        increase_rate_business_revenue = values(increase_rate_business_revenue),
+                        gross_profit_rate = values(gross_profit_rate),
+                        gross_margin_fluctuation = values(gross_margin_fluctuation),
+                        ratio_period_expense_gross = values(ratio_period_expense_gross),
+                        period_expense_rate = values(period_expense_rate),
+                        ratio_expenses_sales = values(ratio_expenses_sales),
+                        operating_profit_rate = values(operating_profit_rate),
+                        main_profit = values(main_profit),
+                        ratio_main_operating = values(ratio_main_operating),
+                        net_profit_cash_ratio = values(net_profit_cash_ratio),
+                        roe = values(roe),
+                        growth_rate_net_profit_attributable = values(growth_rate_net_profit_attributable),
+                        operating_cash_flow = values(operating_cash_flow),
+                        growth_rate_net_cash_flow = values(growth_rate_net_cash_flow),
+                        ratio_cash_paid = values(ratio_cash_paid),
+                        share_out_bonus = values(share_out_bonus),
+                        compact_type = values(compact_type),
+                        update_time = now()
+
+    </insert>
+
+    <delete id="deleteCompanyTarget">
+        DELETE FROM s_company_target
+        WHERE id = #{id}
+    </delete>
+</mapper>

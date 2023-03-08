@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjzx.mapper.SBalanceSheetMapper">
+
+    <select id="selectcount" resultType="long">
+    SELECT COUNT(1) FROM s_balance_sheet a
+    JOIN company b
+    ON a.company_id = b.id
+    <where>
+        <if test="companyId != null">
+            and a.company_id = #{companyId}
+        </if>
+        <if test="year != null">
+            and a.year = #{year}
+        </if>
+    </where>
+    </select>
+
+    <select id="selectList" resultType="com.sjzx.model.vo.output.SBalanceSheetVO">
+        select  a.*,b.name ,b.code from s_balance_sheet a
+        join company b
+        ON a.company_id = b.id
+        <where>
+            <if test="companyId != null">
+                and a.company_id = #{companyId}
+            </if>
+            <if test="year != null">
+                and a.year = #{year}
+            </if>
+        </where>
+        order by a.company_id, a.year desc
+        limit #{pageIndex,jdbcType=INTEGER},#{pageSize}
+
+    </select>
+
+    <update id="updateBalanceSheet">
+        update s_balance_sheet
+        set total_assets = #{totalAssets},
+        total_liabilities=#{totalLiabilities},
+        monetary_funds=#{monetaryFunds},
+        trading_financial_assets=#{tradingFinancialAssets},
+        other_current_assets=#{otherCurrentAssets},
+        short_term_borrowing=#{shortTermBorrowing},
+        non_current_liability=#{nonCurrentLiability},
+        long_term_borrowing=#{longTermBorrowing},
+        total_long_term_payables=#{totalLongTermPayables},
+        bonds_payable=#{bondsPayable},
+        notes_payable=#{notesPayable},
+        accounts_payable=#{accountsPayable},
+        notes_accounts=#{notesAccounts},
+        account_collected_advance=#{accountCollectedAdvance},
+        liability_for_contract=#{liabilityForContract},
+        notes_receivable=#{notesReceivable},
+        accounts_receivable=#{accountsReceivable},
+        prepayment=#{prepayment},
+        total_fixed_assets=#{totalFixedAssets},
+        fixed_assets=#{fixedAssets},
+        total_works_in_progress=#{totalWorksInProgress},
+        work_in_progress=#{workInProgress},
+        materials_for_construction=#{materialsForConstruction},
+        financial_assets_sale=#{financialAssetsSale},
+        hold_financial_assets=#{holdFinancialAssets},
+        long_term_equity_investment=#{longTermEquityInvestment},
+        investment_real_estate=#{investmentRealEstate},
+        investment_in_other=#{investmentInOther},
+        other_non_current_financial_assets=#{otherNonCurrentFinancialAssets},
+        inventory=#{inventory},
+        goodwill=#{goodwill},
+        total_owners_equity=#{totalOwnersEquity},
+        remark=#{remark}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteBalanceSheet">
+        delete from s_balance_sheet
+        where id = #{id}
+    </delete>
+
+    <insert id="insertBalanceSheet">
+        insert into s_balance_sheet (company_id,year,total_assets,total_liabilities,monetary_funds,
+        trading_financial_assets,other_current_assets,short_term_borrowing,non_current_liability,
+        long_term_borrowing,total_long_term_payables,bonds_payable,notes_payable,accounts_payable,notes_accounts,
+        account_collected_advance,liability_for_contract,notes_receivable,accounts_receivable,prepayment,
+        total_fixed_assets,fixed_assets,total_works_in_progress,work_in_progress,materials_for_construction,
+        financial_assets_sale,hold_financial_assets,long_term_equity_investment,investment_real_estate,
+        investment_in_other,other_non_current_financial_assets,inventory,goodwill,total_owners_equity,create_time)
+        value (#{companyId},#{year},#{totalAssets},#{totalLiabilities},#{monetaryFunds},
+        #{tradingFinancialAssets},#{otherCurrentAssets},#{shortTermBorrowing},#{nonCurrentLiability},
+        #{longTermBorrowing},#{totalLongTermPayables},#{bondsPayable},#{notesPayable},#{accountsPayable},#{notesAccounts},
+        #{accountCollectedAdvance},#{liabilityForContract},#{notesReceivable},#{accountsReceivable},#{prepayment},
+        #{totalFixedAssets},#{fixedAssets},#{totalWorksInProgress},#{workInProgress},#{materialsForConstruction},
+        #{financialAssetsSale},#{holdFinancialAssets},#{longTermEquityInvestment},#{investmentRealEstate},
+        #{investmentInOther},#{otherNonCurrentFinancialAssets},#{inventory},#{goodwill},#{totalOwnersEquity},#{createTime})
+        ON DUPLICATE KEY UPDATE
+                total_assets = values(total_assets),
+                total_liabilities = values(total_liabilities),
+                monetary_funds = values(monetary_funds),
+
+                trading_financial_assets = values(trading_financial_assets),
+                other_current_assets = values(other_current_assets),
+                short_term_borrowing = values(short_term_borrowing),
+                non_current_liability = values(non_current_liability),
+
+                long_term_borrowing = values(long_term_borrowing),
+                total_long_term_payables = values(total_long_term_payables),
+                bonds_payable = values(bonds_payable),
+                notes_payable = values(notes_payable),
+                accounts_payable = values(accounts_payable),
+                notes_accounts = values(notes_accounts),
+
+                account_collected_advance = values(account_collected_advance),
+                fixed_assets = values(fixed_assets),
+                notes_receivable = values(notes_receivable),
+                accounts_receivable = values(accounts_receivable),
+                prepayment = values(prepayment),
+
+                total_fixed_assets = values(total_fixed_assets),
+                fixed_assets = values(fixed_assets),
+                total_works_in_progress = values(total_works_in_progress),
+                work_in_progress = values(work_in_progress),
+                materials_for_construction = values(materials_for_construction),
+
+                financial_assets_sale = values(financial_assets_sale),
+                hold_financial_assets = values(hold_financial_assets),
+                long_term_equity_investment = values(long_term_equity_investment),
+                investment_real_estate = values(investment_real_estate),
+
+                investment_in_other = values(investment_in_other),
+                other_non_current_financial_assets = values(other_non_current_financial_assets),
+                inventory = values(inventory),
+                goodwill = values(goodwill),
+                total_owners_equity = values(total_owners_equity),
+                update_time = now()
+    </insert>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
