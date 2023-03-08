@@ -15,7 +15,6 @@ import java.io.File;
 import java.io.IOException;
 
 public class CodeGenerator {
-
     private static final String GLOBAL_PARENT = "com.sjzx";
     private static final String DB_NAEM = "licai";
     private static final boolean ALL_TABLE = false;
