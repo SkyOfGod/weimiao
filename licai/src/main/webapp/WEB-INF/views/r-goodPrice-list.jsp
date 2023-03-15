@@ -195,6 +195,7 @@
             }
         });
         var data = $("#goodPrice-list").datagrid("getSelected");
+        data.institutionalGrowthRate = data.institutionalGrowthRate/100;
         $("#goodPriceEditForm").form("load", data);
     }
     

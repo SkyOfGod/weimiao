@@ -12,8 +12,8 @@ import lombok.Data;
 public class BasePage {
 
     //当前页
-    private Integer pageNo;
+    private Integer pageNo = 1;
     //分页大小
-    private Integer pageSize;
+    private Integer pageSize = 10;
 
 }

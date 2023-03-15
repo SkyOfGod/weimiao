@@ -95,8 +95,16 @@
             {field: 'code', title: '股票代码', width: 100, align: 'center'},
             {field: 'name', title: '公司名称', width: 100, align: 'center'},
             {field: 'year', title: '年份', width: 40, align: 'center'},
+            {field: 'roe', title: '净资产收益率ROE', width: 150, align: 'right',
+                formatter: function (value, row, index) {
+                     if (value != 0) {
+                         return value/100 + '%'
+                         }
+                         return value;
+                     }
+            },
             {
-                field: 'growthRateTotalAssets', title: '总资产增长率', width: 120, align: 'right',
+                field: 'growthRateTotalAssets', title: '总资产增长率', width: 150, align: 'right',
                 formatter: function (value, row, index) {
                     if (value != 0) {
                         return value/100 + '%'
@@ -105,7 +113,7 @@
                 }
             },
             {
-                field: 'totalDebtGrowthRate', title: '资产负债率', width: 120, align: 'right',
+                field: 'totalDebtGrowthRate', title: '资产负债率', width: 150, align: 'right',
                 formatter: function (value, row, index) {
                     if (value != 0) {
                         return value/100 + '%'
@@ -113,21 +121,10 @@
                     return value;
                 }
             },
-            {field: 'difference', title: '准货币资金减有息负债的差额', width: 120, align: 'right'},
-            {field: 'quasiMonetaryFunds', title: '准货币资金', width: 120, align: 'right'},
-            {field: 'liabilityInterest', title: '有息负债', width: 120, align: 'right'},
-            {field: 'differencePayableReceivable', title: '应付预收减应收预付差额', width: 120, align: 'right'},
+            {field: 'difference', title: '准货币资金减有息负债的差额', width: 150, align: 'right'},
+            {field: 'differencePayableReceivable', title: '应付预收减应收预付差额', width: 150, align: 'right'},
             {
-                field: 'accountsReceivablePercentage', title: '应收账款占总资产的比率', width: 120, align: 'right',
-                formatter: function (value, row, index) {
-                    if (value != 0) {
-                        return value/100 + '%'
-                    }
-                    return value;
-                }
-            },
-            {
-                field: 'proportionFixedAssets', title: '固定资产比例', width: 120, align: 'right',
+                field: 'accountsReceivablePercentage', title: '应收账款占总资产的比率', width: 150, align: 'right',
                 formatter: function (value, row, index) {
                     if (value != 0) {
                         return value/100 + '%'
@@ -136,17 +133,7 @@
                 }
             },
             {
-                field: 'ratioInvestmentAssets', title: '投资类资产占总资产的比率', width: 120, align: 'right',
-                formatter: function (value, row, index) {
-                    if (value != 0) {
-                        return value/100 + '%'
-                    }
-                    return value;
-                }
-            },
-            {field: 'totalInvestmentAssets', title: '投资类资产合计', width: 120, align: 'right'},
-            {
-                field: 'ratioInventory', title: '存货占总资产的比率', width: 120, align: 'right',
+                field: 'proportionFixedAssets', title: '固定资产比例', width: 150, align: 'right',
                 formatter: function (value, row, index) {
                     if (value != 0) {
                         return value/100 + '%'
@@ -155,7 +142,7 @@
                 }
             },
             {
-                field: 'ratioGoodwill', title: '商誉占总资产的比率', width: 120, align: 'right',
+                field: 'ratioInvestmentAssets', title: '投资类资产占总资产的比率', width: 150, align: 'right',
                 formatter: function (value, row, index) {
                     if (value != 0) {
                         return value/100 + '%'
@@ -164,7 +151,7 @@
                 }
             },
             {
-                field: 'increaseRateBusinessRevenue', title: '营业收入增长率', width: 120, align: 'right',
+                field: 'ratioInventory', title: '存货占总资产的比率', width: 150, align: 'right',
                 formatter: function (value, row, index) {
                     if (value != 0) {
                         return value/100 + '%'
@@ -173,7 +160,7 @@
                 }
             },
             {
-                field: 'grossProfitRate', title: '毛利率', width: 120, align: 'right',
+                field: 'ratioGoodwill', title: '商誉占总资产的比率', width: 150, align: 'right',
                 formatter: function (value, row, index) {
                     if (value != 0) {
                         return value/100 + '%'
@@ -182,7 +169,7 @@
                 }
             },
             {
-                field: 'grossMarginFluctuation', title: '毛利率波幅', width: 120, align: 'right',
+                field: 'increaseRateBusinessRevenue', title: '营业收入增长率', width: 150, align: 'right',
                 formatter: function (value, row, index) {
                     if (value != 0) {
                         return value/100 + '%'
@@ -191,7 +178,7 @@
                 }
             },
             {
-                field: 'ratioPeriodExpenseGross', title: '期间费用率与毛利率的比率', width: 120, align: 'right',
+                field: 'grossProfitRate', title: '毛利率', width: 150, align: 'right',
                 formatter: function (value, row, index) {
                     if (value != 0) {
                         return value/100 + '%'
@@ -200,7 +187,7 @@
                 }
             },
             {
-                field: 'periodExpenseRate', title: '期间费用率', width: 120, align: 'right',
+                field: 'grossMarginFluctuation', title: '毛利率波幅', width: 150, align: 'right',
                 formatter: function (value, row, index) {
                     if (value != 0) {
                         return value/100 + '%'
@@ -209,7 +196,7 @@
                 }
             },
             {
-                field: 'ratioExpensesSales', title: '销售费用率', width: 120, align: 'right',
+                field: 'ratioPeriodExpenseGross', title: '期间费用率与毛利率的比率', width: 150, align: 'right',
                 formatter: function (value, row, index) {
                     if (value != 0) {
                         return value/100 + '%'
@@ -218,17 +205,7 @@
                 }
             },
             {
-                field: 'operatingProfitRate', title: '主营利润率', width: 120, align: 'right',
-                formatter: function (value, row, index) {
-                    if (value != 0) {
-                        return value/100 + '%'
-                    }
-                    return value;
-                }
-            },
-            {field: 'mainProfit', title: '主营利润', width: 120, align: 'right'},
-            {
-                field: 'ratioMainOperating', title: '主营利润占营业利润的比率', width: 120, align: 'right',
+                field: 'periodExpenseRate', title: '期间费用率', width: 150, align: 'right',
                 formatter: function (value, row, index) {
                     if (value != 0) {
                         return value/100 + '%'
@@ -237,7 +214,7 @@
                 }
             },
             {
-                field: 'netProfitCashRatio', title: '净利润现金比率', width: 120, align: 'right',
+                field: 'ratioExpensesSales', title: '销售费用率', width: 150, align: 'right',
                 formatter: function (value, row, index) {
                     if (value != 0) {
                         return value/100 + '%'
@@ -246,7 +223,7 @@
                 }
             },
             {
-                field: 'roe', title: '净资产收益率', width: 120, align: 'right',
+                field: 'operatingProfitRate', title: '主营利润率', width: 150, align: 'right',
                 formatter: function (value, row, index) {
                     if (value != 0) {
                         return value/100 + '%'
@@ -255,17 +232,7 @@
                 }
             },
             {
-                field: 'growthRateNetProfitAttributable', title: '归母净利润增长率', width: 120, align: 'right',
-                formatter: function (value, row, index) {
-                    if (value != 0) {
-                        return value/100 + '%'
-                    }
-                    return value;
-                }
-            },
-            {field: 'operatingCashFlow', title: '经营活动产生的现金流量净额', width: 120, align: 'right'},
-            {
-                field: 'growthRateNetCashFlow', title: '经营活动产生的现金流量净额增长率', width: 120, align: 'right',
+                field: 'netProfitCashRatio', title: '净利润现金比率', width: 150, align: 'right',
                 formatter: function (value, row, index) {
                     if (value != 0) {
                         return value/100 + '%'
@@ -274,7 +241,15 @@
                 }
             },
             {
-                field: 'ratioCashPaid', title: '购建固定资产、无形资产和其他长期资产支付的现金占经营活动产生的现金流量净额比率', width: 120, align: 'right',
+                field: 'growthRateNetProfitAttributable', title: '归母净利润增长率', width: 150, align: 'right',
+                formatter: function (value, row, index) {
+                    if (value != 0) {
+                        return value/100 + '%'
+                    }
+                    return value;
+                }
+            },
+            {field: 'growthRateNetCashFlow', title: '经营活动产生的现金流量净额增长率', width: 150, align: 'right',
                 formatter: function (value, row, index) {
                     if (value != 0) {
                         return value/100 + '%'
@@ -283,7 +258,16 @@
                 }
             },
             {
-                field: 'shareOutBonus', title: '年度股利支付率/分红', width: 120, align: 'right',
+                field: 'ratioCashPaid', title: '购建固定资产、无形资产和其他长期资产支付的现金占经营活动产生的现金流量净额比率', width: 150, align: 'right',
+                formatter: function (value, row, index) {
+                    if (value != 0) {
+                        return value/100 + '%'
+                    }
+                    return value;
+                }
+            },
+            {
+                field: 'shareOutBonus', title: '年度股利支付率/分红', width: 150, align: 'right',
                 formatter: function (value, row, index) {
                     if (value != 0) {
                         return value/100 + '%'

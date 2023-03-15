@@ -133,13 +133,14 @@ public class SCompanyTargetServiceImpl implements SCompanyTargetService {
                 target.setGrossProfitRate(g);
 
                 //10.1期间费用率=（销售费用+管理费用+研发费用+财务费用）/营业收入
+                int h;
                 if (spro.getFinancialExpenses() < 0) {
-                    int h = (spro.getExpenseSales() + spro.getAdministrativeExpenses() + spro.getResearchDevelopmentExpenses()) * 100 / spro.getOperatingIncome();
-                    target.setPeriodExpenseRate(h);
+                    h = NumberUtils.maintainAccuracy(spro.getExpenseSales() + spro.getAdministrativeExpenses() + spro.getResearchDevelopmentExpenses(), spro.getOperatingIncome());
                 } else {
-                    int h = (spro.getExpenseSales() + spro.getAdministrativeExpenses() + spro.getResearchDevelopmentExpenses() + spro.getFinancialExpenses()) * 100 / spro.getOperatingIncome();
-                    target.setPeriodExpenseRate(h);
+                    h = NumberUtils.maintainAccuracy(spro.getExpenseSales() + spro.getAdministrativeExpenses() + spro.getResearchDevelopmentExpenses()
+                            + spro.getFinancialExpenses(), spro.getOperatingIncome());
                 }
+                target.setPeriodExpenseRate(h);
 
                 //10、期间费用率与毛利率的比率=期间费用率/毛利率*100%
                 target.setRatioPeriodExpenseGross(NumberUtils.maintainAccuracy(target.getPeriodExpenseRate(), target.getGrossProfitRate()));

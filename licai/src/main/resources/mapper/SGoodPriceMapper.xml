@@ -28,6 +28,7 @@
         insert into s_good_price (company_id,year,compound_growth_rate,create_time)
         value (#{companyId},#{year},#{compoundGrowthRate},#{createTime})
         ON DUPLICATE KEY UPDATE
+        year = values (year),
         compound_growth_rate = values (compound_growth_rate),
         update_time = now()
     </insert>
