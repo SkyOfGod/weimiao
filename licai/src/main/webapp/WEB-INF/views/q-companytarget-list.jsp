@@ -130,7 +130,7 @@
                              return '<span style="color:red;">' + value/100 + '%</span>';
                          }
                          if (value/100 < 70 && value/100 >= 40) {
-                             return '<span style="color:yellow;">' + value/100 + '%</span>';
+                             return '<span style="color:blue;">' + value/100 + '%</span>';
                          }
                         return value/100 + '%';
                     }
@@ -141,7 +141,7 @@
                 formatter: function (value, row, index) {
                      if (value != 0) {
                           if (value <= 0) {
-                               return '<span style="color:yellow;">' + value + '%</span>';
+                               return '<span style="color:blue;">' + value + '</span>';
                           }
                           return value;
                      }
@@ -152,9 +152,9 @@
                 formatter: function (value, row, index) {
                      if (value != 0) {
                           if (value <= 0) {
-                              return '<span style="color:yellow;">' + value + '%</span>';
+                              return '<span style="color:blue;">' + value + '</span>';
                           }
-                          return '<span style="color:green;">' + value + '%</span>';
+                          return '<span style="color:green;">' + value + '</span>';
                      }
                      return value;
                 }
@@ -166,7 +166,7 @@
                              return '<span style="color:green;">' + value/100 + '%</span>';
                          }
                          if (value/100 < 20 && value/100 >= 10) {
-                             return '<span style="color:yellow;">' + value/100 + '%</span>';
+                             return '<span style="color:blue;">' + value/100 + '%</span>';
                          }
                          if (value/100 >= 20) {
                              return '<span style="color:red;">' + value/100 + '%</span>';
@@ -248,8 +248,8 @@
             {field: 'grossMarginFluctuation', title: '毛利率波幅', width: 150, align: 'right',
                 formatter: function (value, row, index) {
                     if (value != 0) {
-                        if (value/100 <= 10) {
-                            return '<span style="color:green;">' + value/100 + '%</span>';
+                        if (value/100 >= 10) {
+                            return '<span style="color:red;">' + value/100 + '%</span>';
                         }
                         return value/100 + '%';
                     }
@@ -263,7 +263,7 @@
                             return '<span style="color:red;">' + value/100 + '%</span>';
                         }
                         if (value/100 < 60 && value/100 >= 40) {
-                            return '<span style="color:yellow;">' + value/100 + '%</span>';
+                            return '<span style="color:blue;">' + value/100 + '%</span>';
                         }
                         return value/100 + '%';
                     }
@@ -332,13 +332,13 @@
                 formatter: function (value, row, index) {
                      if (value != 0) {
                           if (value < 0) {
-                              return '<span style="color:red;">' + value + '%</span>';
+                              return '<span style="color:red;">' + value + '</span>';
                           }
-                          return '<span style="color:green;">' + value + '%</span>';
+                          return '<span style="color:green;">' + value + '</span>';
                      }
                      return value;
                 }
-            }
+            },
             {field: 'growthRateNetCashFlow', title: '经营活动产生的现金流量净额增长率', width: 150, align: 'right',
                 formatter: function (value, row, index) {
                     if (value != 0) {
@@ -357,7 +357,7 @@
                             return '<span style="color:gray;">' + value/100 + '%</span>';
                         }
                         if (value/100 < 100 && value/100 >= 60) {
-                            return '<span style="color:yellow;">' + value/100 + '%</span>';
+                            return '<span style="color:blue;">' + value/100 + '%</span>';
                         }
                         if (value/100 >= 100) {
                             return '<span style="color:red;">' + value/100 + '%</span>';
@@ -374,7 +374,7 @@
                             return '<span style="color:red;">' + value/100 + '%</span>';
                         }
                         if (value/100 >= 70) {
-                            return '<span style="color:yellow;">' + value/100 + '%</span>';
+                            return '<span style="color:blue;">' + value/100 + '%</span>';
                         }
                         return value/100 + '%';
                     }
@@ -385,9 +385,9 @@
                 formatter: function (value, row, index) {
                     if (value != null) {
                         if (value === '正负负' || value === '正正负') {
-                            return '<span style="color:green;">' + value + '%</span>';
+                            return '<span style="color:green;">' + value + '</span>';
                         }
-                        return '<span style="color:red;">' + value + '%</span>';
+                        return '<span style="color:red;">' + value + '</span>';
                     }
                     return value;
                 }
